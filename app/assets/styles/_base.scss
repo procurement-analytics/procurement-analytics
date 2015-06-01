@@ -1,0 +1,34 @@
+// GLOBAL
+
+#site-header {
+  padding: 1rem 1rem 0 1rem;
+}
+
+#indicators {
+  @include clearfix();
+  margin-top: 1rem;
+  margin-bottom: -1px; 
+
+  li {
+    display: block;
+    float: left;
+    margin-right: 0.5rem; 
+
+    a {
+      border: 1px solid #bbb;
+      background-color: #eee;
+      padding: 0.5rem;
+      display: block;
+
+      &.active {
+        border-bottom-color: white;
+        background-color: white;
+      }
+    }
+  }
+}
+
+#site-body {
+  border-top: 1px solid #bbb;
+  padding: 1rem;
+}

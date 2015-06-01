@@ -1,0 +1,12 @@
+# System files
+.project
+.DS_Store
+.sass-cache
+node_modules
+.tmp
+
+# Local
+.resources
+
+# Dist
+dist
