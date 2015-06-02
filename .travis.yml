@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- '0.12'
+
+env:
+  global:
+  - GH_REF=github.com/developmentseed/procurement-dashboards.git
+  - DEPLOY_BRANCH=master
+  - secure: "FXCKPnBGdG2giuORVQdt3C8FwZ4NEPhAmwFPSLCbqtu4c6DnOOm9+uxs8zzNd8Dnt/DVF/dSEWjVkLngT/pVQcdWd3sUh9BS3TEKoe8nGDTHnXERw2P6h4wtw73X/pjwOTmC1lOP0dyE50xIqQns9sOHaHsmuRaJonXjH5wGoHc="
+
+before_install:
+- chmod +x ./.build_scripts/deploy.sh
+
+script:
+- gulp prod
+
+after_success:
+- ./.build_scripts/deploy.sh
+  
