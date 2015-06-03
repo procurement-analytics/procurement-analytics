@@ -1,4 +1,4 @@
-# Procurement Dashboards
+# Procurement Dashboards [![Build Status](https://magnum.travis-ci.com/developmentseed/procurement-dashboards.svg?token=Ns1LRJH6eWb8X2DgdBto&branch=master)](https://magnum.travis-ci.com/developmentseed/procurement-dashboards)
 
 Procurement Dashboards
 
