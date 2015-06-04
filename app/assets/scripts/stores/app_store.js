@@ -5,13 +5,17 @@ var actions = require('../actions/actions');
 var AppStore = module.exports = Reflux.createStore({
 
   storage: {
-    group: null
+    group: 'all'
   },
 
   // Called on creation.
   // Setup listeners.
   init: function() {
     this.listenTo(actions.groupChange, this.onGroupChange);
+  },
+
+  getGroup: function() {
+    return this.storage.group;
   },
 
   onGroupChange: function(group) {

@@ -8,7 +8,7 @@ var IndTimeliness = module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      group: null
+      group: AppStore.getGroup()
     };
   },
 
@@ -18,20 +18,34 @@ var IndTimeliness = module.exports = React.createClass({
 
   render: function() {
     var data = null;
-    if (this.state.group) {
-      data = (
-        <div>
-          <img src="assets/graphics/content/charts-02.png"/>
-        </div>
-      );
+    switch(this.state.group) {
+      case 'all':
+        data = (
+          <div>
+            <img src="assets/graphics/content/ch_average-timeline-all.png"/>
+          </div>
+        );
+      break;
+      case 'contract_procedure':
+        data = (
+          <div>
+            <img src="assets/graphics/content/ch_average-timeline-contr.png"/>
+          </div>
+        );
+      break;
+      case 'level_gov':
+        data = (
+          <div>
+            <img src="assets/graphics/content/ch_average-timeline-gov.png"/>
+          </div>
+        );
+      break;
     }
-    else {
-      data = (
-        <div>
-          <img src="assets/graphics/content/charts-01.png"/>
-        </div>
-      );
-    }
-    return data;
+    return (
+      <div>
+        <p className="desc">Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
+        {data}
+      </div>
+    );
   }
 });

@@ -8,7 +8,7 @@ var IndFairness = module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      group: null
+      group: AppStore.getGroup()
     };
   },
 
@@ -18,22 +18,37 @@ var IndFairness = module.exports = React.createClass({
 
   render: function() {
     var data = null;
-    if (this.state.group) {
-      data = (
-        <div>
-          <img src="assets/graphics/content/charts-06.png"/>
-          <img src="assets/graphics/content/charts-08.png"/>
-        </div>
-      );
+    switch(this.state.group) {
+      case 'all':
+        data = (
+          <div>
+            <img src="assets/graphics/content/ch_winning-all.png"/>
+            <img src="assets/graphics/content/ch_relationship-all.png"/>
+          </div>
+        );
+      break;
+      case 'contract_procedure':
+        data = (
+          <div>
+            <img src="assets/graphics/content/ch_winning-contr.png"/>
+            <img src="assets/graphics/content/ch_relationship-contr.png"/>
+          </div>
+        );
+      break;
+      case 'level_gov':
+        data = (
+          <div>
+            <img src="assets/graphics/content/ch_winning-gov.png"/>
+            <img src="assets/graphics/content/ch_relationship-gov.png"/>
+          </div>
+        );
+      break;
     }
-    else {
-      data = (
-        <div>
-          <img src="assets/graphics/content/charts-05.png"/>
-          <img src="assets/graphics/content/charts-07.png"/>
-        </div>
-      );
-    }
-    return data;
+    return (
+      <div>
+        <p className="desc">A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
+        {data}
+      </div>
+    );
   }
 });

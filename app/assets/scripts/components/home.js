@@ -5,7 +5,7 @@ var Home = module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <p>This is the homepage</p>
+        <p>Welcome to the procurement dashboard.</p>
       </div>
     );
   }

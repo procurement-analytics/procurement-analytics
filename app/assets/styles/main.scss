@@ -3,10 +3,18 @@
 
 // Libs
 @import "bourbon";
+
 // Reset and normalize
 @import "normalize";
 @import "reset";
 @import "normalize-opentype";
 
+// Settings
+@import "variables";
+@import "functions";
+@import "mixins";
 
+// Custom styles
+@import "buttons";
 @import "base";
+@import "helpers";

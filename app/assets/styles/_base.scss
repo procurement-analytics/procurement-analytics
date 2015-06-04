@@ -2,11 +2,43 @@
 
 #site-header {
   padding: 1rem 1rem 0 1rem;
+
+  .header-bar {
+    background-color: #eee;
+    margin: -1rem -1rem 2rem -1rem;
+    padding: 1rem;
+  }
+
+  .nav-block-prime {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+
+    ul {
+      @include clearfix();
+
+      li {
+        display: block;
+        float: left;
+        margin-right: 0.5rem; 
+      }
+    }
+  }
+
+  .nav-block-sec {
+    text-align: center;
+
+    .bttn {
+      border-radius: 0;
+      border: 1px solid #aaa;
+      box-shadow: none;
+    }
+  }
 }
 
 #indicators {
   @include clearfix();
-  margin-top: 1rem;
+  margin-top: 3rem;
   margin-bottom: -1px; 
 
   li {
@@ -31,4 +63,10 @@
 #site-body {
   border-top: 1px solid #bbb;
   padding: 1rem;
+
+  .desc {
+    color: #666;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+  }
 }

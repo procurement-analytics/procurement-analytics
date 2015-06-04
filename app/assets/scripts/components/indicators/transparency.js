@@ -5,7 +5,7 @@ var IndTransparency = module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <p>This is the Transparency!</p>
+        <p className="desc">In government procurement, transparency plays a pivotal role in success as it enables competition and promotes accountability of those making purchasing decisions.</p>
       </div>
     );
   }
