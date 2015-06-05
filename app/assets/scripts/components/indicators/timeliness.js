@@ -42,7 +42,7 @@ var IndTimeliness = module.exports = React.createClass({
       break;
     }
     return (
-      <div>
+      <div className="content">
         <p className="desc">Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
         {data}
       </div>

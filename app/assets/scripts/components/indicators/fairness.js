@@ -22,6 +22,7 @@ var IndFairness = module.exports = React.createClass({
       case 'all':
         data = (
           <div>
+            <img src="assets/graphics/content/ch_top5-cont-all.png"/><br />
             <img src="assets/graphics/content/ch_winning-all.png"/>
             <img src="assets/graphics/content/ch_relationship-all.png"/>
           </div>
@@ -30,6 +31,7 @@ var IndFairness = module.exports = React.createClass({
       case 'contract_procedure':
         data = (
           <div>
+            <img src="assets/graphics/content/ch_top5-cont-contr.png"/><br />
             <img src="assets/graphics/content/ch_winning-contr.png"/>
             <img src="assets/graphics/content/ch_relationship-contr.png"/>
           </div>
@@ -38,6 +40,7 @@ var IndFairness = module.exports = React.createClass({
       case 'level_gov':
         data = (
           <div>
+            <img src="assets/graphics/content/ch_top5-cont-gov.png"/><br />
             <img src="assets/graphics/content/ch_winning-gov.png"/>
             <img src="assets/graphics/content/ch_relationship-gov.png"/>
           </div>
@@ -45,7 +48,7 @@ var IndFairness = module.exports = React.createClass({
       break;
     }
     return (
-      <div>
+      <div className="content">
         <p className="desc">A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
         {data}
       </div>

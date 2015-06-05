@@ -16,11 +16,11 @@ var IndTransparency = require('./components/indicators/transparency');
 var IndCostEfficiency = require('./components/indicators/cost_efficiency');
 var IndQuality = require('./components/indicators/quality');
 var IndFairness = require('./components/indicators/fairness');
-var Home = require('./components/home');
+var IndGeneral = require('./components/indicators/general');
 
 var routes = module.exports = (
   <Route path="/" handler={App}>
-    <DefaultRoute name="home" handler={Home} />
+    <DefaultRoute name="home" handler={IndGeneral} />
     <Route name="timeliness" handler={IndTimeliness}/>
     <Route name="transparency" handler={IndTransparency}/>
     <Route name="cost_efficiency" handler={IndCostEfficiency}/>

@@ -7,6 +7,7 @@ var Navigation = module.exports = React.createClass({
   render: function() {
     return (
       <ul id="indicators">
+        <li><Link to="home">General</Link></li>
         <li><Link to="timeliness">Timeliness</Link></li>
         <li><Link to="cost_efficiency">Cost Efficiency</Link></li>
         <li><Link to="fairness">Fairness</Link></li>

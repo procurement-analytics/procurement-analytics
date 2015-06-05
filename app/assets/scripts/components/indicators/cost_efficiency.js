@@ -45,7 +45,7 @@ var IndCostEfficiency = module.exports = React.createClass({
       break;
     }
     return (
-      <div>
+      <div className="content">
         <p className="desc">Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
         {data}
       </div>
