@@ -89,3 +89,34 @@
     margin-top: 1rem;
   }
 }
+
+
+
+
+.lineChart, .boxChart {
+  width: 100%;
+  min-height: 300px;
+}
+
+.line {
+  fill: none;
+  stroke: blue;
+}
+
+.charts .lineChart {
+    width: 50%;
+    float: left;
+}
+
+
+
+
+
+.center-line, .median, .whisker {
+  stroke: red;
+}
+.box.whole-box {
+  fill: white;
+  stroke: red;
+  stroke-width: 1px;
+}
