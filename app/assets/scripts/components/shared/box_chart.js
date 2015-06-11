@@ -44,8 +44,16 @@ var BoxChart = module.exports = React.createClass({
 var d3BoxChart = function(el, data) {
   this.$el = d3.select(el);
 
+  // Chart lifecycle:
+  // _init()
+  //   Creates the chart elements.
+  // update()
+  //   Called whenever the chart needs to be updated.
+  // destroy()
+  //   Called before destroying the chart.
+
   // Var declaration.
-  var margin = {top: 30, right: 32, bottom: 50, left: 50};
+  var margin = {top: 30, right: 32, bottom: 50, left: 50, gap: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
@@ -53,6 +61,12 @@ var d3BoxChart = function(el, data) {
   var x, y, xAxis, yAxis, line;
   // Elements.
   var svg, dataCanvas;
+  // Data max and min.
+  var min, max;
+  // Individual box size.
+  var boxSize;
+  // Function to construct each on of the boxes.
+  var boxChart;
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
@@ -66,6 +80,161 @@ var d3BoxChart = function(el, data) {
     this.update();
   };
 
+  /**
+   * Returns a function that is going to be used by d3 to draw each one of
+   * the boxes.
+   * 
+   * @return function
+   *
+   * Code highly borrowed from:
+   * http://bl.ocks.org/mbostock/4061502
+   * https://gist.github.com/asizer/11198007
+   */
+  this._box = function() {
+    var width = 1;
+    var height = 1;
+    var duration = 0;
+    var domain = null;
+    var value = Number;
+    var tickFormat = null;
+   
+    function box(g) {
+      g.each(function(d, i) {
+        var g = d3.select(this).attr('class', 'boxplot');
+        var min = d.min;
+        var max = d.max;
+
+        var whiskerData = [d.whisker1, d.whisker2];
+        var quartileData = [d.q1, d.median, d.q3];
+
+        // Compute the x-scale.
+        var x = d3.scale.linear()
+            .domain(domain && domain.call(this, d, i) || [min, max])
+            .range([0, width]);
+
+        // Note: the box, median, and box tick elements are fixed in number,
+        // so we only have to handle enter and update. In contrast, the outliers
+        // and other elements are variable, so we need to exit them!
+        // (Except this is a static chart, so no transitions, so no exiting)
+
+        // Update center line: the horizontal line spanning the whiskers.
+        var center = g.selectAll('line.center')
+            .data([whiskerData]);
+
+        center.enter().insert('line', 'rect')
+          .attr('class', 'center')
+          .attr('x1', function(d) { return x(d[0]); })
+          .attr('y1', height / 2)
+          .attr('x2', function(d) { return x(d[1]); })
+          .attr('y2', height / 2);
+
+        center
+          .attr('y1', height / 2)
+          .attr('x1', function(d) { return x(d[0]); })
+          .attr('y2', height / 2)
+          .attr('x2', function(d) { return x(d[1]); });
+
+        // Update innerquartile box.
+        var box = g.selectAll('rect.box')
+          .data([quartileData]);
+
+        box.enter().append('rect')
+          .attr('class', 'box')
+          .attr('y', 0)
+          .attr('x', function(d) { return x(d[0]); })
+          .attr('height', height)
+          .attr('width', function(d) { return x(d[2]) - x(d[0]); });
+
+        box
+          .attr('x', function(d) { return x(d[0]); })
+          .attr('height', height)
+          .attr('width', function(d) { return x(d[2]) - x(d[0]); });
+
+        // Update median line.
+        var medianLine = g.selectAll('line.median')
+          .data([quartileData[1]]);
+
+        medianLine.enter().append('line')
+          .attr('class', 'median')
+          .attr('x1', x)
+          .attr('y1', 0)
+          .attr('x2', x)
+          .attr('y2', height);
+
+        medianLine
+          .attr('x1', x)
+          .attr('x2', x)
+          .attr('y2', height);
+
+        // Update whiskers.
+        var whisker = g.selectAll('line.whisker')
+          .data(whiskerData || []);
+
+        whisker.enter().append('line')
+          .attr('class', 'whisker')
+          .attr('x1', x)
+          .attr('y1', 0)
+          .attr('x2', x)
+          .attr('y2', height);
+
+        whisker
+          .attr('x1', x)
+          .attr('x2', x)
+          .attr('y2', height);
+        });
+      }
+   
+    box.width = function(x) {
+      if (!arguments.length) {
+        return width;
+      }
+      width = x;
+      return box;
+    };
+
+    box.height = function(x) {
+      if (!arguments.length) {
+        return height;
+      }
+      height = x;
+      return box;
+    };
+
+    box.tickFormat = function(x) {
+      if (!arguments.length) {
+        return tickFormat;
+      }
+      tickFormat = x;
+      return box;
+    };
+
+    box.duration = function(x) {
+      if (!arguments.length) {
+        return duration;
+      }
+      duration = x;
+      return box;
+    };
+
+    box.domain = function(x) {
+      if (!arguments.length) {
+        return domain;
+      }
+      domain = x == null ? x : d3.functor(x);
+      return box;
+    };
+
+    box.value = function(x) {
+      if (!arguments.length) {
+        return value;
+      }
+      value = x;
+      return box;
+    };
+
+    return box;
+  };
+
   this._init = function() {
     this._calcSize();
     // The svg
@@ -73,56 +242,39 @@ var d3BoxChart = function(el, data) {
     // X scale. Range updated in function.
     x = d3.scale.linear();
 
-    // Y scale. Range updated in function.
-    /*y = d3.scale.linear();*/
-
     // Define xAxis function.
     xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom");
 
-    // Define yAxis function.
-    /*yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");*/
-
-    // Line function
-    /*line = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.count); });*/
-
     // Chart elements
-
     dataCanvas = svg.append("g")
         .attr('class', 'data-canvas')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
-      .attr("class", "x axis");/*
-      .append("text")
-        .attr("class", "label")
-        .style("text-anchor", "end");*/
+      .attr("class", "x axis");
 
-    /*svg.append("g")
-      .attr("class", "y axis");*//*
-      .append("text")
-        .attr("class", "label")
-        .attr("transform", "rotate(-90)")
-        .style("text-anchor", "end");*/
-
-    /*dataCanvas.append("path")
-      .attr("class", "line");*/
+    boxChart = this._box()
+      .width(_width);
 
   };
 
   this.update = function() {
     this._calcSize();
 
-    x.range([0, _width])
-      .domain([this.data.min, this.data.max]);
+    var n = this.data.length;
+    min = d3.min(this.data, function(v) { return v.min; });
+    max = d3.max(this.data, function(v) { return v.max; });
+    // Compute the size of each box.
+    boxSize = (_height - n * margin.gap) / n;
 
-    /*y.range([_height, 0])
-      .domain(d3.extent(this.data, function(d) { return d.count; }));*/
+    boxChart
+      .height(boxSize)
+      .domain([min, max]);
+
+    x.range([0, _width])
+      .domain([min, max]);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -132,104 +284,24 @@ var d3BoxChart = function(el, data) {
       .attr('width', _width)
       .attr('height', _height);
 
-   var center = dataCanvas.selectAll('line.center')
-        .data([[this.data.whisker1, this.data.whisker2]]);
+    var boxes = dataCanvas.selectAll("g.boxplot")
+      .data(this.data);
 
-    center.enter().append('line')
-        .attr('class', 'center-line')
-        .attr('x1', function(d) { console.log(d);
-            return x(d[0]);
-        })
-        .attr('y1', 80 / 2)
-        .attr('x2', function(d) {
-            return x(d[1]);
-        })
-        .attr('y2', 80 / 2);
+    boxes.enter().append('g')
+      .attr("transform", function(d, i) { return "translate(" +  0  + "," + i * (boxSize + margin.gap) + ")"; })
+      .call(boxChart);
 
+    boxes
+      .attr("transform", function(d, i) { return "translate(" +  0  + "," + i * (boxSize + margin.gap) + ")"; })
+      .call(boxChart);
 
-      // whole innerquartile box. data attached is just quartile values.
-  var q1q3Box = dataCanvas.selectAll('rect.q1q3box')
-      .data([[this.data.q1, this.data.q3]]);
-
-  q1q3Box.enter().append('rect')
-      .attr('class', 'box whole-box')
-      .attr('y', 0)
-      .attr('x', function(d) {console.log(d);
-          return x(d[0]);
-      })
-      .attr('height', 80)
-      .attr('width', function(d) {
-          return x(d[1]) - x(d[0]);
-      });
-
-
-            // add a median line median line.
-            var medianLine = dataCanvas.selectAll('line.median')
-                .data([this.data.median]);
- 
-            medianLine.enter().append('line')
-                .attr('class', 'median')
-                .attr('x1', x)
-                .attr('y1', 0)
-                .attr('x2', x)
-                .attr('y2', 80);
- 
-
-
-             var whiskerG = dataCanvas.selectAll('line.whisker')
-                .data([this.data.whisker1, this.data.whisker2])
-                .enter().append('g')
-                .attr('class', 'whisker');
- 
-            whiskerG.append('line')
-                .attr('class', 'whisker')
-                .attr('x1', function(d) {
-                    return x(d);
-                })
-                .attr('y1', 80 / 6)
-                .attr('x2', function(d) {
-                    return x(d);
-                })
-                .attr('y2', 80 * 5 / 6);
-
-
-
-
-
-    /*var path = dataCanvas.select(".line")
-      .datum(this.data)
-      .attr("d", line);*/
-/*
-    var totalLength = path.node().getTotalLength();
-
-    path
-      .attr("stroke-dasharray", totalLength + " " + totalLength)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-        .duration(1000)
-        .ease("linear")
-        .attr("stroke-dashoffset", 0);
-*/
+    boxes.exit().remove();
 
     // Append Axis.
     svg.select(".x.axis")
       .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition() 
       .call(xAxis);
-   /*   
-    svg.select(".x.axis .label")
-      .attr("x", _width)
-      .attr("y", -12)
-      .text('label-x');
-  */
-    /*svg.select(".y.axis")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition() 
-      .call(yAxis);*/
-   /*
-    svg.select(".y.axis .label")
-      .attr("y", 20)
-      .text('label-y');
-*/
-    console.log(this.$el);
+
   };
 
   this.destroy = function() {
@@ -242,4 +314,7 @@ var d3BoxChart = function(el, data) {
   this._init();
   this.setData(data);
 };
+
+
+
 

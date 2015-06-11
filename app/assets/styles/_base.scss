@@ -93,6 +93,7 @@
 
 
 
+
 .lineChart, .boxChart {
   width: 100%;
   min-height: 300px;
@@ -110,13 +111,14 @@
 
 
 
+.boxplot {
+  line {
+    stroke: red;
+  }
 
-
-.center-line, .median, .whisker {
-  stroke: red;
-}
-.box.whole-box {
-  fill: white;
-  stroke: red;
-  stroke-width: 1px;
+  .box {
+    fill: white;
+    stroke: red;
+    stroke-width: 1px;
+  }
 }

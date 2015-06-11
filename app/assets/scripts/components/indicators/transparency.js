@@ -3,7 +3,6 @@ var Reflux = require('reflux');
 var React = require('react/addons');
 var AppStore = require('../../stores/app_store');
 var LineChart = require('../shared/line_chart');
-var BoxChart = require('../shared/box_chart');
 
 
 var data = [
@@ -51,39 +50,6 @@ var data3 = [
   { date: 'dec', count: 58 },
 ];
 
-
-var theDat = {
-  min: 100,
-  max: 100099,
-  whisker1: 100,
-  q1: 16548,
-  median: 33019,
-  q3: 49566,
-  whisker2: 99093
-};
-
-var boxPlot = [
-  {
-    min: 100,
-    max: 100099,
-    whisker1: 100,
-    q1: 16548,
-    median: 33019,
-    q3: 49566,
-    whisker2: 99093
-  },
-  {
-    min: 5000,
-    max: 80000,
-    whisker1: 5500,
-    q1: 10000,
-    median: 22344,
-    q3: 28000,
-    whisker2: 77527
-  }
-];
-
-
 var IndTransparency = module.exports = React.createClass({
   mixins: [Reflux.listenTo(AppStore, "onAppStoreData")],
 
@@ -112,7 +78,7 @@ var IndTransparency = module.exports = React.createClass({
     }
     return (
       <div className="content">
-        <BoxChart data={boxPlot[0]}/>
+        {charts}
         <p className="desc">In government procurement, transparency plays a pivotal role in success as it enables competition and promotes accountability of those making purchasing decisions.</p>
       </div>
     );
