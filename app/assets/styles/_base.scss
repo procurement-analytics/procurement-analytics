@@ -94,12 +94,12 @@
 
 
 
-.lineChart, .boxChart, .barChart {
+.lineChart, .boxChart, .barChart, .scatterplotChart {
   width: 100%;
   min-height: 300px;
 }
 
-.line {
+.line, .trendline {
   fill: none;
   stroke: blue;
 }
