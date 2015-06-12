@@ -4,6 +4,7 @@ var Reflux = require('reflux');
 var AppStore = require('../../stores/app_store');
 
 var BoxChart = require('../shared/box_chart');
+var BarChart = require('../shared/bar_chart');
 
 var boxPlot1 = [
   {
@@ -74,6 +75,19 @@ var boxPlot2 = [
   },
 ];
 
+
+var barData = {
+  min: 10,
+  max: 150000,
+  buckets: [
+    200,
+    400,
+    380,
+    298,
+    180
+  ]
+};
+
 var IndCostEfficiency = module.exports = React.createClass({
   mixins: [Reflux.listenTo(AppStore, "onAppStoreData")],
 
@@ -117,8 +131,10 @@ var IndCostEfficiency = module.exports = React.createClass({
     }
     return (
       <div className="content">
-        <p className="desc">Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
+        <BarChart data={barData}/>
+        <hr />
         {data}
+        <p className="desc">Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
       </div>
     );
   }

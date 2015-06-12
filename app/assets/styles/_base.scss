@@ -94,7 +94,7 @@
 
 
 
-.lineChart, .boxChart {
+.lineChart, .boxChart, .barChart {
   width: 100%;
   min-height: 300px;
 }
@@ -122,3 +122,17 @@
     stroke-width: 1px;
   }
 }
+
+
+
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+

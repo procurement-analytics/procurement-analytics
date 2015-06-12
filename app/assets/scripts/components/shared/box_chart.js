@@ -255,8 +255,7 @@ var d3BoxChart = function(el, data) {
     svg.append("g")
       .attr("class", "x axis");
 
-    boxChart = this._box()
-      .width(_width);
+    boxChart = this._box();
 
   };
 
@@ -270,6 +269,7 @@ var d3BoxChart = function(el, data) {
     boxSize = (_height - n * margin.gap) / n;
 
     boxChart
+      .width(_width)
       .height(boxSize)
       .domain([min, max]);
 
