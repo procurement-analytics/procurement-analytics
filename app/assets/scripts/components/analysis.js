@@ -10,7 +10,7 @@ var IndQuality = require('./indicators/quality');
 var IndFairness = require('./indicators/fairness');
 var IndGeneral = require('./indicators/general');
 
-var Stats = module.exports = React.createClass({
+var Analysis = module.exports = React.createClass({
 
   getInitialState: function() {
     return {
@@ -19,12 +19,12 @@ var Stats = module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('Stats -- componentDidMount');
+    console.log('Analysis -- componentDidMount');
     // Fetch data first time.
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('Stats -- componentDidUpdate');
+    console.log('Analysis -- componentDidUpdate');
     // Fetch data on url update.
   },
 
