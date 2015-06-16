@@ -2,8 +2,8 @@
 var React = require('react/addons');
 var Reflux = require('reflux');
 
-var BoxChart = require('../shared/box_chart');
-var BarChart = require('../shared/bar_chart');
+var BoxChart = require('../charts/box_chart');
+var BarChart = require('../charts/bar_chart');
 
 var boxPlot1 = [
   {

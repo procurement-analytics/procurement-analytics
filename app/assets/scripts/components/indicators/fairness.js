@@ -1,7 +1,7 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
-var ScatterplotChart = require('../shared/scatterplot_chart');
+var ScatterplotChart = require('../charts/scatterplot_chart');
 
 
 var relationshipData = [

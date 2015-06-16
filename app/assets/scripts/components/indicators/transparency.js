@@ -1,7 +1,7 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
-var LineChart = require('../shared/line_chart');
+var LineChart = require('../charts/line_chart');
 
 
 var data = [
