@@ -1,9 +1,14 @@
 'use strict';
 var React = require('react/addons');
+var _ = require('lodash');
 var actions = require('../actions/actions');
 var AppStore = require('../stores/app_store');
 
 var Filters = module.exports = React.createClass({
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   getInitialState: function() {
     return {
@@ -17,15 +22,28 @@ var Filters = module.exports = React.createClass({
   },
 
   getGroupBttnClass: function(group) {
-    return "bttn bttn-m bttn-base-light" + (this.state.group == group ? ' active' : '');
+    var comparison = this.context.router.getCurrentParams().comparison;
+    if (!comparison) {
+      comparison = 'all';
+    }
+    return "bttn bttn-m bttn-base-light" + (comparison == group ? ' active' : '');
+  },
+
+  getGroupPath: function(group) {
+    var params = _.clone(this.context.router.getCurrentParams());
+    if (group == 'all') {
+      return this.context.router.makeHref('analysis_summary', params);
+    }
+    params.comparison = group;
+    return this.context.router.makeHref('analysis', params);
   },
 
   render: function() {
     return (
       <div className="bttn-group">
-        <button className={this.getGroupBttnClass('all')} onClick={this.onGroupingChange.bind(this, 'all')}>No Comparison</button>
-        <button className={this.getGroupBttnClass('contract_procedure')} onClick={this.onGroupingChange.bind(this, 'contract_procedure')}>Contract Procedure</button>
-        <button className={this.getGroupBttnClass('level_gov')} onClick={this.onGroupingChange.bind(this, 'level_gov')}>Level of Government</button>
+        <a href={this.getGroupPath('all')} className={this.getGroupBttnClass('all')}>No Comparison</a>
+        <a href={this.getGroupPath('contract_procedure')} className={this.getGroupBttnClass('contract_procedure')}>Contract Procedure</a>
+        <a href={this.getGroupPath('level_gov')} className={this.getGroupBttnClass('level_gov')}>Level of Government</a>
       </div>
     );
   }

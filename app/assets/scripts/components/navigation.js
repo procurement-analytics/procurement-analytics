@@ -7,12 +7,12 @@ var Navigation = module.exports = React.createClass({
   render: function() {
     return (
       <ul id="indicators">
-        <li><Link to="home">General</Link></li>
-        <li><Link to="timeliness">Timeliness</Link></li>
-        <li><Link to="cost_efficiency">Cost Efficiency</Link></li>
-        <li><Link to="fairness">Fairness</Link></li>
-        <li><Link to="transparency">Transparency</Link></li>
-        <li><Link to="quality">Quality</Link></li>
+        <li><Link to="analysis_summary" params={{indicator: 'summary'}}>General</Link></li>
+        <li><Link to="analysis_summary" params={{indicator: 'timeliness'}}>Timeliness</Link></li>
+        <li><Link to="analysis_summary" params={{indicator: 'cost_efficiency'}}>Cost Efficiency</Link></li>
+        <li><Link to="analysis_summary" params={{indicator: 'fairness'}}>Fairness</Link></li>
+        <li><Link to="analysis_summary" params={{indicator: 'transparency'}}>Transparency</Link></li>
+        <li><Link to="analysis_summary" params={{indicator: 'quality'}}>Quality</Link></li>
       </ul>
     );
   }
