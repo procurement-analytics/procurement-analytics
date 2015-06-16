@@ -89,3 +89,50 @@
     margin-top: 1rem;
   }
 }
+
+
+
+
+
+.lineChart, .boxChart, .barChart, .scatterplotChart {
+  width: 100%;
+  min-height: 300px;
+}
+
+.line, .trendline {
+  fill: none;
+  stroke: blue;
+}
+
+.charts .lineChart {
+    width: 50%;
+    float: left;
+}
+
+
+
+.boxplot {
+  line {
+    stroke: red;
+  }
+
+  .box {
+    fill: white;
+    stroke: red;
+    stroke-width: 1px;
+  }
+}
+
+
+
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
