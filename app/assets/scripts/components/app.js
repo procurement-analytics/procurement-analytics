@@ -16,12 +16,8 @@ var App = module.exports = React.createClass({
           <nav id="site-prime-nav" role="navigation">
             <div className="nav-block-prime">
               <ul>
-                <li><a href="#">About</a></li>
+                <li><a href="#/about">About</a></li>
               </ul>
-            </div>
-            <div className="nav-block-sec">
-              <Filters />
-              <Navigation />
             </div>
           </nav>
         </header>

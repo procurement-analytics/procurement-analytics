@@ -29,27 +29,37 @@ var Analysis = module.exports = React.createClass({
   },
 
   render: function() {
+    var indicator = null;
     switch(this.props.params.indicator) {
       case 'summary':
-        return <IndGeneral data={this.state.data} comparison={this.props.params.comparison}/>;
+        indicator = <IndGeneral data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'timeliness':
-        return <IndTimeliness data={this.state.data} comparison={this.props.params.comparison}/>;
+        indicator = <IndTimeliness data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'cost_efficiency':
-        return <IndCostEfficiency data={this.state.data} comparison={this.props.params.comparison}/>;
+        indicator = <IndCostEfficiency data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'fairness':
-        return <IndFairness data={this.state.data} comparison={this.props.params.comparison}/>;
+        indicator = <IndFairness data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'transparency':
-        return <IndTransparency data={this.state.data} comparison={this.props.params.comparison}/>;
+        indicator = <IndTransparency data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'quality':
-        return <IndQuality data={this.state.data} comparison={this.props.params.comparison}/>;
+        indicator = <IndQuality data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
-      default:
-        return <div>This is not what you are looking for</div>;
     }
+
+    return (
+      <section>
+        <header>
+          <h1>showing this thing</h1>
+        </header>
+        <div className="body">{indicator}</div>
+      </section>
+    );
+
+
   }
 });
