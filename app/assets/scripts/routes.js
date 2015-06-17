@@ -11,14 +11,17 @@ var Redirect = Router.Redirect;
 
 
 var App = require('./components/app');
+var About = require('./components/about');
 var Analysis = require('./components/analysis');
 
 var routes = module.exports = (
   <Route path="/" handler={App}>
 
+    <Route name="about" path="about" handler={About} />
+
     <Route path="analysis" handler={Analysis}>
         <Route name="analysis_summary" path=":indicator" handler={Analysis}>
-          <Route name="analysis" path=":comparison" handler={Analysis}/>
+          <Route name="analysis" path=":comparison" handler={Analysis} />
         </Route>
         <Redirect from="/analysis" to="analysis_summary" params={{indicator: 'summary'}} />
     </Route>
