@@ -1,8 +1,7 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
-var AppStore = require('../../stores/app_store');
-var LineChart = require('../shared/line_chart');
+var LineChart = require('../charts/line_chart');
 
 
 var data = [
@@ -51,31 +50,31 @@ var data3 = [
 ];
 
 var IndTransparency = module.exports = React.createClass({
-  mixins: [Reflux.listenTo(AppStore, "onAppStoreData")],
 
-  getInitialState: function() {
-    return {
-      group: AppStore.getGroup()
-    };
-  },
-
-  onAppStoreData: function(data) {
-    this.setState({group: data.group});
+  propTypes: {
+    data: React.PropTypes.array
   },
 
   render: function() {
+
+    // DEV NOTE: For now we're doing here a switch based on comparison.
+    // This should be done in the parent and the data passed through props.data
+
+    var comparison = this.props.comparison || 'all';
     var charts = null;
-    if (this.state.group == 'all') {
-      charts = <LineChart data={data}/>;
+    switch(comparison) {
+      case 'all':
+        charts = <LineChart data={data}/>;
+      break;
+      default:
+        charts = (
+          <div className="charts">
+            <LineChart data={data2}/>
+            <LineChart data={data3}/>
+          </div>
+        );
     }
-    else {
-      charts = (
-        <div className="charts">
-          <LineChart data={data2}/>
-          <LineChart data={data3}/>
-        </div>
-      )
-    }
+
     return (
       <div className="content">
         {charts}

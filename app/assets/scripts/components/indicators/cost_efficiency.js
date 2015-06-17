@@ -1,10 +1,9 @@
 'use strict';
 var React = require('react/addons');
 var Reflux = require('reflux');
-var AppStore = require('../../stores/app_store');
 
-var BoxChart = require('../shared/box_chart');
-var BarChart = require('../shared/bar_chart');
+var BoxChart = require('../charts/box_chart');
+var BarChart = require('../charts/bar_chart');
 
 var boxPlot1 = [
   {
@@ -89,21 +88,19 @@ var barData = {
 };
 
 var IndCostEfficiency = module.exports = React.createClass({
-  mixins: [Reflux.listenTo(AppStore, "onAppStoreData")],
 
-  getInitialState: function() {
-    return {
-      group: AppStore.getGroup()
-    };
-  },
-
-  onAppStoreData: function(data) {
-    this.setState({group: data.group});
+  propTypes: {
+    data: React.PropTypes.array
   },
 
   render: function() {
+
+    // DEV NOTE: For now we're doing here a switch based on comparison.
+    // This should be done in the parent and the data passed through props.data
+
     var data = null;
-    switch(this.state.group) {
+    var comparison = this.props.comparison || 'all';
+    switch(comparison) {
       case 'all':
         data = (
           <div>
