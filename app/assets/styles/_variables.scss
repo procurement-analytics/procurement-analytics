@@ -1,13 +1,8 @@
 // We use these as default colors throughout
-$base-color: #1f3b45;                   // Midnight Blue
-$primary-color: #439ab4;              	// Blue
-$secondary-color: #68c39f;          	  // Green
+$base-color: #001e25;                   // Swamp (Very Dark Blue)
+$primary-color: #1e896f;              	// Elm (Green)
+$secondary-color: #004358;          	  // Teal Blue
 // $tertiary-color: #ffffff;            // Undefined
-
-$alert-color: #ea4f54;                  // Red
-$success-color: $secondary-color;       // Green
-$warning-color: #f6d55f;                // Yellow
-$info-color: $primary-color;            // Blue
 
 // We use these to control various font styles
 // $base-* refers to the base styles when there's nothing else to override them.
