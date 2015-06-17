@@ -1,0 +1,11 @@
+// TYPE
+
+// MISC
+
+%tabular-text {
+  @include font-feature-settings("kern" 0, "liga" 0, "calt" 1, "dlig" 0, "pnum" 0, "tnum" 1, "onum" 0, "lnum" 1, "zero" 1);
+}
+
+b, strong {
+  font-weight: $base-font-bold;
+}

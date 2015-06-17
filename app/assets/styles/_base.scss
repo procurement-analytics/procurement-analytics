@@ -1,5 +1,28 @@
 // GLOBAL
 
+html {
+  @include box-sizing(border-box);
+}
+
+*, *:before, *:after, input[type="search"] {
+  @include box-sizing(inherit);
+}
+
+html, body {
+  height: 100%;
+  font-size: 100%;
+  line-height: 1.5;
+}
+
+body {
+  background: #fff;
+  color: $base-font-color;
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  font-style: $base-font-style;
+  min-width: $row-min-width;
+}
+
 #site-header {
   padding: 1rem 1rem 0 1rem;
 
