@@ -176,7 +176,8 @@ gulp.task('styles', function() {
     .pipe(sass({
       outputStyle: 'nested', // libsass doesn't support expanded yet
       precision: 10,
-      includePaths: require('node-bourbon').includePaths
+      includePaths: require('node-neat').includePaths,
+      onError: console.error.bind(console, 'Sass error:')
     }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist/assets/styles'));
