@@ -18,19 +18,20 @@ $code-font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 
 // We use these to make sure border radius matches unless we want it different.
 $global-radius: 0.25rem;
-$semi-radius: $global-radius/2;
 $global-rounded: 60rem;
 
 // We use this rgba for shadowing
-$brdr-rgba: rgba($base-color, 0.08); // border-like shadow
-$frame-rgba: rgba($base-color, 0.16);
+$pos-brdr-rgba: rgba($base-color, 0.08); // border-like shadow
+$neg-brdr-rgba: rgba(#fff, 0.08); // border-like shadow
+$pos-frame-rgba: rgba($base-color, 0.12);
 
 $flat-shadow-rgba: rgba($base-color, 0.08); // flat drop shadow
-$spread-shadow-rgba: rgba($base-color, 0.24); // spread drop shadow
+$spread-shadow-rgba: rgba($base-color, 0.16); // spread drop shadow
 
 // We use this set site row's min and max width
-$row-min-width: 768px;
+$row-min-width: 320px;
 $row-max-width: 1280px;
+$jeet-max-width: $row-max-width; // Reset Jeet max width
 
 // Media query ranges
 $xsmall-range: (0, 543px);
@@ -42,4 +43,5 @@ $xlarge-range: (1200px);
 $screen: "only screen";
 
 // Inner paddings
+$inner-pad: 1rem;
 $inner-pad: 1rem;

@@ -52,11 +52,21 @@ var Analysis = module.exports = React.createClass({
     }
 
     return (
-      <section>
-        <header>
-          <h1>showing this thing</h1>
+      <section className="page viz analytics">
+        <header className="page-header">
+          <div className="inner">
+            <div className="page-headline">
+              <h1 className="page-title">Showing a <a href="#">summary</a> of the procurement process for the <a href="#">full data set</a>.</h1>
+            </div>
+          </div>
         </header>
-        <div className="body">{indicator}</div>
+        <div className="page-body">
+          <div className="inner">
+            <div className="prose">
+              {indicator}
+            </div>
+          </div>
+        </div>
       </section>
     );
 
