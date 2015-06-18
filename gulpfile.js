@@ -144,7 +144,7 @@ gulp.task('scripts:build:watch', function() {
 gulp.task('watch', function() {
 
   gulp.watch('app/assets/styles/**/*.scss', function() {
-    runSequence('styles', browserReload);
+    runSequence('styles');
   });
 
   gulp.watch(['app/**/*', '!app/assets/styles/**', '!app/assets/scripts/**'], function() {
@@ -180,7 +180,8 @@ gulp.task('styles', function() {
       onError: console.error.bind(console, 'Sass error:')
     }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/assets/styles'));
+    .pipe(gulp.dest('dist/assets/styles'))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // Setup browserSync.
