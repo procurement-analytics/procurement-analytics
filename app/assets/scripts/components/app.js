@@ -15,7 +15,7 @@ var App = module.exports = React.createClass({
             </div>
             <nav id="site-prime-nav" role="navigation">
               <ul className="global-menu">
-                <li className="analysis"><Link to="analysis_summary" params={{dimension: 'summary'}} title="View the analysis"><span>Analysis</span></Link></li>
+                <li className="analysis"><Link to="analysis_root" title="View the analysis"><span>Analysis</span></Link></li>
                 <li className="about"><Link to="about" title="Learn more"><span>About</span></Link></li>
               </ul>
             </nav>

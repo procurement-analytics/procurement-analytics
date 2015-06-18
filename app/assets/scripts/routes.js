@@ -19,7 +19,7 @@ var routes = module.exports = (
 
     <Route name="about" path="about" handler={About} />
 
-    <Route path="analysis" handler={Analysis}>
+    <Route name="analysis_root" path="analysis" handler={Analysis}>
         <Route name="analysis_summary" path=":dimension" handler={Analysis}>
           <Route name="analysis" path=":comparison" handler={Analysis} />
         </Route>
