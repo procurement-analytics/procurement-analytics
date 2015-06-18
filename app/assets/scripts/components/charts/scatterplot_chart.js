@@ -118,17 +118,13 @@ var d3ScatterplotChart = function(el, data) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
-      .attr("class", "x axis");
-
-    svg.select(".x.axis")
+      .attr("class", "x axis")
       .append("text")
       .attr("class", "label")
       .attr("text-anchor", "end");
 
     svg.append("g")
-      .attr("class", "y axis");
-
-    svg.select(".y.axis")
+      .attr("class", "y axis")
       .append("text")
       .attr("class", "label")
       .attr("text-anchor", "middle");
