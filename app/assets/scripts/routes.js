@@ -20,12 +20,12 @@ var routes = module.exports = (
     <Route name="about" path="about" handler={About} />
 
     <Route path="analysis" handler={Analysis}>
-        <Route name="analysis_summary" path=":indicator" handler={Analysis}>
+        <Route name="analysis_summary" path=":dimension" handler={Analysis}>
           <Route name="analysis" path=":comparison" handler={Analysis} />
         </Route>
-        <Redirect from="/analysis" to="analysis_summary" params={{indicator: 'summary'}} />
+        <Redirect from="/analysis" to="analysis_summary" params={{dimension: 'summary'}} />
     </Route>
 
-    <Redirect from="/" to="analysis_summary" params={{indicator: 'summary'}} />
+    <Redirect from="/" to="analysis_summary" params={{dimension: 'summary'}} />
   </Route>
 );
