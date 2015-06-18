@@ -252,6 +252,14 @@ var NlForm = module.exports = React.createClass({
   },
 
   /**
+   * Lifecycle: Component was unmounted.
+   */
+  componentWillUnmount: function() {
+    console.log('NlForm -- componentWillUnmount');
+    document.removeEventListener('click', this.onOutsideClick, true);
+  },
+
+  /**
    * Lifecycle: Component was updated.
    */
   componentDidUpdate: function(/*prevProps, prevState*/) {

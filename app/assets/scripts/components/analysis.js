@@ -3,12 +3,10 @@ var React = require('react/addons');
 var Router = require('react-router');
 var _ = require('lodash');
 
-var IndTimeliness = require('./indicators/timeliness');
-var IndTransparency = require('./indicators/transparency');
-var IndCostEfficiency = require('./indicators/cost_efficiency');
-var IndQuality = require('./indicators/quality');
-var IndFairness = require('./indicators/fairness');
-var IndGeneral = require('./indicators/general');
+var DimTimeliness = require('./dimensions/timeliness');
+var DimCostEfficiency = require('./dimensions/cost_efficiency');
+var DimFairness = require('./dimensions/fairness');
+var DimGeneral = require('./dimensions/general');
 
 var NlForm = require('./nl_form');
 
@@ -36,15 +34,15 @@ var Analysis = module.exports = React.createClass({
     console.log('selection', selection);
 
     if (selection.comparison == 'all') {
-      return this.transitionTo('analysis_summary', {indicator: selection.indicator});
+      return this.transitionTo('analysis_summary', {dimension: selection.dimension});
     }
 
-    this.transitionTo('analysis', {indicator: selection.indicator, comparison: selection.comparison});
+    this.transitionTo('analysis', {dimension: selection.dimension, comparison: selection.comparison});
   },
 
   render: function() {
 
-    var nlformSentence = 'Showing {#indicatorArticle#} {%indicator%} of the procurement process {#comparisonArticle#} {%comparison%}.';
+    var nlformSentence = 'Showing {#dimensionArticle#} {%dimension%} of the procurement process {#comparisonArticle#} {%comparison%}.';
     var nlformFields = [
       {
         id: 'comparison',
@@ -76,7 +74,7 @@ var Analysis = module.exports = React.createClass({
       },
 
       {
-        id: 'indicator',
+        id: 'dimension',
         active: 'summary',
 
         opts: [
@@ -84,54 +82,55 @@ var Analysis = module.exports = React.createClass({
             key: 'summary',
             value: 'summary',
             tokens: {
-              'indicatorArticle': 'a'
+              'dimensionArticle': 'a'
             }
           },
           {
             key: 'timeliness',
             value: 'timeliness',
             tokens: {
-              'indicatorArticle': ''
+              'dimensionArticle': ''
             }
           },
           {
             key: 'cost-efficiency',
             value: 'cost efficiency',
             tokens: {
-              'indicatorArticle': ''
+              'dimensionArticle': ''
+            }
+          },
+          {
+            key: 'fairness',
+            value: 'fairness',
+            tokens: {
+              'dimensionArticle': ''
             }
           }
         ]
       }
     ];
 
-    var routerIndicator = this.props.params.indicator;
+    var routerDimension = this.props.params.dimension;
     var routerComparison = this.props.params.comparison || 'all';
 
     // Update values.
-    _.find(nlformFields, {id: 'indicator'}).active = routerIndicator;
+    _.find(nlformFields, {id: 'dimension'}).active = routerDimension;
     _.find(nlformFields, {id: 'comparison'}).active = routerComparison;
 
-    var indicator = null;
+    var dimension = null;
     
-    switch(this.props.params.indicator) {
+    switch(this.props.params.dimension) {
       case 'summary':
-        indicator = <IndGeneral data={this.state.data} comparison={this.props.params.comparison}/>;
+        dimension = <DimGeneral data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'timeliness':
-        indicator = <IndTimeliness data={this.state.data} comparison={this.props.params.comparison}/>;
+        dimension = <DimTimeliness data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'cost-efficiency':
-        indicator = <IndCostEfficiency data={this.state.data} comparison={this.props.params.comparison}/>;
+        dimension = <DimCostEfficiency data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
       case 'fairness':
-        indicator = <IndFairness data={this.state.data} comparison={this.props.params.comparison}/>;
-      break;
-      case 'transparency':
-        indicator = <IndTransparency data={this.state.data} comparison={this.props.params.comparison}/>;
-      break;
-      case 'quality':
-        indicator = <IndQuality data={this.state.data} comparison={this.props.params.comparison}/>;
+        dimension = <DimFairness data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
     }
 
@@ -147,7 +146,7 @@ var Analysis = module.exports = React.createClass({
         <div className="page-body">
           <div className="inner">
             <div className="prose">
-              {indicator}
+              {dimension}
             </div>
           </div>
         </div>
