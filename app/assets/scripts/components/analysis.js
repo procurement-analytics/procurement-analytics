@@ -4,9 +4,7 @@ var Router = require('react-router');
 var _ = require('lodash');
 
 var DimTimeliness = require('./dimensions/timeliness');
-var DimTransparency = require('./dimensions/transparency');
 var DimCostEfficiency = require('./dimensions/cost_efficiency');
-var DimQuality = require('./dimensions/quality');
 var DimFairness = require('./dimensions/fairness');
 var DimGeneral = require('./dimensions/general');
 
@@ -100,6 +98,13 @@ var Analysis = module.exports = React.createClass({
             tokens: {
               'dimensionArticle': ''
             }
+          },
+          {
+            key: 'fairness',
+            value: 'fairness',
+            tokens: {
+              'dimensionArticle': ''
+            }
           }
         ]
       }
@@ -126,12 +131,6 @@ var Analysis = module.exports = React.createClass({
       break;
       case 'fairness':
         dimension = <DimFairness data={this.state.data} comparison={this.props.params.comparison}/>;
-      break;
-      case 'transparency':
-        dimension = <DimTransparency data={this.state.data} comparison={this.props.params.comparison}/>;
-      break;
-      case 'quality':
-        dimension = <DimQuality data={this.state.data} comparison={this.props.params.comparison}/>;
       break;
     }
 
