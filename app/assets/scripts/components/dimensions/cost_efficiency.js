@@ -76,8 +76,16 @@ var boxPlot2 = [
 
 
 var barData = {
-  min: 10,
-  max: 150000,
+  x: {
+    min: 30,
+    max: 150000,
+    label: 'custom x label'
+  },
+  y: {
+    min: 160,
+    max: 400,
+    label: 'another custom y label'
+  },
   buckets: [
     200,
     400,

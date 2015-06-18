@@ -101,26 +101,35 @@ var d3BarChart = function(el, data) {
     svg.append("g")
       .attr("class", "x axis");
 
+    svg.select(".x.axis")
+      .append("text")
+      .attr("class", "label")
+      .attr("text-anchor", "end");
+
     svg.append("g")
       .attr("class", "y axis");
 
+    svg.select(".y.axis")
+      .append("text")
+      .attr("class", "label")
+      .attr("text-anchor", "middle");
   };
 
   this.update = function() {
     this._calcSize();
 
     // Create the buckets.
-    var buckets = d3.range(this.data.min, this.data.max, (this.data.max - this.data.min) / this.data.buckets.length);
+    var buckets = d3.range(this.data.x.min, this.data.x.max, (this.data.x.max - this.data.x.min) / this.data.buckets.length);
 
     xBar.rangeBands([0, _width])
       .domain(buckets);
 
     // For the range points we need the max value as well.
     x.rangePoints([0, _width])
-      .domain(buckets.concat([this.data.max]));
+      .domain(buckets.concat([this.data.x.max]));
 
     y.range([_height, 0])
-      .domain([d3.min(this.data.buckets) - 20, d3.max(this.data.buckets) + 20]);
+      .domain([this.data.y.min, this.data.y.max]);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -134,7 +143,7 @@ var d3BarChart = function(el, data) {
 
     var barG = dataCanvas.selectAll(".bar")
       .data(data);
-    
+
     barG.enter()
       .append("g")
         .attr("class", "bar")
@@ -153,22 +162,29 @@ var d3BarChart = function(el, data) {
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
-   /*   
-    svg.select(".x.axis .label")
-      .attr("x", _width)
-      .attr("y", -12)
-      .text('label-x');
-  */
+
+    if (this.data.x.label) {
+      svg.select(".x.axis .label")
+        .text(this.data.x.label)
+        .transition()
+        .attr("x", _width + margin.right)
+        .attr("y", 30);
+    }
+
     svg.select(".y.axis")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
       .call(yAxis);
-   /*
-    svg.select(".y.axis .label")
-      .attr("y", 20)
-      .text('label-y');
-*/
+
+    if (this.data.y.label) {
+      svg.select(".y.axis .label")
+        .text(this.data.y.label)
+        .transition()
+        .attr("x", 0)
+        .attr("y", -15);
+    }
+
     console.log(this.$el);
   };
 
