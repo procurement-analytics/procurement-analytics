@@ -136,11 +136,21 @@ var Analysis = module.exports = React.createClass({
     }
 
     return (
-      <section>
-        <header>
-          <h1><NlForm sentence={nlformSentence} fields={nlformFields} onNlSelect={this.onNlSelect} /></h1>
+      <section className="page viz analytics">
+        <header className="page-header">
+          <div className="inner">
+            <div className="page-headline">
+              <h1 className="page-title"><NlForm sentence={nlformSentence} fields={nlformFields} onNlSelect={this.onNlSelect} /></h1>
+            </div>
+          </div>
         </header>
-        <div className="body">{indicator}</div>
+        <div className="page-body">
+          <div className="inner">
+            <div className="prose">
+              {indicator}
+            </div>
+          </div>
+        </div>
       </section>
     );
   }

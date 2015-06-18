@@ -3,6 +3,7 @@
 
 // Libs
 @import "bourbon";
+@import "neat";
 
 // Reset and normalize
 @import "normalize";
@@ -15,6 +16,9 @@
 @import "mixins";
 
 // Custom styles
+@import "fonts";
+@import "icons";
 @import "buttons";
+@import "type";
 @import "base";
 @import "helpers";

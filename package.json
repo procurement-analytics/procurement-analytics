@@ -1,5 +1,5 @@
 {
-  "name": "oam-browser",
+  "name": "procurement-dashboards",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -20,7 +20,8 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
-    "node-bourbon": "^4.2.2",
+    "node-bourbon": "^4.2.3",
+    "node-neat": "^1.7.2",
     "node-notifier": "^4.2.1",
     "reactify": "^0.15.2",
     "run-sequence": "^1.0.2",
@@ -32,6 +33,7 @@
     "d3": "^3.5.5",
     "jquery": "^2.1.4",
     "lodash": "^3.8.0",
+    "node-bourbon": "^4.2.3",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "reflux": "^0.2.7"
