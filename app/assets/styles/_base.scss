@@ -164,6 +164,33 @@ a:active{
 
 
 
+
+
+.nl-select {
+  background: $primary-color;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  @include transform(translate(-1rem, -1rem));
+
+  li {
+    a {
+      display: block;
+      padding: 0.5rem 5rem 0.5rem 1rem;
+    }
+
+    &.active a:before {
+      @extend .icn20-check;
+      position: absolute;
+      z-index: 10;
+      right: 1rem;
+    }
+  }
+}
+
+
+
+
+
+
 // CLEAN ME
 
 #indicators {
