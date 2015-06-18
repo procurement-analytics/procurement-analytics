@@ -83,7 +83,7 @@ var d3BoxChart = function(el, data) {
   /**
    * Returns a function that is going to be used by d3 to draw each one of
    * the boxes.
-   * 
+   *
    * @return function
    *
    * Code highly borrowed from:
@@ -97,7 +97,7 @@ var d3BoxChart = function(el, data) {
     var domain = null;
     var value = Number;
     var tickFormat = null;
-   
+
     function box(g) {
       g.each(function(d, i) {
         var g = d3.select(this).attr('class', 'boxplot');
@@ -183,7 +183,7 @@ var d3BoxChart = function(el, data) {
           .attr('y2', height);
         });
       }
-   
+
     box.width = function(x) {
       if (!arguments.length) {
         return width;
@@ -253,7 +253,10 @@ var d3BoxChart = function(el, data) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
-      .attr("class", "x axis");
+      .attr("class", "x axis")
+      .append("text")
+      .attr("class", "label")
+      .attr("text-anchor", "end");
 
     boxChart = this._box();
 
@@ -262,9 +265,9 @@ var d3BoxChart = function(el, data) {
   this.update = function() {
     this._calcSize();
 
-    var n = this.data.length;
-    min = d3.min(this.data, function(v) { return v.min; });
-    max = d3.max(this.data, function(v) { return v.max; });
+    var n = this.data.plots.length;
+    min = this.data.x.min;
+    max = this.data.x.max;
     // Compute the size of each box.
     boxSize = (_height - n * margin.gap) / n;
 
@@ -285,7 +288,7 @@ var d3BoxChart = function(el, data) {
       .attr('height', _height);
 
     var boxes = dataCanvas.selectAll("g.boxplot")
-      .data(this.data);
+      .data(this.data.plots);
 
     boxes.enter().append('g')
       .attr("transform", function(d, i) { return "translate(" +  0  + "," + i * (boxSize + margin.gap) + ")"; })
@@ -299,8 +302,16 @@ var d3BoxChart = function(el, data) {
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
+
+    if (this.data.x.label) {
+      svg.select(".x.axis .label")
+        .text(this.data.x.label)
+        .transition()
+        .attr("x", _width + margin.right)
+        .attr("y", 30);
+    }
 
   };
 
@@ -314,7 +325,3 @@ var d3BoxChart = function(el, data) {
   this._init();
   this.setData(data);
 };
-
-
-
-
