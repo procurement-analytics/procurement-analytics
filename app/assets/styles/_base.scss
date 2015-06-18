@@ -47,6 +47,32 @@ a:active{
   @include transform(translate(0, 1px));
 }
 
+// Rows
+
+
+// Rows
+
+.row {
+  @extend .clearfix;
+  padding-left: $inner-pad;
+  padding-right: $inner-pad;
+  @include media(small-up) {
+    padding-left: $inner-pad*2;
+    padding-right: $inner-pad*2;
+  }
+  @include media(large-up) {
+    padding-left: $inner-pad*4;
+    padding-right: $inner-pad*4;
+  }
+}
+
+.centered {
+  max-width: $row-max-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 // SITE CANVAS
 
 #site-canvas {
@@ -67,17 +93,29 @@ a:active{
   a, a:visited {
     color: inherit;
   }
+  > .inner {
+    @extend .row;
+    padding-right: 0;
+  }
 }
 
 #site-headline {
   float: left;
-  padding: 1rem;
+  padding: 0.75rem 0;
+  width: 10rem;
+  @include media(small-up) {
+    width: auto;
+    padding: 1rem 0;
+  }
 }
 
 #site-title {
-  line-height: 2rem;
+  line-height: 1.25rem;
   text-transform: uppercase;
   margin-bottom: 0;
+  @include media(small-up) {
+    line-height: 2rem;
+  }
 }
 
 #site-prime-nav {
@@ -86,7 +124,7 @@ a:active{
 
 .global-menu {
   float: left;
-  box-shadow: inset 1px 0 0 0 rgba(#fff, 0.12);
+  box-shadow: inset 1px 0 0 0 rgba(#fff, 0.12), inset -1px 0 0 0 rgba(#fff, 0.12);
   li {
     float: left;
   }
@@ -122,10 +160,20 @@ a:active{
 
 .page-header {
   background: $primary-color;
-  padding: 6rem 1rem 2rem 1rem;
   color: #fff;
   @extend .antialiased;
   @extend .clearfix;
+  > .inner {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+    @extend .row;
+  }
+  @include media(medium-up) {
+    > .inner {
+      padding-top: 7rem;
+      padding-bottom: 3rem;
+    }
+  }
 }
 
 .page-headline {
@@ -146,17 +194,26 @@ a:active{
 
 .page-body {
   > .inner {
-    padding: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    @extend .row;
+    @extend .centered;
+  }
+  @include media(medium-up) {
+     > .inner {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
   }
 }
 
 .page .prose {
   @include span-columns(12 of 12);
-  @include media(small-up) {
+  @include media(medium-up) {
     @include span-columns(10 of 12);
     @include shift(1);
   }
-  @include media(large-up) {
+  @include media(xlarge-up) {
     @include span-columns(8 of 12);
     @include shift(2);
   }
