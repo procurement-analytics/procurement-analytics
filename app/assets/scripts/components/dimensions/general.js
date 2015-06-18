@@ -64,21 +64,20 @@ var IndGeneral = module.exports = React.createClass({
     var charts = null;
     switch(comparison) {
       case 'all':
-        charts = <LineChart data={data}/>;
+        charts = <div className="chart"><LineChart data={data}/></div>;
       break;
       default:
-        charts = (
-          <div className="charts">
-            <LineChart data={data2}/>
-            <LineChart data={data3}/>
-          </div>
-        );
+        charts = [
+          <div className="chart"><LineChart data={data2}/></div>,
+          <div className="chart"><LineChart data={data3}/></div>
+        ];
     }
 
     return (
       <div className="content">
-        <p className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in. Ut sodales pellentesque tempus. Nulla ac velit tempor, vestibulum lectus et, dapibus quam. Donec molestie cursus enim, quis eleifend lectus mollis at. Integer nec augue eleifend velit tempus ullamcorper eget ac ex. Integer finibus eget ex eu pulvinar. Mauris id nulla dui. Nulla fringilla tellus vitae purus tempus, id fermentum nisl maximus.</p>
 
+        <div className="intro">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in. Ut sodales pellentesque tempus. Nulla ac velit tempor, vestibulum lectus et, dapibus quam. Donec molestie cursus enim, quis eleifend lectus mollis at. Integer nec augue eleifend velit tempus ullamcorper eget ac ex. Integer finibus eget ex eu pulvinar. Mauris id nulla dui. Nulla fringilla tellus vitae purus tempus, id fermentum nisl maximus.</p>
           <ul>
             <li><strong>total procurement procedures:</strong> 520.167</li>
             <li><strong>total amount:</strong> $4.239.000.120.758</li>
@@ -86,10 +85,10 @@ var IndGeneral = module.exports = React.createClass({
             <li><strong>most active supplier:</strong> INGENIERIA Y SERVICIOS ELECTROMECANICOS J &amp; M SA</li>
             <li><strong>most active purchasing unit:</strong> API-Coatzacoalcos</li>
           </ul>
+        </div>
 
-          <div>
-            {charts}
-          </div>
+        {charts}
+
       </div>
     );
   }

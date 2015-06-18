@@ -144,11 +144,7 @@ var Analysis = module.exports = React.createClass({
           </div>
         </header>
         <div className="page-body">
-          <div className="inner">
-            <div className="prose">
-              {dimension}
-            </div>
-          </div>
+          {dimension}
         </div>
       </section>
     );
