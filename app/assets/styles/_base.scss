@@ -179,6 +179,7 @@ a:active{
 .page-headline {
   float: left;
   max-width: 40rem;
+  @include animation(fade-in 0.64s ease 0s);
 }
 
 .page-title {
@@ -401,4 +402,15 @@ a:active{
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+// ANIMATION
+
+@include keyframes(fade-in) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
