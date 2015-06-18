@@ -276,7 +276,8 @@ a:active{
   @extend .antialiased;
   font-size: 1.25rem;
   padding: 1rem 0;
-  min-width: 16rem;
+  min-width: 18rem;
+  box-shadow: 4px 4px 0 0 rgba($base-color, 0.08);
 
   .nl-curtain-appear & {
     @include transform(translate(0, 0) scale(0));
@@ -294,7 +295,7 @@ a:active{
     color: #fff;
     a {
       display: block;
-      padding: 0.5rem 2rem 0.5rem 1.5rem;
+      padding: 0.5rem 3.5rem 0.5rem 1.5rem;
       color: inherit;
       transition: all 0.24s ease 0s;
     }
@@ -311,12 +312,13 @@ a:active{
         position: absolute;
         z-index: 10;
         right: 1.5rem;
+        font-size: 1.25rem;
       }
     }
   }
   @include media(medium-down) {
     position: static !important;
-    @include transform-origin(0 0 0);
+    @include transform-origin(50% 50% 0);
     @include transform(translate(0, 0) scale(1));
     .nl-curtain-appear & {
       @include transform(translate(0, 0) scale(0));
@@ -326,6 +328,13 @@ a:active{
     }
     .nl-curtain-leave-active {
       @include transform(translate(0, 0) scale(0));
+    }
+  }
+
+  @include media(medium-up) {
+    font-size: 1.5rem;
+    .active a:before {
+      margin-top: 0.125rem;
     }
   }
 }
