@@ -5,11 +5,89 @@ var _ = require('lodash');
 
 var NlForm = module.exports = React.createClass({
 
-  // Regular expressions
+  // How the NlForm works:
+  // The component expects a sentence to be passed to it. Something like:
+  // 
+  // {%name%} did it! {#pronoun#} put it {#article#} the {%place%}.
+  // 
+  // {%name%} and {%place%} are fields. These are going to be converted to links
+  // to provide the interactivity. On click the option box will pop up and an
+  // option can be selected.
+  // 
+  // {#pronoun#} and {#article#} are replacement tokens, meaning that they may
+  // change based on one of the fields.
+  // For example, if field {%name%} is Daniel, {#pronoun#} will have to be "He".
+  // but if {%name%} is Kate, {#pronoun#} will have to be "She".
+  // 
+  // To define the behavior of these fields you pass a configuration array to
+  // the component. Each element of the array is a field definition.
+  // The config array for the previous example would be:
+  // [
+  //   {
+  //    id: 'name',               // Field name as defined in the token.
+  //    active: 'daniel',         // Key of the active option.
+  //
+  //    opts: [                   // Available options.
+  //      {
+  //        key: 'daniel',        // Option key will be returned when selected.
+  //        value: 'Daniel',      // Presentation value.
+  //        tokens: {             // Replacement tokens. Keyed by the token name.
+  //          'pronoun': 'He'
+  //        }
+  //      },
+  //      {
+  //        key: 'kate',
+  //        value: 'Kate',
+  //        tokens: {
+  //          'pronoun': 'She'
+  //        }
+  //      },
+  //    ]
+  //   },
+  //   {
+  //    id: 'place',             // Field name as defined in the token.
+  //    active: 'table',         // Key of the active option.
+  //
+  //    opts: [                  // Available options.
+  //      {
+  //        key: 'table',        // Option key will be returned when selected.
+  //        value: 'table',      // Presentation value.
+  //        tokens: {            // Replacement tokens. Keyed by the token name.
+  //          'article': 'on'
+  //        }
+  //      },
+  //      {
+  //        key: 'drawer',
+  //        value: 'drawer',
+  //        tokens: {
+  //          'article': 'in'
+  //        }
+  //      },
+  //    ]
+  //   }
+  // ]
+  // 
+  // When an option is selected the parent is notified through
+  // the this.props.onNlSelect() function passing an object containing the
+  // values for all the fields.
+  // For the example, said object would be:
+  // {
+  //  name: 'daniel',
+  //  place: 'table'
+  // }
+  // 
+
+  // Regular expressions.
   fieldsRgx: new RegExp('{%([a-zA-Z0-9-_]+)%}', 'g'),
   fieldValidateRgx: new RegExp('{%([a-zA-Z0-9-_]+)%}'),
   splitterRgx: new RegExp('({(?:%|#)[a-zA-Z0-9-_]+(?:%|#)})'),
 
+
+  propTypes: {
+    sentence: React.PropTypes.string.isRequired,
+    fields: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    onNlSelect: React.PropTypes.func.isRequired
+  },
 
   getInitialState: function() {
     return {
@@ -17,6 +95,14 @@ var NlForm = module.exports = React.createClass({
     }
   },
 
+  /**
+   * Positions the field options based on the trigger word.
+   * Each element with the data-hook*="nl-position", will be positioned
+   * according the link (trigger word) which href is the element's id:
+   *
+   * <ul id="field1" data-hook="nl-position">
+   * <a href="#field1"></a>
+   */
   positionFieldOptions: function() {
     var fieldOptions = Array.prototype.slice.call(this.getDOMNode().querySelectorAll('[data-hook*="nl-position"]'));
 
@@ -31,6 +117,12 @@ var NlForm = module.exports = React.createClass({
     }.bind(this));
   },
 
+  /**
+   * Listener: Document click
+   * If the click does not originate from one of the fields or the field
+   * options, the field options are closed.
+   * The data-hook to define no click areas is "stop-doc-click"
+   */
   onOutsideClick: function(e) {
     var noClickAreas = Array.prototype.slice.call(this.getDOMNode().querySelectorAll('[data-hook*="stop-doc-click"]'));
     var prevent = false;
@@ -51,12 +143,23 @@ var NlForm = module.exports = React.createClass({
     }
   },
 
+  /**
+   * Listener: Field click (word)
+   * Sets the clicked fields as open, closing the other in the process.
+   */
   nlFieldClick: function(field, e) {
     e.preventDefault();
     console.log(field);
     this.setState({openFields: [field]});
   },
 
+  /**
+   * Listener: Field option click.
+   * Builds the selection object:
+   * { field_name: selected_option, ... }
+   * and passes it to the parent through the this.props.onNlSelect()
+   * Closes all the fields.
+   */
   nlFieldOptSelect: function(field, opt) {
     var selection = {};
     _.forEach(this.props.fields, function(f) {
@@ -69,6 +172,12 @@ var NlForm = module.exports = React.createClass({
     this.setState({openFields: []});
   },
 
+  /**
+   * Renders the sentence replacing the fields with the correct value.
+   * 
+   * @return Array
+   *   Array of React components and strings. 
+   */
   renderNlSentence: function() {
     var sentence = this.props.sentence;
     var sentenceParts = sentence.split(this.splitterRgx);
@@ -111,6 +220,11 @@ var NlForm = module.exports = React.createClass({
     }.bind(this));
   },
 
+  /**
+   * Renders the field options using <NlFieldOptions>
+   * 
+   * @return Array NlFieldOptions
+   */
   renderNlFieldOptions: function() {
     var fields = this.state.openFields.map(function(fieldName) {
       return _.find(this.props.fields, {id: fieldName});
@@ -122,13 +236,18 @@ var NlForm = module.exports = React.createClass({
     }.bind(this));
   },
 
+  /**
+   * Lifecycle: Component was mounted.
+   */
   componentDidMount: function() {
     console.log('NlForm -- componentDidMount');
     this.positionFieldOptions();
-
     document.addEventListener('click', this.onOutsideClick, true);
   },
 
+  /**
+   * Lifecycle: Component was updated.
+   */
   componentDidUpdate: function(/*prevProps, prevState*/) {
     console.log('NlForm -- componentDidUpdate');
     this.positionFieldOptions();
@@ -146,10 +265,21 @@ var NlForm = module.exports = React.createClass({
     );
   },
 
+  /**
+   * Check whether the given "parent" is the "child" or one of
+   * it's ancestors.
+   * 
+   * @return boolean
+   */
   isParentOrSelf: function(parent, child) {
     return child == parent ? true : this.isParent(parent, child);
   },
 
+  /**
+   * Check whether the given "parent" is one of "child"'s ancestors.
+   * 
+   * @return boolean
+   */
   isParent: function(parent, child) {
     var node = child.parentNode;
     while (node != null) {
@@ -162,7 +292,9 @@ var NlForm = module.exports = React.createClass({
   }
 });
 
-
+/**
+ * React component to render the field option boxes.
+ */
 var NlFieldOptions = React.createClass({
   onOptionClick: function(field, option, e) {
     e.preventDefault();
