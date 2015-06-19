@@ -106,11 +106,7 @@ var Analysis = module.exports = React.createClass({
           </div>
         </header>
         <div className="page-body">
-          <div className="inner">
-            <div className="prose">
-              {Dimension ? <Dimension loading={this.state.loading} data={this.state.data} comparison={this.props.params.comparison}/> : null}
-            </div>
-          </div>
+          {Dimension ? <Dimension loading={this.state.loading} data={this.state.data} comparison={this.props.params.comparison}/> : null}
         </div>
       </section>
     );

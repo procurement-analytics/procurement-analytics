@@ -159,10 +159,21 @@ a:active{
 }
 
 .page-header {
+  position: relative;
   background: $primary-color;
   color: #fff;
   @extend .antialiased;
   @extend .clearfix;
+  &:after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    z-index: 1;
+    background: rgba($base-color, 0.08);
+    content: "";
+  }
   > .inner {
     padding-top: 6rem;
     padding-bottom: 2rem;
@@ -179,6 +190,7 @@ a:active{
 .page-headline {
   float: left;
   max-width: 40rem;
+  @include animation(fade-in 0.64s ease 0s);
 }
 
 .page-title {
@@ -207,7 +219,7 @@ a:active{
   }
 }
 
-.page .prose {
+.page-body > .inner .prose {
   @include span-columns(12 of 12);
   @include media(medium-up) {
     @include span-columns(10 of 12);
@@ -218,6 +230,94 @@ a:active{
     @include shift(2);
   }
 }
+
+.content {
+  @include display(flex);
+  @include flex-direction(row);
+  @include flex-wrap(wrap);
+  box-shadow: inset 0 1px 0 0 rgba($base-color, 0.08);
+}
+
+.content > * {
+  box-shadow: inset -1px -1px 0 0 rgba($base-color, 0.08);
+  @extend .clearfix;
+  padding: $inner-pad;
+  @include media(small-up) {
+    padding: $inner-pad*2;
+  }
+  @include media(large-up) {
+    padding: $inner-pad*4;
+  }
+}
+
+.content > * {
+  width: 100%;
+  @include media(small-up) {
+    width: calc(100% / 2);
+  }
+  @include media(large-up) {
+    width: calc(100% / 3);
+  }
+}
+
+// .intro {
+//   width: calc(100% / 3);
+// }
+
+// .chart {
+//   width: calc(100% / 3 * 2);
+// }
+
+// TILE
+
+.intro {
+  background: tint($base-color, 44%);
+}
+
+.tile-title {
+  display: inline-block;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem -1rem;
+  background: $base-font-color;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  @extend .antialiased;
+  @include media(small-up) {
+    margin-left: -$inner-pad*2;
+    padding-left: $inner-pad*2;
+  }
+  @include media(large-up) {
+    margin-left: -$inner-pad*4;
+    padding-left: $inner-pad*4;
+  }
+}
+
+.tile-body {
+  // @extend .prose;
+  color: tint($base-color, 44%);
+  p {
+    margin-bottom: 1.5rem;
+  }
+  .intro & {
+    color: #fff;
+  }
+  .facts-list {
+    dt {
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin: 0;
+      color: $base-font-color;
+      font-weight: $base-font-bold;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    dd {
+      margin-bottom: 0.75rem;
+    }
+  }
+}
+
 
 
 // INDICATORS SELECTION AKA NL SELECT
@@ -276,7 +376,8 @@ a:active{
   @extend .antialiased;
   font-size: 1.25rem;
   padding: 1rem 0;
-  min-width: 16rem;
+  min-width: 18rem;
+  box-shadow: 4px 4px 0 0 rgba($base-color, 0.08);
 
   .nl-curtain-appear & {
     @include transform(translate(0, 0) scale(0));
@@ -294,7 +395,7 @@ a:active{
     color: #fff;
     a {
       display: block;
-      padding: 0.5rem 2rem 0.5rem 1.5rem;
+      padding: 0.5rem 3.5rem 0.5rem 1.5rem;
       color: inherit;
       transition: all 0.24s ease 0s;
     }
@@ -311,12 +412,13 @@ a:active{
         position: absolute;
         z-index: 10;
         right: 1.5rem;
+        font-size: 1.25rem;
       }
     }
   }
   @include media(medium-down) {
     position: static !important;
-    @include transform-origin(0 0 0);
+    @include transform-origin(50% 50% 0);
     @include transform(translate(0, 0) scale(1));
     .nl-curtain-appear & {
       @include transform(translate(0, 0) scale(0));
@@ -326,6 +428,13 @@ a:active{
     }
     .nl-curtain-leave-active {
       @include transform(translate(0, 0) scale(0));
+    }
+  }
+
+  @include media(medium-up) {
+    font-size: 1.5rem;
+    .active a:before {
+      margin-top: 0.125rem;
     }
   }
 }
@@ -392,4 +501,15 @@ a:active{
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+// ANIMATION
+
+@include keyframes(fade-in) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
