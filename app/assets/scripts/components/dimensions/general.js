@@ -1,6 +1,7 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
+var _ = require('lodash');
 var LineChart = require('../charts/line_chart');
 
 var data = {
@@ -74,36 +75,49 @@ var data3 = {
 var IndGeneral = module.exports = React.createClass({
 
   propTypes: {
-    data: React.PropTypes.array
+    data: React.PropTypes.object,
+    x: React.PropTypes.object,
+    y: React.PropTypes.object
   },
 
   render: function() {
+    var ldn = this.props.loading;
+    if (!ldn) {
+      // Get the charts we want from the data
+      var amountChartData = _.find(this.props.data.charts, {id: 'amount-time'});
+      var contractsChartData = _.find(this.props.data.charts, {id: 'contracts-time'});
 
-    // DEV NOTE: For now we're doing here a switch based on comparison.
-    // This should be done in the parent and the data passed through props.data
+      // Check how many "mini-charts" we need to build for each chart.
+      // Because these charts are of the type that spawn "mini-charts".
 
-    var comparison = this.props.comparison || 'all';
-    var charts = null;
-
-    if (this.props.loading) {
-      charts = 'Loading...';
+      ////// Chart contracts over time
+      var contractsCharts = contractsChartData.data.map(function(o, i) {
+        return <div className="chart-item" key={o._id + i}><LineChart data={o.data} x={contractsChartData.x}  y={contractsChartData.y}/></div>;
+      });
+      ////// Chart amount over time
+      var amountCharts = amountChartData.data.map(function(o, i) {
+        return <div className="chart-item" key={o._id + i}><LineChart data={o.data} x={amountChartData.x}  y={amountChartData.y}/></div>;
+      });
     }
-    else {
-      switch(comparison) {
-        case 'all':
-          charts = <div className="chart"><LineChart data={data}/></div>;
-        break;
-        default:
-          charts = [
-            <div className="chart"><LineChart data={data2}/></div>,
-            <div className="chart"><LineChart data={data3}/></div>
-          ];
-      }
-    }
+
+    // Build the tile for this contractsCharts.
+    var contractsTile = (
+      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
+        {ldn ? null :<div className="tile-body">{contractsCharts}</div>}
+      </section>
+    );
+
+    // Build the tile for this amountCharts.
+    var amountTile = (
+      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
+        {ldn ? null :<div className="tile-body">{amountCharts}</div>}
+      </section>
+    );
 
     return (
       <div className="content">
-
         <section className="tile intro">
           <h1 className="tile-title">Overview</h1>
           <div className="tile-body">
@@ -130,10 +144,10 @@ var IndGeneral = module.exports = React.createClass({
           </div>
         </section>
 
-        {charts}
+        {contractsTile}
+        {amountTile}
 
       </div>
     );
   }
 });
-

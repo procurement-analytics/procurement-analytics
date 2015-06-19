@@ -25,7 +25,7 @@ var Analysis = module.exports = React.createClass({
   getInitialState: function() {
     return {
       data: {},
-      loading: false
+      loading: true
     }
   },
 

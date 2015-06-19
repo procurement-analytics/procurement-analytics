@@ -17,7 +17,7 @@ var LineChart = module.exports = React.createClass({
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
     window.addEventListener('resize', this.onWindowResize);
-    this.chart = new d3LineChart(this.getDOMNode(), this.props.data);
+    this.chart = new d3LineChart(this.getDOMNode(), this.props);
   },
 
   componentWillUnmount: function() {
@@ -28,7 +28,7 @@ var LineChart = module.exports = React.createClass({
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
     console.log('LineChart componentDidUpdate');
-    this.chart.setData(this.props.data);
+    this.chart.setData(this.props);
   },
 
   render: function() {
@@ -43,6 +43,10 @@ var LineChart = module.exports = React.createClass({
 
 var d3LineChart = function(el, data) {
   this.$el = d3.select(el);
+
+  this.data = null;
+  this.xData = null;
+  this.yData = null;
 
   // Var declaration.
   var margin = {top: 30, right: 32, bottom: 50, left: 50};
@@ -62,7 +66,9 @@ var d3LineChart = function(el, data) {
   };
 
   this.setData = function(data) {
-    this.data = data;
+    this.data = data.data;
+    this.xData = data.x;
+    this.yData = data.y;
     this.update();
   };
 
@@ -89,7 +95,7 @@ var d3LineChart = function(el, data) {
     // Line function
     line = d3.svg.line()
       .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.count); });
+      .y(function(d) { return y(d.value); });
 
     // Chart elements
 
@@ -117,10 +123,10 @@ var d3LineChart = function(el, data) {
     this._calcSize();
 
     x.rangePoints([0, _width])
-      .domain(this.data.points.map(function(d) { return d.date; }));
+      .domain(this.data.map(function(d) { return d.date; }));
 
     y.range([_height, 0])
-      .domain([this.data.y.min, this.data.y.max]);
+      .domain(this.yData.domain);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -132,7 +138,7 @@ var d3LineChart = function(el, data) {
 
 
     var path = dataCanvas.select(".line")
-      .datum(this.data.points)
+      .datum(this.data)
       .attr("d", line);
 /*
     var totalLength = path.node().getTotalLength();
@@ -151,9 +157,9 @@ var d3LineChart = function(el, data) {
       .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
 
-    if (this.data.x && this.data.x.label) {
+    if (this.xData && this.xData.label) {
       svg.select(".x.axis .label")
-        .text(this.data.x.label)
+        .text(this.xData.label)
         .transition()
         .attr("x", _width + margin.right)
         .attr("y", 30);
@@ -163,9 +169,9 @@ var d3LineChart = function(el, data) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
       .call(yAxis);
 
-    if (this.data.y && this.data.y.label) {
+    if (this.yData && this.yData.label) {
       svg.select(".y.axis .label")
-        .text(this.data.y.label)
+        .text(this.yData.label)
         .transition()
         .attr("x", 0)
         .attr("y", -15);
