@@ -21,9 +21,8 @@ $global-radius: 0.25rem;
 $global-rounded: 60rem;
 
 // We use this rgba for shadowing
-$pos-brdr-rgba: rgba($base-color, 0.08); // border-like shadow
-$neg-brdr-rgba: rgba(#fff, 0.08); // border-like shadow
-$pos-frame-rgba: rgba($base-color, 0.12);
+$brdr-rgba: rgba($base-color, 0.08); // border-like shadow
+$frame-rgba: rgba($base-color, 0.12);
 
 $flat-shadow-rgba: rgba($base-color, 0.08); // flat drop shadow
 $spread-shadow-rgba: rgba($base-color, 0.16); // spread drop shadow

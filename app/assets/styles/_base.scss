@@ -112,6 +112,7 @@ a:active{
 #site-title {
   line-height: 1.25rem;
   text-transform: uppercase;
+  font-weight: $base-font-bold;
   margin-bottom: 0;
   @include media(small-up) {
     line-height: 2rem;
@@ -278,6 +279,7 @@ a:active{
   display: inline-block;
   font-size: 1rem;
   text-transform: uppercase;
+  font-weight: $base-font-bold;
   margin: 0 0 1.5rem -1rem;
   background: $base-font-color;
   padding: 0.5rem 1rem;
@@ -315,6 +317,16 @@ a:active{
     dd {
       margin-bottom: 0.75rem;
     }
+  }
+}
+
+.page-footer {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  box-shadow: inset 0 1px 0 0 $brdr-rgba;
+  > .inner {
+    @extend .row;
+    @extend .clearfix;
   }
 }
 
@@ -511,5 +523,22 @@ a:active{
   }
   to {
     opacity: 1;
+  }
+}
+
+
+// ABOUT
+
+.credits-list {
+  text-align: center;
+  li {
+    display: inline-block;
+    margin: 0 1rem;
+  }
+  a {
+    display: block;
+  }
+  span {
+    @extend .visually-hidden;
   }
 }
