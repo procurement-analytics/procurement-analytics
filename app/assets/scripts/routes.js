@@ -11,20 +11,21 @@ var Redirect = Router.Redirect;
 
 
 var App = require('./components/app');
-var IndTimeliness = require('./components/indicators/timeliness');
-var IndTransparency = require('./components/indicators/transparency');
-var IndCostEfficiency = require('./components/indicators/cost_efficiency');
-var IndQuality = require('./components/indicators/quality');
-var IndFairness = require('./components/indicators/fairness');
-var IndGeneral = require('./components/indicators/general');
+var About = require('./components/about');
+var Analysis = require('./components/analysis');
 
 var routes = module.exports = (
   <Route path="/" handler={App}>
-    <DefaultRoute name="home" handler={IndGeneral} />
-    <Route name="timeliness" handler={IndTimeliness}/>
-    <Route name="transparency" handler={IndTransparency}/>
-    <Route name="cost_efficiency" handler={IndCostEfficiency}/>
-    <Route name="quality" handler={IndQuality}/>
-    <Route name="fairness" handler={IndFairness}/>
+
+    <Route name="about" path="about" handler={About} />
+
+    <Route name="analysis_root" path="analysis" handler={Analysis}>
+        <Route name="analysis_summary" path=":dimension" handler={Analysis}>
+          <Route name="analysis" path=":comparison" handler={Analysis} />
+        </Route>
+        <Redirect from="/analysis" to="analysis_summary" params={{dimension: 'summary'}} />
+    </Route>
+
+    <Redirect from="/" to="analysis_summary" params={{dimension: 'summary'}} />
   </Route>
 );
