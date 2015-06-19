@@ -265,6 +265,8 @@ a:active{
 
 .intro {
   background: tint($base-color, 44%);
+  color: #fff;
+  @extend .antialiased;
 }
 
 .tile-title {
@@ -294,7 +296,7 @@ a:active{
     margin-bottom: 1.5rem;
   }
   .intro & {
-    color: #fff;
+    color: inherit;
   }
   .facts-list {
     dt {
