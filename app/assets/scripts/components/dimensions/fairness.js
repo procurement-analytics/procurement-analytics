@@ -4,38 +4,58 @@ var React = require('react/addons');
 var ScatterplotChart = require('../charts/scatterplot_chart');
 
 
-var relationshipData = [
-  {
-    name: 'company1',
-    suppliers: 10,
-    contracts: 30,
-    amount: 25000
+var relationshipData = {
+  x: {
+    min: 25000,
+    max: 80888,
+    label: 'Something or other x'
   },
-  {
-    name: 'company2',
-    suppliers: 15,
-    contracts: 18,
-    amount: 40000
+
+  y: {
+    min: 10,
+    max: 150,
+    label: 'Something or other y'
   },
-  {
-    name: 'company3',
-    suppliers: 22,
-    contracts: 10,
-    amount: 60000
+
+  r: {
+    min: 10,
+    max: 40,
+    label: 'Something or other r'
   },
-  {
-    name: 'company4',
-    suppliers: 26,
-    contracts: 40,
-    amount: 66000
-  },
-  {
-    name: 'company5',
-    suppliers: 10,
-    contracts: 12,
-    amount: 80888
-  }
-];
+
+  points: [
+    {
+      name: 'company1',
+      suppliers: 10,
+      contracts: 30,
+      amount: 25000
+    },
+    {
+      name: 'company2',
+      suppliers: 15,
+      contracts: 18,
+      amount: 40000
+    },
+    {
+      name: 'company3',
+      suppliers: 22,
+      contracts: 10,
+      amount: 60000
+    },
+    {
+      name: 'company4',
+      suppliers: 26,
+      contracts: 40,
+      amount: 66000
+    },
+    {
+      name: 'company5',
+      suppliers: 10,
+      contracts: 12,
+      amount: 80888
+    }
+  ]
+};
 
 var IndFairness = module.exports = React.createClass({
 

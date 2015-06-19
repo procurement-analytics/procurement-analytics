@@ -69,23 +69,23 @@ var d3ScatterplotChart = function(el, data) {
   // returns slope, intercept and r-square of the line
   this.leastSquares = function(xSeries, ySeries) {
     var reduceSumFunc = function(prev, cur) { return prev + cur; };
-    
+
     var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
     var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
 
     var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
       .reduce(reduceSumFunc);
-    
+
     var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
       .reduce(reduceSumFunc);
-      
+
     var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
       .reduce(reduceSumFunc);
-      
+
     var slope = ssXY / ssXX;
     var intercept = yBar - (xBar * slope);
     var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
-    
+
     return [slope, intercept, rSquare];
   };
 
@@ -118,10 +118,16 @@ var d3ScatterplotChart = function(el, data) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
-      .attr("class", "x axis");
+      .attr("class", "x axis")
+      .append("text")
+      .attr("class", "label")
+      .attr("text-anchor", "end");
 
     svg.append("g")
-      .attr("class", "y axis");
+      .attr("class", "y axis")
+      .append("text")
+      .attr("class", "label")
+      .attr("text-anchor", "middle");
 
   };
 
@@ -131,7 +137,7 @@ var d3ScatterplotChart = function(el, data) {
     // Add some padding to the axes.
     // 1/10th of the difference between min and max.
     // Do not allow to fall below 0.
-    var xd = [d3.min(this.data, function(d) { return d.amount; }), d3.max(this.data, function(d) { return d.amount; })];
+    var xd = [this.data.x.min, this.data.x.max];
     xd[0] -= (xd[1] - xd[0]) / 10;
     xd[0] = xd[0] < 0 ? 0 : xd[0];
     xd[1] += (xd[1] - xd[0]) / 10;
@@ -141,14 +147,14 @@ var d3ScatterplotChart = function(el, data) {
     // Add some padding to the axes.
     // 1/10th of the difference between min and max.
     // Do not allow to fall below 0.
-    var yd = [d3.min(this.data, function(d) { return d.suppliers; }), d3.max(this.data, function(d) { return d.suppliers; })]
+    var yd = [this.data.y.min, this.data.y.max];
     yd[0] -= (yd[1] - yd[0]) / 10;
     yd[0] = yd[0] < 0 ? 0 : yd[0];
     yd[1] += (yd[1] - yd[0]) / 10;
 
     y.range([_height, 0]).domain(yd);
 
-    r.domain([d3.min(this.data, function(d) { return d.contracts; }), d3.max(this.data, function(d) { return d.contracts; })]);
+    r.domain([this.data.r.min, this.data.r.max]);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -159,16 +165,16 @@ var d3ScatterplotChart = function(el, data) {
       .attr('height', _height);
 
     // Calc the linear regression.
-    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data, 'amount'), _.pluck(this.data, 'suppliers'));
+    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data.points, 'amount'), _.pluck(this.data.points, 'suppliers'));
     var x1 = xd[0];
     var x2 = xd[1];
     //y = mx + b
     var y1 = leastSquaresCoeff[0] * x1 + leastSquaresCoeff[1];
     var y2 = leastSquaresCoeff[0] * x2 + leastSquaresCoeff[1];
-    
+
     var trendline = dataCanvas.selectAll(".trendline")
       .data([[x1,y1,x2,y2]]);
-    
+
     trendline.enter().append("line")
       .attr("class", "trendline")
       .attr("x1", function(d) { return x(d[0]); })
@@ -184,7 +190,7 @@ var d3ScatterplotChart = function(el, data) {
 
 
     var circles = dataCanvas.selectAll('circle.dot')
-      .data(this.data);
+      .data(this.data.points);
 
     circles.enter().append("circle")
       .attr("class", "dot")
@@ -193,18 +199,34 @@ var d3ScatterplotChart = function(el, data) {
       .attr("cy", function(d) { return y(d.suppliers); })
 
     circles
-      .attr("r", function(d) { return r(d.contracts); })  
+      .attr("r", function(d) { return r(d.contracts); })
       .attr("cx", function(d) { return x(d.amount); })
       .attr("cy", function(d) { return y(d.suppliers); })
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
 
+    if (this.data.x.label) {
+      svg.select(".x.axis .label")
+        .text(this.data.x.label)
+        .transition()
+        .attr("x", _width + margin.right)
+        .attr("y", 30);
+    }
+
     svg.select(".y.axis")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
       .call(yAxis);
+
+    if (this.data.y.label) {
+      svg.select(".y.axis .label")
+        .text(this.data.y.label)
+        .transition()
+        .attr("x", 0)
+        .attr("y", -15);
+    }
   };
 
   this.destroy = function() {
