@@ -19,7 +19,7 @@ h4, .hd-s,
 h5, .hd-xs,
 h6, .hd-xxs {
   font-family: $base-font-family;
-  font-weight: $base-font-bold;
+  font-weight: $base-font-light;
   margin: 0 0 1rem 0;
   @include media(medium-up) {
     margin: 0 0 1.25rem 0;
@@ -63,7 +63,7 @@ h6, .hd-xxs {
     padding: 1rem;
     word-break: break-all;
     word-wrap: break-word;
-    box-shadow: inset 0 0 0 1px $pos-brdr-rgba;
+    box-shadow: inset 0 0 0 1px $brdr-rgba;
     overflow: auto;
   }
 
@@ -182,7 +182,7 @@ h6, .hd-xxs {
         width: 50%;
         margin: 0;
         padding: 0.25rem 0;
-        box-shadow: inset 0 1px 0 0 $pos-brdr-rgba;
+        box-shadow: inset 0 1px 0 0 $brdr-rgba;
         &:first-of-type {
           box-shadow: none;
         }

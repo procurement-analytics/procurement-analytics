@@ -20,24 +20,6 @@ var boxPlot1 = {
       median: 33019,
       q3: 49566,
       whisker2: 99093
-    },
-    {
-      min: 5000,
-      max: 80000,
-      whisker1: 5500,
-      q1: 10000,
-      median: 22344,
-      q3: 28000,
-      whisker2: 77527
-    },
-    {
-      min: 71233,
-      whisker1: 75000,
-      q1: 77198,
-      median: 85525,
-      q3: 91036,
-      whisker2: 99001,
-      max: 99898
     }
   ]
 };
@@ -45,7 +27,35 @@ var boxPlot1 = {
 var boxPlot2 = {
   x: {
     min: 100,
-    max: 100099,
+    max: 10099,
+    label: 'Data label'
+  },
+  plots: [
+    {
+      min: 590,
+      max: 8090,
+      whisker1: 590,
+      q1: 1090,
+      median: 2294,
+      q3: 2890,
+      whisker2: 7797,
+    },
+    {
+      min: 90,
+      max: 10099,
+      whisker1: 90,
+      q1: 1698,
+      median: 3399,
+      q3: 4996,
+      whisker2: 9993,
+    }
+  ]
+};
+
+var boxPlot3 = {
+  x: {
+    min: 100,
+    max: 10099,
     label: 'Data label'
   },
   plots: [
@@ -75,16 +85,7 @@ var boxPlot2 = {
       median: 3399,
       q3: 4996,
       whisker2: 9993,
-    },
-    {
-      min: 7193,
-      whisker1: 7590,
-      q1: 7798,
-      median: 8595,
-      q3: 9196,
-      whisker2: 9991,
-      max: 9998,
-    },
+    }
   ]
 };
 
@@ -118,6 +119,7 @@ var IndCostEfficiency = module.exports = React.createClass({
 
   render: function() {
 
+    // THIS NEEDS TO BE CLEANED.
     // DEV NOTE: For now we're doing here a switch based on comparison.
     // This should be done in the parent and the data passed through props.data
 
@@ -125,36 +127,66 @@ var IndCostEfficiency = module.exports = React.createClass({
     var comparison = this.props.comparison || 'all';
     switch(comparison) {
       case 'all':
-        data = (
-          <div>
-            <BoxChart data={boxPlot1}/>
-            <img src="assets/graphics/content/ch_price-dist-all.png"/>
-          </div>
-        );
+        data = [
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Price distribution</h1>
+            <div className="tile-body">
+              <BarChart data={barData}/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Price variation</h1>
+            <div className="tile-body">
+              <BoxChart data={boxPlot1}/>
+            </div>
+          </section>)
+        ];
       break;
       case 'contract_procedure':
-        data = (
-          <div>
-            <BoxChart data={boxPlot2}/>
-            <img src="assets/graphics/content/ch_price-dist-contr.png"/>
-          </div>
-        );
+        data = [
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Price distribution</h1>
+            <div className="tile-body">
+              <BarChart data={barData}/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Price variation</h1>
+            <div className="tile-body">
+              <BoxChart data={boxPlot2}/>
+            </div>
+          </section>)
+        ];
       break;
       case 'level_gov':
-        data = (
-          <div>
-            <BoxChart data={boxPlot2}/>
-            <img src="assets/graphics/content/ch_price-dist-gov.png"/>
-          </div>
-        );
+        data = [
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Price distribution</h1>
+            <div className="tile-body">
+              <BarChart data={barData}/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Price variation</h1>
+            <div className="tile-body">
+              <BoxChart data={boxPlot3}/>
+            </div>
+          </section>)
+        ];
       break;
     }
     return (
       <div className="content">
-        <BarChart data={barData}/>
-        <hr />
+        <section className="tile intro">
+          <h1 className="tile-title">Overview</h1>
+          <div className="tile-body">
+            <p>Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
+          </div>
+        </section>
         {data}
-        <p className="desc">Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
       </div>
     );
   }
