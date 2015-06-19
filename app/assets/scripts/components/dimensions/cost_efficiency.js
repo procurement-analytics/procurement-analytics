@@ -5,6 +5,8 @@ var Reflux = require('reflux');
 var BoxChart = require('../charts/box_chart');
 var BarChart = require('../charts/bar_chart');
 
+var _ = require('lodash');
+
 var boxPlot1 = {
   x: {
     min: 100,
@@ -91,93 +93,45 @@ var boxPlot3 = {
 
 
 
-var barData = {
-  x: {
-    min: 30,
-    max: 150000,
-    label: 'custom x label'
-  },
-  y: {
-    min: 160,
-    max: 400,
-    label: 'another custom y label'
-  },
-  buckets: [
-    200,
-    400,
-    380,
-    298,
-    180
-  ]
-};
-
 var IndCostEfficiency = module.exports = React.createClass({
 
   propTypes: {
-    data: React.PropTypes.array
+    data: React.PropTypes.object,
   },
 
   render: function() {
 
-    // THIS NEEDS TO BE CLEANED.
-    // DEV NOTE: For now we're doing here a switch based on comparison.
-    // This should be done in the parent and the data passed through props.data
+    var ldn = this.props.loading;
+    if (this.props.data.metadata) {
 
-    var data = null;
-    var comparison = this.props.comparison || 'all';
-    switch(comparison) {
-      case 'all':
-        data = [
-          (<section className="tile chart-group">
-            <h1 className="tile-title">Price distribution</h1>
-            <div className="tile-body">
-              <BarChart data={barData}/>
-            </div>
-          </section>),
+      var chartData = this.props.data.charts;
+      var distributionChartData = _.find(chartData, {id: 'price-distribution'});
+      var variationChartData = _.find(chartData, {id: 'price-variation'});
+      console.log(distributionChartData);
 
-          (<section className="tile chart-group">
-            <h1 className="tile-title">Price variation</h1>
-            <div className="tile-body">
-              <BoxChart data={boxPlot1}/>
-            </div>
-          </section>)
-        ];
-      break;
-      case 'contract_procedure':
-        data = [
-          (<section className="tile chart-group">
-            <h1 className="tile-title">Price distribution</h1>
-            <div className="tile-body">
-              <BarChart data={barData}/>
-            </div>
-          </section>),
+      var distributionCharts = distributionChartData.data.map(function(o, i) {
+        return <div className="chart-item" key={i.toString()}><BarChart data={o.data} x={distributionChartData.x}  y={distributionChartData.y}/></div>;
+      });
 
-          (<section className="tile chart-group">
-            <h1 className="tile-title">Price variation</h1>
-            <div className="tile-body">
-              <BoxChart data={boxPlot2}/>
-            </div>
-          </section>)
-        ];
-      break;
-      case 'level_gov':
-        data = [
-          (<section className="tile chart-group">
-            <h1 className="tile-title">Price distribution</h1>
-            <div className="tile-body">
-              <BarChart data={barData}/>
-            </div>
-          </section>),
-
-          (<section className="tile chart-group">
-            <h1 className="tile-title">Price variation</h1>
-            <div className="tile-body">
-              <BoxChart data={boxPlot3}/>
-            </div>
-          </section>)
-        ];
-      break;
+      var variationCharts = <div className="chart-item"><BoxChart data={variationChartData.data} x={variationChartData.x}/></div>;
     }
+
+    var distributionTile = (
+        <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+          <h1 className="tile-title">Price distribution</h1>
+          {this.props.data.metadata ? <div className="tile-body">{distributionCharts}</div> : null}
+        </section>
+    );
+
+    var variationTile = (
+        <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+          <h1 className="tile-title">Price variation</h1>
+          {this.props.data.metadata ? <div className="tile-body">{variationCharts}</div> : null}
+        </section>
+    );
+
+
+
     return (
       <div className="content">
         <section className="tile intro">
@@ -186,7 +140,8 @@ var IndCostEfficiency = module.exports = React.createClass({
             <p>Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
           </div>
         </section>
-        {data}
+        {distributionTile}
+        {variationTile}
       </div>
     );
   }

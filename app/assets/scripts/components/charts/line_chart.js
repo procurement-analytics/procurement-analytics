@@ -66,6 +66,7 @@ var d3LineChart = function(el, data) {
   };
 
   this.setData = function(data) {
+    console.log('data', data);
     this.data = data.data;
     this.xData = data.x;
     this.yData = data.y;

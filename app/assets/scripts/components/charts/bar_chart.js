@@ -7,7 +7,6 @@ var BarChart = module.exports = React.createClass({
   chart: null,
 
   onWindowResize: function() {
-    console.log('resize!');
     this.chart.update();
   },
 
@@ -17,7 +16,7 @@ var BarChart = module.exports = React.createClass({
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
     window.addEventListener('resize', this.onWindowResize);
-    this.chart = new d3BarChart(this.getDOMNode(), this.props.data);
+    this.chart = new d3BarChart(this.getDOMNode(), this.props);
   },
 
   componentWillUnmount: function() {
@@ -28,7 +27,7 @@ var BarChart = module.exports = React.createClass({
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
     console.log('BarChart componentDidUpdate');
-    this.chart.setData(this.props.data);
+    this.chart.setData(this.props);
   },
 
   render: function() {
@@ -43,6 +42,10 @@ var BarChart = module.exports = React.createClass({
 
 var d3BarChart = function(el, data) {
   this.$el = d3.select(el);
+
+  this.data = null;
+  this.xData = null;
+  this.yData = null;
 
   // Var declaration.
   var margin = {top: 30, right: 32, bottom: 50, left: 50};
@@ -63,6 +66,8 @@ var d3BarChart = function(el, data) {
 
   this.setData = function(data) {
     this.data = data;
+    this.xData = data.x;
+    this.yData = data.y;
     this.update();
   };
 
@@ -115,17 +120,18 @@ var d3BarChart = function(el, data) {
     this._calcSize();
 
     // Create the buckets.
-    var buckets = d3.range(this.data.x.min, this.data.x.max, (this.data.x.max - this.data.x.min) / this.data.buckets.length);
+    var xDomain = this.xData.domain;
+    var buckets = d3.range(xDomain[0], xDomain[1], (xDomain[1] - xDomain[0]) / this.data.data.length);
 
     xBar.rangeBands([0, _width])
       .domain(buckets);
 
     // For the range points we need the max value as well.
     x.rangePoints([0, _width])
-      .domain(buckets.concat([this.data.x.max]));
+      .domain(buckets.concat([xDomain[1]]));
 
     y.range([_height, 0])
-      .domain([this.data.y.min, this.data.y.max]);
+      .domain(this.yData.domain);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -135,7 +141,7 @@ var d3BarChart = function(el, data) {
       .attr('width', _width)
       .attr('height', _height);
 
-    var data = this.data.buckets.map(function(o) { return [o]; });
+    var data = this.data.data.map(function(o) { return [o]; });
 
     var barG = dataCanvas.selectAll(".bar")
       .data(data);
