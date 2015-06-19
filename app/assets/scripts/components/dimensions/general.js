@@ -82,7 +82,7 @@ var IndGeneral = module.exports = React.createClass({
 
   render: function() {
     var ldn = this.props.loading;
-    if (!ldn) {
+    if (this.props.data.metadata) {
       // Get the charts we want from the data
       var amountChartData = _.find(this.props.data.charts, {id: 'amount-time'});
       var contractsChartData = _.find(this.props.data.charts, {id: 'contracts-time'});
@@ -92,11 +92,11 @@ var IndGeneral = module.exports = React.createClass({
 
       ////// Chart contracts over time
       var contractsCharts = contractsChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={o._id + i}><LineChart data={o.data} x={contractsChartData.x}  y={contractsChartData.y}/></div>;
+        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={contractsChartData.x}  y={contractsChartData.y}/></div>;
       });
       ////// Chart amount over time
       var amountCharts = amountChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={o._id + i}><LineChart data={o.data} x={amountChartData.x}  y={amountChartData.y}/></div>;
+        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={amountChartData.x}  y={amountChartData.y}/></div>;
       });
     }
 
@@ -104,7 +104,7 @@ var IndGeneral = module.exports = React.createClass({
     var contractsTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
-        {ldn ? null :<div className="tile-body">{contractsCharts}</div>}
+        {this.props.data ? <div className="tile-body">{contractsCharts}</div> : null}
       </section>
     );
 
@@ -112,7 +112,7 @@ var IndGeneral = module.exports = React.createClass({
     var amountTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
-        {ldn ? null :<div className="tile-body">{amountCharts}</div>}
+        {this.props.data ? <div className="tile-body">{amountCharts}</div> : null}
       </section>
     );
 
