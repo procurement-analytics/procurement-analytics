@@ -221,20 +221,14 @@ a:active{
 }
 
 .content {
-  display: -ms-flexbox;
-  -ms-flex-direction: column;
-  -ms-flex-wrap: wrap;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  height: 100vw;
+  @include display(flex);
+  @include flex-direction(row);
+  @include flex-wrap(wrap);
   box-shadow: inset 0 -1px 0 0 rgba($base-color, 0.08);
 }
 
-.intro,
-.chart {
-  width: 50%;
-  box-shadow: inset -1px 1px 0 0 rgba($base-color, 0.08);
+.content > * {
+  box-shadow: inset -1px -1px 0 0 rgba($base-color, 0.08);
   @extend .clearfix;
   padding: $inner-pad;
   @include media(small-up) {
@@ -245,8 +239,52 @@ a:active{
   }
 }
 
+.content > * {
+  width: calc(100% / 3);
+}
+
+// .intro {
+//   width: calc(100% / 3);
+// }
+
+// .chart {
+//   width: calc(100% / 3 * 2);
+// }
+
+// TILE
+
 .intro {
-  @extend .prose;
+  background: tint($base-color, 44%);
+}
+
+.tile-title {
+  display: inline-block;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem -1rem;
+  background: $base-font-color;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  @extend .antialiased;
+  @include media(small-up) {
+    margin-left: -$inner-pad*2;
+    padding-left: $inner-pad*2;
+  }
+  @include media(large-up) {
+    margin-left: -$inner-pad*4;
+    padding-left: $inner-pad*4;
+  }
+}
+
+.tile-body {
+  // @extend .prose;
+  color: tint($base-color, 44%);
+  p {
+    margin-bottom: 1.5rem;
+  }
+  .intro & {
+    color: #fff;
+  }
 }
 
 
