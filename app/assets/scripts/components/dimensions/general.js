@@ -77,7 +77,7 @@ var IndGeneral = module.exports = React.createClass({
       <div className="content">
 
         <section className="tile intro">
-          <h1 className="tile-title">Summary</h1>
+          <h1 className="tile-title">Overview</h1>
           <div className="tile-body">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
             <p>Ut sodales pellentesque tempus. Nulla ac velit tempor, vestibulum lectus et, dapibus quam. Donec molestie cursus enim, quis eleifend lectus mollis at. Integer nec augue eleifend velit tempus ullamcorper eget ac ex. Integer finibus eget ex eu pulvinar. Mauris id nulla dui. Nulla fringilla tellus vitae purus tempus, id fermentum nisl maximus.</p>
@@ -85,15 +85,20 @@ var IndGeneral = module.exports = React.createClass({
         </section>
 
         <section className="tile">
-          <h1 className="tile-title">Stats</h1>
+          <h1 className="tile-title">Key facts</h1>
           <div className="tile-body">
-            <ul>
-              <li><strong>total procurement procedures:</strong> 520.167</li>
-              <li><strong>total amount:</strong> $4.239.000.120.758</li>
-              <li><strong>biggest contract:</strong> API-Coatzacoalcos with PUENTES Y ESTRUCTURAS TOVEGO S.A DE C.V. for $51.375.215</li>
-              <li><strong>most active supplier:</strong> INGENIERIA Y SERVICIOS ELECTROMECANICOS J &amp; M SA</li>
-              <li><strong>most active purchasing unit:</strong> API-Coatzacoalcos</li>
-            </ul>
+            <dl className="facts-list">
+              <dt>total procurement procedures</dt>
+              <dd>520.167</dd>
+              <dt>total amount</dt>
+              <dd>$4.239.000.120.758</dd>
+              <dt>biggest contract</dt>
+              <dd>API-Coatzacoalcos with PUENTES Y ESTRUCTURAS TOVEGO S.A DE C.V. for $51.375.215</dd>
+              <dt>most active supplier</dt>
+              <dd>INGENIERIA Y SERVICIOS ELECTROMECANICOS J &amp; M SA</dd>
+              <dt>most active purchasing unit</dt>
+              <dd>API-Coatzacoalcos</dd>
+            </dl>
           </div>
         </section>
 
