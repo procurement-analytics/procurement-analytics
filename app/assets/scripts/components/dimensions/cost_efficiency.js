@@ -1,97 +1,10 @@
 'use strict';
 var React = require('react/addons');
 var Reflux = require('reflux');
+var _ = require('lodash');
 
 var BoxChart = require('../charts/box_chart');
 var BarChart = require('../charts/bar_chart');
-
-var _ = require('lodash');
-
-var boxPlot1 = {
-  x: {
-    min: 100,
-    max: 100099,
-    label: 'Data label'
-  },
-  plots: [
-    {
-      min: 100,
-      max: 100099,
-      whisker1: 100,
-      q1: 16548,
-      median: 33019,
-      q3: 49566,
-      whisker2: 99093
-    }
-  ]
-};
-
-var boxPlot2 = {
-  x: {
-    min: 100,
-    max: 10099,
-    label: 'Data label'
-  },
-  plots: [
-    {
-      min: 590,
-      max: 8090,
-      whisker1: 590,
-      q1: 1090,
-      median: 2294,
-      q3: 2890,
-      whisker2: 7797,
-    },
-    {
-      min: 90,
-      max: 10099,
-      whisker1: 90,
-      q1: 1698,
-      median: 3399,
-      q3: 4996,
-      whisker2: 9993,
-    }
-  ]
-};
-
-var boxPlot3 = {
-  x: {
-    min: 100,
-    max: 10099,
-    label: 'Data label'
-  },
-  plots: [
-    {
-      min: 590,
-      max: 8090,
-      whisker1: 590,
-      q1: 1090,
-      median: 2294,
-      q3: 2890,
-      whisker2: 7797,
-    },
-    {
-      min: 90,
-      max: 10099,
-      whisker1: 90,
-      q1: 1698,
-      median: 3399,
-      q3: 4996,
-      whisker2: 9993,
-    },
-    {
-      min: 90,
-      max: 10099,
-      whisker1: 90,
-      q1: 1698,
-      median: 3399,
-      q3: 4996,
-      whisker2: 9993,
-    }
-  ]
-};
-
-
 
 var IndCostEfficiency = module.exports = React.createClass({
 
@@ -132,8 +45,6 @@ var IndCostEfficiency = module.exports = React.createClass({
           {variationCharts ? <div className="tile-body">{variationCharts}</div> : null}
         </section>
     );
-
-
 
     return (
       <div className="content">

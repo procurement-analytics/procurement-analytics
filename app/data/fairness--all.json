@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "id": "summary--all"
+  },
+  "charts": [
+    {
+      "id": "concentration-winning",
+      "title": "Concentration of Winning",
+      "x": {
+        "domain": [25000,80888],
+        "label": "Price ($)"
+      },
+      "y": {
+        "label": "# Contracts",
+        "domain": [10,100]
+      },
+      "r": {
+        "domain": [10,40]
+      },
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            {
+              "name": "company1",
+              "suppliers": 10,
+              "contracts": 30,
+              "amount": 25000
+            },
+            {
+              "name": "company2",
+              "suppliers": 15,
+              "contracts": 18,
+              "amount": 40000
+            },
+            {
+              "name": "company3",
+              "suppliers": 22,
+              "contracts": 10,
+              "amount": 60000
+            },
+            {
+              "name": "company4",
+              "suppliers": 26,
+              "contracts": 40,
+              "amount": 66000
+            },
+            {
+              "name": "company5",
+              "suppliers": 10,
+              "contracts": 12,
+              "amount": 80888
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
