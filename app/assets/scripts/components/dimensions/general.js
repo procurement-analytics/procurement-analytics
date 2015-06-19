@@ -62,17 +62,23 @@ var IndGeneral = module.exports = React.createClass({
 
     var comparison = this.props.comparison || 'all';
     var charts = null;
-    switch(comparison) {
-      case 'all':
-        charts = <LineChart data={data}/>;
-      break;
-      default:
-        charts = (
-          <div className="charts">
-            <LineChart data={data2}/>
-            <LineChart data={data3}/>
-          </div>
-        );
+
+    if (this.props.loading) {
+      charts = 'Loading...';
+    }
+    else {
+      switch(comparison) {
+        case 'all':
+          charts = <LineChart data={data}/>;
+        break;
+        default:
+          charts = (
+            <div className="charts">
+              <LineChart data={data2}/>
+              <LineChart data={data3}/>
+            </div>
+          );
+      }
     }
 
     return (
