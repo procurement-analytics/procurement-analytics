@@ -98,31 +98,29 @@ var d3LineChart = function(el, data) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
-      .attr("class", "x axis");/*
+      .attr("class", "x axis")
       .append("text")
-        .attr("class", "label")
-        .style("text-anchor", "end");*/
+      .attr("class", "label")
+      .attr("text-anchor", "end");
 
     svg.append("g")
-      .attr("class", "y axis");/*
+      .attr("class", "y axis")
       .append("text")
-        .attr("class", "label")
-        .attr("transform", "rotate(-90)")
-        .style("text-anchor", "end");*/
+      .attr("class", "label")
+      .attr("text-anchor", "middle");
 
     dataCanvas.append("path")
       .attr("class", "line");
-
   };
 
   this.update = function() {
     this._calcSize();
 
     x.rangePoints([0, _width])
-      .domain(this.data.map(function(d) { return d.date; }));
+      .domain(this.data.points.map(function(d) { return d.date; }));
 
     y.range([_height, 0])
-      .domain(d3.extent(this.data, function(d) { return d.count; }));
+      .domain([this.data.y.min, this.data.y.max]);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -134,7 +132,7 @@ var d3LineChart = function(el, data) {
 
 
     var path = dataCanvas.select(".line")
-      .datum(this.data)
+      .datum(this.data.points)
       .attr("d", line);
 /*
     var totalLength = path.node().getTotalLength();
@@ -150,22 +148,29 @@ var d3LineChart = function(el, data) {
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
-   /*   
-    svg.select(".x.axis .label")
-      .attr("x", _width)
-      .attr("y", -12)
-      .text('label-x');
-  */
+
+    if (this.data.x && this.data.x.label) {
+      svg.select(".x.axis .label")
+        .text(this.data.x.label)
+        .transition()
+        .attr("x", _width + margin.right)
+        .attr("y", 30);
+    }
+
     svg.select(".y.axis")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition() 
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
       .call(yAxis);
-   /*
-    svg.select(".y.axis .label")
-      .attr("y", 20)
-      .text('label-y');
-*/
+
+    if (this.data.y && this.data.y.label) {
+      svg.select(".y.axis .label")
+        .text(this.data.y.label)
+        .transition()
+        .attr("x", 0)
+        .attr("y", -15);
+    }
+
     console.log(this.$el);
   };
 

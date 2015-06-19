@@ -1,136 +1,98 @@
 'use strict';
 var React = require('react/addons');
+var Reflux = require('reflux');
 var Router = require('react-router');
 var _ = require('lodash');
 
+var analysisNlForm = require('../utils/analysis_nl_form');
+var actions = require('../actions/actions');
+var appStore = require('../stores/app_store');
+var NlForm = require('./nl_form');
+
+// Dimension pages.
 var DimTimeliness = require('./dimensions/timeliness');
 var DimCostEfficiency = require('./dimensions/cost_efficiency');
 var DimFairness = require('./dimensions/fairness');
 var DimGeneral = require('./dimensions/general');
 
-var NlForm = require('./nl_form');
-
 var Analysis = module.exports = React.createClass({
 
-  mixins: [Router.Navigation],
+  mixins: [
+    Reflux.listenTo(appStore, "onData"),
+    Router.Navigation
+  ],
 
   getInitialState: function() {
     return {
-      data: []
+      data: {},
+      loading: false
     }
   },
 
-  componentDidMount: function() {
-    console.log('Analysis -- componentDidMount');
-    // Fetch data first time.
+  /**
+   * Listener: Data from the store.
+   */
+  onData: function(err, storage) {
+    if (err) return;
+    this.setState({
+      data: storage.data,
+      loading: false
+    });
   },
 
-  componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('Analysis -- componentDidUpdate');
-    // Fetch data on url update.
-  },
-
+  /**
+   * Listener: Change on nlForm options.
+   */
   onNlSelect: function(selection) {
-    console.log('selection', selection);
+    console.log('nl onNlSelect', selection);
+    var params = {dimension: selection.dimension, comparison: selection.comparison};
+    this.transitionTo(selection.comparison == 'all' ? 'analysis_summary' : 'analysis', params);
+  },
 
-    if (selection.comparison == 'all') {
-      return this.transitionTo('analysis_summary', {dimension: selection.dimension});
-    }
+  /**
+   * Lifecycle: Component mount.
+   */
+  componentDidMount: function() {
+    // Fetch data first time.
+    actions.loadData(this.props.params.dimension, this.props.params.comparison || 'all');
+    this.setState({loading: true});
+  },
 
-    this.transitionTo('analysis', {dimension: selection.dimension, comparison: selection.comparison});
+  /**
+   * Lifecycle: Component props update.
+   */
+  componentWillReceiveProps: function(nextProps) {
+    // Fetch data on url update.
+    actions.loadData(nextProps.params.dimension, nextProps.params.comparison || 'all');
+    this.setState({loading: true});
   },
 
   render: function() {
 
-    var nlformSentence = 'Showing {#dimensionArticle#} {%dimension%} of the procurement process {#comparisonArticle#} {%comparison%}.';
-    var nlformFields = [
-      {
-        id: 'comparison',
-        active: 'all',
-
-        opts: [
-          {
-            key: 'all',
-            value: 'full data set',
-            tokens: {
-              'comparisonArticle': 'for the'
-            }
-          },
-          {
-            key: 'level_gov',
-            value: 'level of government',
-            tokens: {
-              'comparisonArticle': 'for'
-            }
-          },
-          {
-            key: 'contract_procedure',
-            value: 'contract procedure',
-            tokens: {
-              'comparisonArticle': 'for'
-            }
-          }
-        ]
-      },
-
-      {
-        id: 'dimension',
-        active: 'summary',
-
-        opts: [
-          {
-            key: 'summary',
-            value: 'summary',
-            tokens: {
-              'dimensionArticle': 'a'
-            }
-          },
-          {
-            key: 'timeliness',
-            value: 'timeliness',
-            tokens: {
-              'dimensionArticle': ''
-            }
-          },
-          {
-            key: 'cost-efficiency',
-            value: 'cost efficiency',
-            tokens: {
-              'dimensionArticle': ''
-            }
-          },
-          {
-            key: 'fairness',
-            value: 'fairness',
-            tokens: {
-              'dimensionArticle': ''
-            }
-          }
-        ]
-      }
-    ];
-
     var routerDimension = this.props.params.dimension;
     var routerComparison = this.props.params.comparison || 'all';
 
-    // Update values.
-    _.find(nlformFields, {id: 'dimension'}).active = routerDimension;
-    _.find(nlformFields, {id: 'comparison'}).active = routerComparison;
+    var nlformSentence = analysisNlForm.getSentence();
+    // Update nlform fields active value based on router.
+    var nlformFields = analysisNlForm.fields
+      .setActive('dimension', routerDimension)
+      .setActive('comparison', routerComparison)
+      .value();
 
-    var dimension = null;
+    var Dimension = null;
     
-    switch(this.props.params.dimension) {
+    switch(routerDimension) {
       case 'summary':
-        dimension = <DimGeneral data={this.state.data} comparison={this.props.params.comparison}/>;
+        Dimension = DimGeneral;
       break;
       case 'timeliness':
-        dimension = <DimTimeliness data={this.state.data} comparison={this.props.params.comparison}/>;
+        Dimension = DimTimeliness;
       break;
       case 'cost-efficiency':
-        dimension = <DimCostEfficiency data={this.state.data} comparison={this.props.params.comparison}/>;
+        Dimension = DimCostEfficiency;
       break;
       case 'fairness':
-        dimension = <DimFairness data={this.state.data} comparison={this.props.params.comparison}/>;
+        Dimension = DimFairness;
       break;
     }
 
@@ -144,7 +106,7 @@ var Analysis = module.exports = React.createClass({
           </div>
         </header>
         <div className="page-body">
-          {dimension}
+          {Dimension ? <Dimension loading={this.state.loading} data={this.state.data} comparison={this.props.params.comparison}/> : null}
         </div>
       </section>
     );
