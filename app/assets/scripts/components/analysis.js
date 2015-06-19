@@ -3,6 +3,8 @@ var React = require('react/addons');
 var Router = require('react-router');
 var _ = require('lodash');
 
+var analysisNlForm = require('../utils/analysis_nl_form');
+
 var DimTimeliness = require('./dimensions/timeliness');
 var DimCostEfficiency = require('./dimensions/cost_efficiency');
 var DimFairness = require('./dimensions/fairness');
@@ -42,80 +44,15 @@ var Analysis = module.exports = React.createClass({
 
   render: function() {
 
-    var nlformSentence = 'Showing {#dimensionArticle#} {%dimension%} of the procurement process {#comparisonArticle#} {%comparison%}.';
-    var nlformFields = [
-      {
-        id: 'comparison',
-        active: 'all',
-
-        opts: [
-          {
-            key: 'all',
-            value: 'full data set',
-            tokens: {
-              'comparisonArticle': 'for the'
-            }
-          },
-          {
-            key: 'level_gov',
-            value: 'level of government',
-            tokens: {
-              'comparisonArticle': 'for'
-            }
-          },
-          {
-            key: 'contract_procedure',
-            value: 'contract procedure',
-            tokens: {
-              'comparisonArticle': 'for'
-            }
-          }
-        ]
-      },
-
-      {
-        id: 'dimension',
-        active: 'summary',
-
-        opts: [
-          {
-            key: 'summary',
-            value: 'summary',
-            tokens: {
-              'dimensionArticle': 'a'
-            }
-          },
-          {
-            key: 'timeliness',
-            value: 'timeliness',
-            tokens: {
-              'dimensionArticle': ''
-            }
-          },
-          {
-            key: 'cost-efficiency',
-            value: 'cost efficiency',
-            tokens: {
-              'dimensionArticle': ''
-            }
-          },
-          {
-            key: 'fairness',
-            value: 'fairness',
-            tokens: {
-              'dimensionArticle': ''
-            }
-          }
-        ]
-      }
-    ];
-
     var routerDimension = this.props.params.dimension;
     var routerComparison = this.props.params.comparison || 'all';
 
-    // Update values.
-    _.find(nlformFields, {id: 'dimension'}).active = routerDimension;
-    _.find(nlformFields, {id: 'comparison'}).active = routerComparison;
+    var nlformSentence = analysisNlForm.getSentence();
+    // Update nlform fields active value based on router.
+    var nlformFields = analysisNlForm.fields
+      .setActive('dimension', routerDimension)
+      .setActive('comparison', routerComparison)
+      .value();
 
     var dimension = null;
     
