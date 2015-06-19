@@ -101,8 +101,14 @@ var IndFairness = module.exports = React.createClass({
     }
     return (
       <div className="content">
+        <section className="tile intro">
+          <h1 className="tile-title">Overview</h1>
+          <div className="tile-body">
+            <p>A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
+          </div>
+        </section>
+        {/* Clean me */}
         <ScatterplotChart data={relationshipData} />
-        <p className="desc">A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
         {data}
       </div>
     );

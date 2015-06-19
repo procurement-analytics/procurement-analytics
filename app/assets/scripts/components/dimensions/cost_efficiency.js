@@ -151,10 +151,16 @@ var IndCostEfficiency = module.exports = React.createClass({
     }
     return (
       <div className="content">
+        <section className="tile intro">
+          <h1 className="tile-title">Overview</h1>
+          <div className="tile-body">
+            <p>Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
+          </div>
+        </section>
+        {/* Clean me */}
         <BarChart data={barData}/>
         <hr />
         {data}
-        <p className="desc">Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
       </div>
     );
   }

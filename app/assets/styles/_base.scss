@@ -261,14 +261,6 @@ a:active{
   }
 }
 
-// .intro {
-//   width: calc(100% / 3);
-// }
-
-// .chart {
-//   width: calc(100% / 3 * 2);
-// }
-
 // TILE
 
 .intro {
@@ -515,17 +507,6 @@ a:active{
   shape-rendering: crispEdges;
 }
 
-// ANIMATION
-
-@include keyframes(fade-in) {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 
 // ABOUT
 
@@ -540,5 +521,17 @@ a:active{
   }
   span {
     @extend .visually-hidden;
+  }
+}
+
+
+// ANIMATION
+
+@include keyframes(fade-in) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
