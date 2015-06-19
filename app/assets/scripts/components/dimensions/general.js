@@ -14,20 +14,27 @@ var IndGeneral = module.exports = React.createClass({
 
   render: function() {
     var ldn = this.props.loading;
-    if (this.props.data.metadata) {
-      // Get the charts we want from the data
-      var amountChartData = _.find(this.props.data.charts, {id: 'amount-time'});
-      var contractsChartData = _.find(this.props.data.charts, {id: 'contracts-time'});
 
-      // Check how many "mini-charts" we need to build for each chart.
-      // Because these charts are of the type that spawn "mini-charts".
+    // Get the charts we want from the data
+    var chartData = this.props.data.charts || [];
+    var amountChartData = _.find(chartData, {id: 'amount-time'});
+    var contractsChartData = _.find(chartData, {id: 'contracts-time'});
 
-      ////// Chart contracts over time
-      var contractsCharts = contractsChartData.data.map(function(o, i) {
+    var contractsCharts, amountCharts;
+
+    // Check how many "mini-charts" we need to build for each chart.
+    // Because these charts are of the type that spawn "mini-charts".
+
+    ////// Chart contracts over time
+    if (contractsChartData) {
+      contractsCharts = contractsChartData.data.map(function(o, i) {
         return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={contractsChartData.x}  y={contractsChartData.y}/></div>;
       });
-      ////// Chart amount over time
-      var amountCharts = amountChartData.data.map(function(o, i) {
+    }
+
+    ////// Chart amount over time
+    if (amountChartData) {
+      amountCharts = amountChartData.data.map(function(o, i) {
         return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={amountChartData.x}  y={amountChartData.y}/></div>;
       });
     }
@@ -36,7 +43,7 @@ var IndGeneral = module.exports = React.createClass({
     var contractsTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
-        {this.props.data ? <div className="tile-body">{contractsCharts}</div> : null}
+        {contractsCharts ? <div className="tile-body">{contractsCharts}</div> : null}
       </section>
     );
 
@@ -44,7 +51,7 @@ var IndGeneral = module.exports = React.createClass({
     var amountTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
-        {this.props.data ? <div className="tile-body">{amountCharts}</div> : null}
+        {amountCharts ? <div className="tile-body">{amountCharts}</div> : null}
       </section>
     );
 

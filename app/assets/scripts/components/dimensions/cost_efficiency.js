@@ -102,31 +102,34 @@ var IndCostEfficiency = module.exports = React.createClass({
   render: function() {
 
     var ldn = this.props.loading;
-    if (this.props.data.metadata) {
 
-      var chartData = this.props.data.charts;
-      var distributionChartData = _.find(chartData, {id: 'price-distribution'});
-      var variationChartData = _.find(chartData, {id: 'price-variation'});
-      console.log(distributionChartData);
+    var chartData = this.props.data.charts || [];
+    var distributionChartData = _.find(chartData, {id: 'price-distribution'});
+    var variationChartData = _.find(chartData, {id: 'price-variation'});
 
-      var distributionCharts = distributionChartData.data.map(function(o, i) {
+    var distributionCharts, variationCharts;
+
+    if (distributionChartData) {
+      distributionCharts = distributionChartData.data.map(function(o, i) {
         return <div className="chart-item" key={i.toString()}><BarChart data={o.data} x={distributionChartData.x}  y={distributionChartData.y}/></div>;
       });
+    }
 
-      var variationCharts = <div className="chart-item"><BoxChart data={variationChartData.data} x={variationChartData.x}/></div>;
+    if (variationChartData) {
+      variationCharts = <div className="chart-item"><BoxChart data={variationChartData.data} x={variationChartData.x}/></div>;
     }
 
     var distributionTile = (
         <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
           <h1 className="tile-title">Price distribution</h1>
-          {this.props.data.metadata ? <div className="tile-body">{distributionCharts}</div> : null}
+          {distributionCharts && distributionCharts.length ? <div className="tile-body">{distributionCharts}</div> : null}
         </section>
     );
 
     var variationTile = (
         <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
           <h1 className="tile-title">Price variation</h1>
-          {this.props.data.metadata ? <div className="tile-body">{variationCharts}</div> : null}
+          {variationCharts ? <div className="tile-body">{variationCharts}</div> : null}
         </section>
     );
 
