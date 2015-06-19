@@ -65,6 +65,7 @@ var IndFairness = module.exports = React.createClass({
 
   render: function() {
 
+    // THIS NEEDS TO BE CLEANED.
     // DEV NOTE: For now we're doing here a switch based on comparison.
     // This should be done in the parent and the data passed through props.data
 
@@ -72,31 +73,76 @@ var IndFairness = module.exports = React.createClass({
     var comparison = this.props.comparison || 'all';
     switch(comparison) {
       case 'all':
-        data = (
-          <div>
-            <img src="assets/graphics/content/ch_top5-cont-all.png"/><br />
-            <img src="assets/graphics/content/ch_winning-all.png"/>
-            <img src="assets/graphics/content/ch_relationship-all.png"/>
-          </div>
-        );
+        data = [
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Top 5 contracts</h1>
+            <div className="tile-body">
+              <img src="assets/graphics/content/ch_top5-cont-all.png"/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Concentration of winning</h1>
+            <div className="tile-body">
+              <img src="assets/graphics/content/ch_winning-all.png"/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Relationship</h1>
+            <div className="tile-body">
+              <ScatterplotChart data={relationshipData} />
+            </div>
+          </section>)
+        ];
       break;
       case 'contract_procedure':
-        data = (
-          <div>
-            <img src="assets/graphics/content/ch_top5-cont-contr.png"/><br />
-            <img src="assets/graphics/content/ch_winning-contr.png"/>
-            <img src="assets/graphics/content/ch_relationship-contr.png"/>
-          </div>
-        );
+        data = [
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Top 5 contracts</h1>
+            <div className="tile-body">
+              <img src="assets/graphics/content/ch_top5-cont-contr.png"/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Concentration of winning</h1>
+            <div className="tile-body">
+              <img src="assets/graphics/content/ch_winning-contr.png"/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Relationship</h1>
+            <div className="tile-body">
+              <ScatterplotChart data={relationshipData} />
+            </div>
+          </section>)
+        ];
       break;
       case 'level_gov':
-        data = (
-          <div>
-            <img src="assets/graphics/content/ch_top5-cont-gov.png"/><br />
-            <img src="assets/graphics/content/ch_winning-gov.png"/>
-            <img src="assets/graphics/content/ch_relationship-gov.png"/>
-          </div>
-        );
+        data = [
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Top 5 contracts</h1>
+            <div className="tile-body">
+              <img src="assets/graphics/content/ch_top5-cont-gov.png"/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Concentration of winning</h1>
+            <div className="tile-body">
+              <img src="assets/graphics/content/ch_winning-gov.png"/>
+            </div>
+          </section>),
+
+          (<section className="tile chart-group">
+            <h1 className="tile-title">Relationship</h1>
+            <div className="tile-body">
+              <ScatterplotChart data={relationshipData} />
+            </div>
+          </section>)
+        ];
       break;
     }
     return (
@@ -107,8 +153,6 @@ var IndFairness = module.exports = React.createClass({
             <p>A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
           </div>
         </section>
-        {/* Clean me */}
-        <ScatterplotChart data={relationshipData} />
         {data}
       </div>
     );

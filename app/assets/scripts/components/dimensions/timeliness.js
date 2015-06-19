@@ -10,6 +10,7 @@ var IndTimeliness = module.exports = React.createClass({
 
   render: function() {
 
+    // THIS NEEDS TO BE CLEANED.
     // DEV NOTE: For now we're doing here a switch based on comparison.
     // This should be done in the parent and the data passed through props.data
 
