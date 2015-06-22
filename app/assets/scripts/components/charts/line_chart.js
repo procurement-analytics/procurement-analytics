@@ -63,31 +63,34 @@ var d3LineChart = function(el, data) {
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
     _height = parseInt(this.$el.style('height'), 10) - margin.top - margin.bottom;
-    console.log('_calcSize', _width, 'w');
-    console.log('_calcSize', _height, 'h');
   };
 
   this.setData = function(data) {
-    data.data.forEach(function(d) {
+    var _data = _.cloneDeep(data);
+    this.data = _data.data;
+    this.xData = _data.x;
+    this.yData = _data.y;
+
+    this.data.forEach(function(d) {
       d.date = parseDate(d.date);
     });
-    console.log('data', data);
-    this.data = data.data;
-    this.xData = data.x;
-    this.yData = data.y;
+
     this.update();
   };
 
   this._init = function() {
     this._calcSize();
-    // The svg
+
+    // The svg.
     svg = this.$el.append('svg')
         .attr('class', 'chart');
+
     // X scale. Range updated in function.
     x = d3.time.scale();
 
     // Y scale. Range updated in function.
     y = d3.scale.linear();
+
     // Define xAxis function.
     xAxis = d3.svg.axis()
       .scale(x)
@@ -110,7 +113,7 @@ var d3LineChart = function(el, data) {
       .y0(function(d) { return y(d.value); })
       .y1(function(d) { return _height; });
 
-    // Chart elements
+    // Chart elements.
     dataCanvas = svg.append("g")
         .attr('class', 'data-canvas')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -154,7 +157,6 @@ var d3LineChart = function(el, data) {
     dataCanvas
       .attr('width', _width)
       .attr('height', _height);
-
 
     var pathLine = dataCanvas.select(".line")
       .datum(this.data)
@@ -266,7 +268,6 @@ var d3LineChart = function(el, data) {
         .attr("y", -15);
     }
 
-    console.log(this.$el);
   };
 
   this.destroy = function() {
