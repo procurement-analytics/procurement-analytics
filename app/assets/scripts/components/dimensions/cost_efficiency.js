@@ -33,17 +33,17 @@ var IndCostEfficiency = module.exports = React.createClass({
     }
 
     var distributionTile = (
-        <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
-          <h1 className="tile-title">Price distribution</h1>
-          {distributionCharts && distributionCharts.length ? <div className="tile-body">{distributionCharts}</div> : null}
-        </section>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">Price distribution</h1>
+        {distributionCharts && distributionCharts.length ? <div className="tile-body">{distributionCharts}</div> : null}
+      </section>
     );
 
     var variationTile = (
-        <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
-          <h1 className="tile-title">Price variation</h1>
-          {variationCharts ? <div className="tile-body">{variationCharts}</div> : null}
-        </section>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">Price variation</h1>
+        {variationCharts ? <div className="tile-body">{variationCharts}</div> : null}
+      </section>
     );
 
     return (
