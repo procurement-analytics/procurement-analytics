@@ -17,7 +17,7 @@ var ScatterplotChart = module.exports = React.createClass({
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
     window.addEventListener('resize', this.onWindowResize);
-    this.chart = new d3ScatterplotChart(this.getDOMNode(), this.props.data);
+    this.chart = new d3ScatterplotChart(this.getDOMNode(), this.props);
   },
 
   componentWillUnmount: function() {
@@ -28,7 +28,7 @@ var ScatterplotChart = module.exports = React.createClass({
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
     console.log('ScatterplotChart componentDidUpdate');
-    this.chart.setData(this.props.data);
+    this.chart.setData(this.props);
   },
 
   render: function() {
@@ -43,6 +43,11 @@ var ScatterplotChart = module.exports = React.createClass({
 
 var d3ScatterplotChart = function(el, data) {
   this.$el = d3.select(el);
+
+  this.data = null;
+  this.xData = null;
+  this.yData = null;
+  this.rData = null;
 
   // Var declaration.
   var margin = {top: 30, right: 32, bottom: 50, left: 50};
@@ -62,7 +67,10 @@ var d3ScatterplotChart = function(el, data) {
   };
 
   this.setData = function(data) {
-    this.data = data;
+    this.data = data.data;
+    this.xData = data.x;
+    this.yData = data.y;
+    this.rData = data.r;
     this.update();
   };
 
@@ -137,7 +145,7 @@ var d3ScatterplotChart = function(el, data) {
     // Add some padding to the axes.
     // 1/10th of the difference between min and max.
     // Do not allow to fall below 0.
-    var xd = [this.data.x.min, this.data.x.max];
+    var xd = this.xData.domain;
     xd[0] -= (xd[1] - xd[0]) / 10;
     xd[0] = xd[0] < 0 ? 0 : xd[0];
     xd[1] += (xd[1] - xd[0]) / 10;
@@ -147,14 +155,14 @@ var d3ScatterplotChart = function(el, data) {
     // Add some padding to the axes.
     // 1/10th of the difference between min and max.
     // Do not allow to fall below 0.
-    var yd = [this.data.y.min, this.data.y.max];
+    var yd = this.yData.domain;
     yd[0] -= (yd[1] - yd[0]) / 10;
     yd[0] = yd[0] < 0 ? 0 : yd[0];
     yd[1] += (yd[1] - yd[0]) / 10;
 
     y.range([_height, 0]).domain(yd);
 
-    r.domain([this.data.r.min, this.data.r.max]);
+    r.domain(this.rData.domain);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -165,7 +173,7 @@ var d3ScatterplotChart = function(el, data) {
       .attr('height', _height);
 
     // Calc the linear regression.
-    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data.points, 'amount'), _.pluck(this.data.points, 'suppliers'));
+    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data,'amount'), _.pluck(this.data, 'suppliers'));
     var x1 = xd[0];
     var x2 = xd[1];
     //y = mx + b
@@ -188,9 +196,8 @@ var d3ScatterplotChart = function(el, data) {
       .attr("x2", function(d) { return x(d[2]); })
       .attr("y2", function(d) { return y(d[3]); });
 
-
     var circles = dataCanvas.selectAll('circle.dot')
-      .data(this.data.points);
+      .data(this.data);
 
     circles.enter().append("circle")
       .attr("class", "dot")
@@ -208,9 +215,9 @@ var d3ScatterplotChart = function(el, data) {
       .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
 
-    if (this.data.x.label) {
+    if (this.xData.label) {
       svg.select(".x.axis .label")
-        .text(this.data.x.label)
+        .text(this.xData.label)
         .transition()
         .attr("x", _width + margin.right)
         .attr("y", 30);
@@ -220,9 +227,9 @@ var d3ScatterplotChart = function(el, data) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
       .call(yAxis);
 
-    if (this.data.y.label) {
+    if (this.yData.label) {
       svg.select(".y.axis .label")
-        .text(this.data.y.label)
+        .text(this.yData.label)
         .transition()
         .attr("x", 0)
         .attr("y", -15);

@@ -17,7 +17,7 @@ var BoxChart = module.exports = React.createClass({
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
     window.addEventListener('resize', this.onWindowResize);
-    this.chart = new d3BoxChart(this.getDOMNode(), this.props.data);
+    this.chart = new d3BoxChart(this.getDOMNode(), this.props);
   },
 
   componentWillUnmount: function() {
@@ -28,7 +28,7 @@ var BoxChart = module.exports = React.createClass({
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
     console.log('BoxChart componentDidUpdate');
-    this.chart.setData(this.props.data);
+    this.chart.setData(this.props);
   },
 
   render: function() {
@@ -43,6 +43,9 @@ var BoxChart = module.exports = React.createClass({
 
 var d3BoxChart = function(el, data) {
   this.$el = d3.select(el);
+
+  this.data = null;
+  this.xData = null;
 
   // Chart lifecycle:
   // _init()
@@ -76,7 +79,8 @@ var d3BoxChart = function(el, data) {
   };
 
   this.setData = function(data) {
-    this.data = data;
+    this.data = data.data;
+    this.xData = data.x;
     this.update();
   };
 
@@ -265,19 +269,19 @@ var d3BoxChart = function(el, data) {
   this.update = function() {
     this._calcSize();
 
-    var n = this.data.plots.length;
-    min = this.data.x.min;
-    max = this.data.x.max;
+    console.log(this.data);
+    var n = this.data.data.length;
+    var domain = this.xData.domain;
     // Compute the size of each box.
     boxSize = (_height - n * margin.gap) / n;
 
     boxChart
       .width(_width)
       .height(boxSize)
-      .domain([min, max]);
+      .domain(domain);
 
     x.range([0, _width])
-      .domain([min, max]);
+      .domain(domain);
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -288,7 +292,7 @@ var d3BoxChart = function(el, data) {
       .attr('height', _height);
 
     var boxes = dataCanvas.selectAll("g.boxplot")
-      .data(this.data.plots);
+      .data(this.data.data);
 
     boxes.enter().append('g')
       .attr("transform", function(d, i) { return "translate(" +  0  + "," + i * (boxSize + margin.gap) + ")"; })
@@ -305,9 +309,9 @@ var d3BoxChart = function(el, data) {
       .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
       .call(xAxis);
 
-    if (this.data.x.label) {
+    if (this.xData) {
       svg.select(".x.axis .label")
-        .text(this.data.x.label)
+        .text(this.xData.label)
         .transition()
         .attr("x", _width + margin.right)
         .attr("y", 30);
