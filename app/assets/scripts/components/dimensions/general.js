@@ -28,14 +28,14 @@ var IndGeneral = module.exports = React.createClass({
     ////// Chart contracts over time
     if (contractsChartData) {
       contractsCharts = contractsChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={contractsChartData.x}  y={contractsChartData.y}/></div>;
+        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={_.omit(contractsChartData.x, 'label')}  y={_.omit(contractsChartData.y, 'label')}/></div>;
       });
     }
 
     ////// Chart amount over time
     if (amountChartData) {
       amountCharts = amountChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={amountChartData.x}  y={amountChartData.y}/></div>;
+        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={_.omit(amountChartData.x, 'label')}  y={_.omit(amountChartData.y, 'label')}/></div>;
       });
     }
 
