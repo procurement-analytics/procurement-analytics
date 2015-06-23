@@ -161,7 +161,7 @@ var d3BoxChart = function(el, data) {
           .attr('x2', function(d) { return x(d[1]); })
           .attr('y2', boxHeight / 2);
 
-        center
+        center.transition()
           .attr('y1', boxHeight / 2)
           .attr('x1', function(d) { return x(d[0]); })
           .attr('y2', boxHeight / 2)
@@ -178,7 +178,7 @@ var d3BoxChart = function(el, data) {
           .attr('height', boxHeight)
           .attr('width', function(d) { return x(d[2]) - x(d[0]); });
 
-        box
+        box.transition()
           .attr('x', function(d) { return x(d[0]); })
           .attr('height', boxHeight)
           .attr('width', function(d) { return x(d[2]) - x(d[0]); });
@@ -194,7 +194,7 @@ var d3BoxChart = function(el, data) {
           .attr('x2', x)
           .attr('y2', boxHeight);
 
-        medianLine
+        medianLine.transition()
           .attr('x1', x)
           .attr('x2', x)
           .attr('y2', boxHeight);
@@ -210,7 +210,7 @@ var d3BoxChart = function(el, data) {
           .attr('x2', x)
           .attr('y2', boxHeight);
 
-        whisker
+        whisker.transition()
           .attr('x1', x)
           .attr('x2', x)
           .attr('y2', boxHeight);
