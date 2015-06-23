@@ -477,7 +477,7 @@ a:active{
   }
 }
 
-.lineChart, .boxChart, .barChart, .scatterplotChart {
+.lineChart, .barChart, .scatterplotChart {
   width: 100%;
   min-height: 300px;
 }
@@ -559,6 +559,8 @@ a:active{
 
 
 
+
+
 svg.chart {
   display: block;
 }
@@ -574,5 +576,24 @@ svg.chart {
 
   .focus-circle {
     fill: $secondary-color;
+  }
+}
+
+.boxChart {
+  .boxplot-container {
+    .label {
+      color: tint($base-color, 44%);
+    }
+
+    line {
+      stroke: $secondary-color;
+      stroke-width: 1px;
+    }
+
+    .box {
+      fill: $primary-color;
+      stroke: $secondary-color;
+      stroke-width: 1px;
+    }
   }
 }

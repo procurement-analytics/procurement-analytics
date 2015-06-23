@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "id": "cost-efficiency--all"
+    "id": "cost-efficiency--contract-procedure"
   },
   "charts": [
     {
@@ -33,19 +33,30 @@
       "title": "Price Variation",
       "x": {
         "label": "Price variation",
-        "domain": [100,10099]
+        "domain": [1200,12500]
       },
       "data": [
         {
-          "id": "all",
-          "label": "Full data set",
-          "min": 590,
-          "max": 8090,
-          "whisker1": 590,
-          "q1": 1090,
-          "median": 2294,
-          "q3": 2890,
-          "whisker2": 7797
+          "id": "direct-award",
+          "label": "Direct award",
+          "min": 1500,
+          "max": 12000,
+          "whisker1": 1500,
+          "q1": 3120,
+          "median": 5000,
+          "q3": 7500,
+          "whisker2": 12000
+        },
+        {
+          "id": "open-call",
+          "label": "Open call",
+          "min": 5000,
+          "max": 10000,
+          "whisker1": 5550,
+          "q1": 6320,
+          "median": 7000,
+          "q3": 9500,
+          "whisker2": 10000
         }
       ]
     }

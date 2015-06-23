@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "id": "cost-efficiency--all"
+    "id": "cost-efficiency--level-gov"
   },
   "charts": [
     {
@@ -33,19 +33,30 @@
       "title": "Price Variation",
       "x": {
         "label": "Price variation",
-        "domain": [100,10099]
+        "domain": [200,5500]
       },
       "data": [
         {
-          "id": "all",
-          "label": "Full data set",
-          "min": 590,
-          "max": 8090,
-          "whisker1": 590,
-          "q1": 1090,
+          "id": "federal",
+          "label": "Federal",
+          "min": 500,
+          "max": 5000,
+          "whisker1": 1235,
+          "q1": 1300,
           "median": 2294,
-          "q3": 2890,
-          "whisker2": 7797
+          "q3": 3000,
+          "whisker2": 4410
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "min": 500,
+          "max": 5000,
+          "whisker1": 800,
+          "q1": 1200,
+          "median": 1500,
+          "q3": 1800,
+          "whisker2": 3200
         }
       ]
     }
