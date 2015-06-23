@@ -2,6 +2,7 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var popover = require('./popover');
 
 var BarChart = module.exports = React.createClass({
   chart: null,
@@ -37,9 +38,6 @@ var BarChart = module.exports = React.createClass({
   }
 });
 
-
-
-
 var d3BarChart = function(el, data) {
   this.$el = d3.select(el);
 
@@ -56,25 +54,28 @@ var d3BarChart = function(el, data) {
   var x, y, xBar, xAxis, yAxis, line;
   // Elements.
   var svg, dataCanvas;
+  // Init the popover.
+  var chartPopover = new popover();
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
     _height = parseInt(this.$el.style('height'), 10) - margin.top - margin.bottom;
-    console.log('_calcSize', _width, 'w');
-    console.log('_calcSize', _height, 'h');
   };
 
   this.setData = function(data) {
-    this.data = data;
-    this.xData = data.x;
-    this.yData = data.y;
+    var _data = _.cloneDeep(data);
+    this.data = _data;
+    this.xData = _data.x;
+    this.yData = _data.y;
     this.update();
   };
 
   this._init = function() {
     this._calcSize();
-    // The svg
-    svg = this.$el.append('svg');
+    // The svg.
+    svg = this.$el.append('svg')
+        .attr('class', 'chart');
+
     // X scale. Range updated in function.
     x = d3.scale.ordinal();
     xBar = d3.scale.ordinal();
@@ -98,7 +99,6 @@ var d3BarChart = function(el, data) {
       .y(function(d) { return y(d.count); });
 
     // Chart elements
-
     dataCanvas = svg.append("g")
         .attr('class', 'data-canvas')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -122,13 +122,14 @@ var d3BarChart = function(el, data) {
     // Create the buckets.
     var xDomain = this.xData.domain;
     var buckets = d3.range(xDomain[0], xDomain[1], (xDomain[1] - xDomain[0]) / this.data.data.length);
+    var bucketsScale = buckets.concat([xDomain[1]]);
 
     xBar.rangeBands([0, _width])
       .domain(buckets);
 
     // For the range points we need the max value as well.
     x.rangePoints([0, _width])
-      .domain(buckets.concat([xDomain[1]]));
+      .domain(bucketsScale);
 
     y.range([_height, 0])
       .domain(this.yData.domain);
@@ -158,9 +159,29 @@ var d3BarChart = function(el, data) {
     barG
       .attr("transform", function(d, i) { return "translate(" + i * xBar.rangeBand() + "," + 0 + ")"; })
       .select('rect')
+        .transition()
         .attr("y", function(d) { return y(d); })
         .attr("height", function(d) { return _height - y(d); })
         .attr("width", xBar.rangeBand());
+
+
+    barG.on('mouseover', function(d, i) {
+      var matrix = this.getScreenCTM();
+
+      var posX = matrix.e + xBar.rangeBand()/2;
+      var posY =  matrix.f + _height / 2;
+
+      chartPopover.setContent(
+        <div>
+          Number of contracts: {d[0]}<br/>
+          Price bucket: {bucketsScale[i]} - {bucketsScale[i + 1]}
+        </div>
+      ).show(posX, posY);
+    });
+
+    barG.on('mouseout', function(d) {
+      chartPopover.hide();
+    });
 
     // Append Axis.
     svg.select(".x.axis")
