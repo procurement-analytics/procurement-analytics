@@ -65,7 +65,7 @@ var IndGeneral = module.exports = React.createClass({
           </div>
         </section>
 
-        <section className="tile">
+        <section className="tile facts">
           <h1 className="tile-title">Key facts</h1>
           <div className="tile-body">
             <dl className="facts-list">
