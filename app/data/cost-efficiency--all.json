@@ -35,30 +35,19 @@
         "label": "Price variation",
         "domain": [100,10099]
       },
-      "data": {
-        "id": "all",
-        "label": "Full data set",
-        "data": [
-          {
-            "min": 590,
-            "max": 8090,
-            "whisker1": 590,
-            "q1": 1090,
-            "median": 2294,
-            "q3": 2890,
-            "whisker2": 7797
-          },
-          {
-            "min": 90,
-            "max": 10099,
-            "whisker1": 90,
-            "q1": 1698,
-            "median": 3399,
-            "q3": 4996,
-            "whisker2": 9993
-          }
-        ]
-      }
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "min": 590,
+          "max": 8090,
+          "whisker1": 590,
+          "q1": 1090,
+          "median": 2294,
+          "q3": 2890,
+          "whisker2": 7797
+        }
+      ]
     }
   ]
 }

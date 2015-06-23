@@ -29,7 +29,7 @@ var IndCostEfficiency = module.exports = React.createClass({
     }
 
     if (variationChartData) {
-      variationCharts = <div className="chart-item"><BoxChart data={variationChartData.data} x={variationChartData.x}/></div>;
+      variationCharts = <div className="chart-item"><BoxChart data={variationChartData.data} x={_.omit(variationChartData.x, 'label')}/></div>;
     }
 
     var distributionTile = (
