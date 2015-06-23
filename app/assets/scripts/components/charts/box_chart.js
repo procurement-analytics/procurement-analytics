@@ -237,8 +237,8 @@ var d3BoxChart = function(el, data) {
         trigger.on('mouseover', function(d) {
           var matrix = this.getScreenCTM();
 
-          var posX = matrix.e + width/2;
-          var posY =  matrix.f;
+          var posX = (window.pageXOffset + matrix.e) + width/2;
+          var posY =  (window.pageYOffset + matrix.f);
 
           chartPopover.setContent(
             <div>

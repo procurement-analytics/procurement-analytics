@@ -168,8 +168,8 @@ var d3BarChart = function(el, data) {
     barG.on('mouseover', function(d, i) {
       var matrix = this.getScreenCTM();
 
-      var posX = matrix.e + xBar.rangeBand()/2;
-      var posY =  matrix.f + _height / 2;
+      var posX = (window.pageXOffset + matrix.e) + xBar.rangeBand()/2;
+      var posY =  (window.pageYOffset + matrix.f) + _height / 2;
 
       chartPopover.setContent(
         <div>
