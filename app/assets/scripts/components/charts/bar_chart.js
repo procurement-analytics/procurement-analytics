@@ -51,7 +51,7 @@ var d3BarChart = function(el, data) {
   // must be added.
   var _width, _height;
   // Scales, Axis, and line functions.
-  var x, y, xBar, xAxis, yAxis, line;
+  var x, y, xBar, xAxis, yAxis;
   // Elements.
   var svg, dataCanvas;
   // Init the popover.
@@ -93,15 +93,10 @@ var d3BarChart = function(el, data) {
       .scale(y)
       .orient("left");
 
-    // Line function
-    line = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.count); });
-
     // Chart elements
     dataCanvas = svg.append("g")
-        .attr('class', 'data-canvas')
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr('class', 'data-canvas')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
       .attr("class", "x axis")
