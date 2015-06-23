@@ -353,7 +353,7 @@ a:active{
 // For the animation
 
 .nl-curtain-appear {
-  transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+  transition: opacity 0.24s ease 0s, visibility 0.24s linear 0s;
   opacity: 0;
   visibility: hidden;
   
@@ -364,7 +364,7 @@ a:active{
 }
 
 .nl-curtain-leave {
-  transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+  transition: opacity 0.24s ease 0s, visibility 0.24s linear 0s;
   opacity: 1;
   visibility: visible;
 
@@ -381,7 +381,7 @@ a:active{
   background: $primary-color;
   @include transform(translate(-25%, -25%) scale(1));
   @include transform-origin(25% 25% 0);
-  transition: all 0.32s ease 0s;
+  transition: all 0.24s ease 0s;
   font-weight: $base-font-light;
   line-height: 1;
   @extend .antialiased;
@@ -540,5 +540,39 @@ a:active{
   }
   to {
     opacity: 1;
+  }
+}
+
+
+
+.popover {
+  @extend .antialiased;
+  background: rgba($base-color, 0.8);
+  position: absolute;
+  z-index: 9999;
+  color: #fff;
+  padding: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.25rem;
+}
+
+
+
+
+svg.chart {
+  display: block;
+}
+
+.lineChart {
+  .area {
+    fill: $primary-color;
+  }
+  .line {
+    stroke: $secondary-color;
+    stroke-width: 2px;
+  }
+
+  .focus-circle {
+    fill: $secondary-color;
   }
 }

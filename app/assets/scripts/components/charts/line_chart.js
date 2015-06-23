@@ -2,12 +2,12 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var popover = require('./popover');
 
 var LineChart = module.exports = React.createClass({
   chart: null,
 
   onWindowResize: function() {
-    console.log('resize!');
     this.chart.update();
   },
 
@@ -39,8 +39,6 @@ var LineChart = module.exports = React.createClass({
 });
 
 
-
-
 var d3LineChart = function(el, data) {
   this.$el = d3.select(el);
 
@@ -53,32 +51,42 @@ var d3LineChart = function(el, data) {
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
-  // Scales, Axis, and line functions.
-  var x, y, xAxis, yAxis, line;
+  // Scales, Axis, line and area functions.
+  var x, y, xAxis, yAxis, line, area;
   // Elements.
   var svg, dataCanvas;
+  // Init the popover.
+  var chartPopover = new popover();
+
+  var parseDate = d3.time.format("%Y-%m-%d").parse;
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
     _height = parseInt(this.$el.style('height'), 10) - margin.top - margin.bottom;
-    console.log('_calcSize', _width, 'w');
-    console.log('_calcSize', _height, 'h');
   };
 
   this.setData = function(data) {
-    console.log('data', data);
-    this.data = data.data;
-    this.xData = data.x;
-    this.yData = data.y;
+    var _data = _.cloneDeep(data);
+    this.data = _data.data;
+    this.xData = _data.x;
+    this.yData = _data.y;
+
+    this.data.forEach(function(d) {
+      d.date = parseDate(d.date);
+    });
+
     this.update();
   };
 
   this._init = function() {
     this._calcSize();
-    // The svg
-    svg = this.$el.append('svg');
+
+    // The svg.
+    svg = this.$el.append('svg')
+        .attr('class', 'chart');
+
     // X scale. Range updated in function.
-    x = d3.scale.ordinal();
+    x = d3.time.scale();
 
     // Y scale. Range updated in function.
     y = d3.scale.linear();
@@ -86,6 +94,7 @@ var d3LineChart = function(el, data) {
     // Define xAxis function.
     xAxis = d3.svg.axis()
       .scale(x)
+      .ticks(6)
       .orient("bottom");
 
     // Define yAxis function.
@@ -93,13 +102,18 @@ var d3LineChart = function(el, data) {
       .scale(y)
       .orient("left");
 
-    // Line function
+    // Line function.
     line = d3.svg.line()
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.value); });
 
-    // Chart elements
+    // Area function.
+    area = d3.svg.area()
+      .x(function(d) { return x(d.date); })
+      .y0(function(d) { return y(d.value); })
+      .y1(function(d) { return _height; });
 
+    // Chart elements.
     dataCanvas = svg.append("g")
         .attr('class', 'data-canvas')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -117,14 +131,21 @@ var d3LineChart = function(el, data) {
       .attr("text-anchor", "middle");
 
     dataCanvas.append("path")
+      .attr("class", "area");
+
+    dataCanvas.append("path")
       .attr("class", "line");
+
+    dataCanvas.append("g")
+      .attr("class", "focus-circles");
   };
 
   this.update = function() {
     this._calcSize();
 
-    x.rangePoints([0, _width])
-      .domain(this.data.map(function(d) { return d.date; }));
+    x.range([0, _width])
+      .domain(d3.extent(this.data, function(d) { return d.date; }));
+      //.domain(this.data.map(function(d) { return d.date; }));
 
     y.range([_height, 0])
       .domain(this.yData.domain);
@@ -137,21 +158,57 @@ var d3LineChart = function(el, data) {
       .attr('width', _width)
       .attr('height', _height);
 
-
-    var path = dataCanvas.select(".line")
+    var pathLine = dataCanvas.select(".line")
       .datum(this.data)
       .attr("d", line);
-/*
-    var totalLength = path.node().getTotalLength();
 
-    path
-      .attr("stroke-dasharray", totalLength + " " + totalLength)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-        .duration(1000)
-        .ease("linear")
-        .attr("stroke-dashoffset", 0);
-*/
+    var pathArea = dataCanvas.select(".area")
+      .datum(this.data)
+      .attr("d", area);
+
+    var focusCirlces = dataCanvas.select(".focus-circles").selectAll('.focus-circle')
+      .data(this.data);
+
+    focusCirlces.enter()
+      .append('circle')
+      .attr('class', 'focus-circle')
+      .attr('cx', function(d) { return x(d.date);})
+      .attr('cy', function(d) { return y(d.value);})
+      .style('opacity', 0)
+      .attr('r', 6);
+
+    focusCirlces
+      .attr('cx', function(d) { return x(d.date);})
+      .attr('cy', function(d) { return y(d.value);})
+      .style('opacity', 0)
+      .attr('r', 6);
+
+    focusCirlces.exit()
+      .remove();
+
+    focusCirlces
+      .on("mouseover", function(d) {
+        var cr = d3.select(this);
+        cr.transition().attr('r', 8).style('opacity', 1);
+
+        var matrix = this.getScreenCTM()
+          .translate(this.getAttribute("cx"), this.getAttribute("cy"));
+        
+        var posX = window.pageXOffset + matrix.e;
+        var posY =  window.pageYOffset + matrix.f;
+
+        chartPopover.setContent(
+          <div>
+            Value: {d.value}<br/>
+            Date: {d.date.toString()}
+          </div>
+        ).show(posX, posY);
+
+      })
+      .on("mouseout", function() {
+        d3.select(this).transition().attr('r', 6).style('opacity', 0 );
+        chartPopover.hide();
+      });
 
     // Append Axis.
     svg.select(".x.axis")
@@ -178,7 +235,6 @@ var d3LineChart = function(el, data) {
         .attr("y", -15);
     }
 
-    console.log(this.$el);
   };
 
   this.destroy = function() {
@@ -191,4 +247,3 @@ var d3LineChart = function(el, data) {
   this._init();
   this.setData(data);
 };
-
