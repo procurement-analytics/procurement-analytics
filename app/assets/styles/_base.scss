@@ -356,7 +356,7 @@ a:active{
   transition: opacity 0.24s ease 0s, visibility 0.24s linear 0s;
   opacity: 0;
   visibility: hidden;
-  
+
   &.nl-curtain-appear-active {
     opacity: 1;
     visibility: visible;
@@ -456,12 +456,12 @@ a:active{
 #indicators {
   @include clearfix();
   margin-top: 3rem;
-  margin-bottom: -1px; 
+  margin-bottom: -1px;
 
   li {
     display: block;
     float: left;
-    margin-right: 0.5rem; 
+    margin-right: 0.5rem;
 
     a {
       border: 1px solid #bbb;
@@ -477,7 +477,7 @@ a:active{
   }
 }
 
-.lineChart, .barChart, .scatterplotChart {
+.timeChart, .lineChart, .barChart, .scatterplotChart {
   width: 100%;
   min-height: 300px;
 }
@@ -602,5 +602,23 @@ svg.chart {
 .barChart {
   .bar rect {
     fill: $primary-color;
+  }
+}
+
+.timeChart {
+  .small-label {
+    @extend .antialiased;
+    font-size: 0.785rem;
+    font-weight: $base-font-bold;
+    fill: $base-font-color;
+  }
+  .bar-tick {
+    text-anchor: middle;
+    fill: #fff;
+  }
+  .bar-axis-tick {
+    text-anchor: middle;
+    fill: $base-font-color;
+    font-size: 11px;
   }
 }
