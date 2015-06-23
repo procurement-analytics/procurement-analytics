@@ -11,7 +11,7 @@
         "label": "Price"
       },
       "y": {
-        "label": "Distribution",
+        "label": "# of contracts",
         "domain": [160,400]
       },
       "data": [

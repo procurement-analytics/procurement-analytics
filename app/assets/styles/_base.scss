@@ -554,6 +554,7 @@ a:active{
   padding: 1rem;
   font-size: 0.85rem;
   line-height: 1.25rem;
+  pointer-events: none;
 }
 
 
@@ -595,5 +596,11 @@ svg.chart {
       stroke: $secondary-color;
       stroke-width: 1px;
     }
+  }
+}
+
+.barChart {
+  .bar rect {
+    fill: $primary-color;
   }
 }

@@ -23,6 +23,7 @@ function popover() {
     }
 
     $popover = $(_content);
+    $popover.hide();
     $('#site-canvas').append($popover);
 
     // Set position on next tick.
@@ -50,7 +51,8 @@ function popover() {
 
       $popover
       .css('left', leftOffset + 'px')
-      .css('top', topOffset + 'px');
+      .css('top', topOffset + 'px')
+      .show();
     }, 1);
 
     return this;

@@ -80,8 +80,9 @@ var d3BoxChart = function(el, data) {
   };
 
   this.setData = function(data) {
-    this.data = data.data;
-    this.xData = data.x;
+    var _data = _.cloneDeep(data);
+    this.data = _data.data;
+    this.xData = _data.x;
     this.update();
   };
 
@@ -310,8 +311,10 @@ var d3BoxChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
-    // The svg
-    svg = this.$el.append('svg');
+    // The svg.
+    svg = this.$el.append('svg')
+        .attr('class', 'chart');
+
     // X scale. Range updated in function.
     x = d3.scale.linear();
 

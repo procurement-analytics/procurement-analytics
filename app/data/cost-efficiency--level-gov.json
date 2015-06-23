@@ -11,19 +11,41 @@
         "label": "Price"
       },
       "y": {
-        "label": "Distribution",
-        "domain": [160,400]
+        "label": "# of contracts",
+        "domain": [40,400]
       },
       "data": [
         {
-          "id": "all",
-          "label": "Full data set",
+          "id": "federal",
+          "label": "Federal",
+          "data": [
+            400,
+            200,
+            298,
+            380,
+            200
+          ]
+        },
+        {
+          "id": "state",
+          "label": "State",
           "data": [
             200,
-            400,
-            380,
+            300,
             298,
-            180
+            380,
+            160
+          ]
+        },
+        {
+          "id": "municipal",
+          "label": "Municipal",
+          "data": [
+            380,
+            200,
+            100,
+            90,
+            50
           ]
         }
       ]
@@ -57,6 +79,17 @@
           "median": 1500,
           "q3": 1800,
           "whisker2": 3200
+        },
+        {
+          "id": "municipal",
+          "label": "Municipal",
+          "min": 500,
+          "max": 3000,
+          "whisker1": 520,
+          "q1": 580,
+          "median": 1000,
+          "q3": 2500,
+          "whisker2": 2980
         }
       ]
     }

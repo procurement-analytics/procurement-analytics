@@ -11,19 +11,30 @@
         "label": "Price"
       },
       "y": {
-        "label": "Distribution",
-        "domain": [160,400]
+        "label": "# of contracts",
+        "domain": [30,400]
       },
       "data": [
         {
-          "id": "all",
-          "label": "Full data set",
+          "id": "direct-award",
+          "label": "Direct award",
+          "data": [
+            45,
+            80,
+            250,
+            300,
+            100
+          ]
+        },
+        {
+          "id": "open-call",
+          "label": "Open call",
           "data": [
             200,
-            400,
-            380,
-            298,
-            180
+            280,
+            390,
+            360,
+            120
           ]
         }
       ]
