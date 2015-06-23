@@ -2,7 +2,7 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
-var $ = require('jquery');
+var popover = require('./popover');
 
 var LineChart = module.exports = React.createClass({
   chart: null,
@@ -39,8 +39,6 @@ var LineChart = module.exports = React.createClass({
 });
 
 
-
-
 var d3LineChart = function(el, data) {
   this.$el = d3.select(el);
 
@@ -56,7 +54,9 @@ var d3LineChart = function(el, data) {
   // Scales, Axis, line and area functions.
   var x, y, xAxis, yAxis, line, area;
   // Elements.
-  var svg, dataCanvas, tooltip;
+  var svg, dataCanvas;
+  // Init the popover.
+  var chartPopover = new popover();
 
   var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -188,10 +188,8 @@ var d3LineChart = function(el, data) {
 
     focusCirlces
       .on("mouseover", function(d) {
-        var $this = $(this);
         var cr = d3.select(this);
-        cr.transition().attr('r', 8)
-      .style('opacity', 1);
+        cr.transition().attr('r', 8).style('opacity', 1);
 
         var matrix = this.getScreenCTM()
           .translate(this.getAttribute("cx"), this.getAttribute("cy"));
@@ -199,48 +197,17 @@ var d3LineChart = function(el, data) {
         var posX = window.pageXOffset + matrix.e;
         var posY =  window.pageYOffset + matrix.f;
 
-        tooltip = $(React.renderToStaticMarkup(
-          <Tooltip>
+        chartPopover.setContent(
+          <div>
             Value: {d.value}<br/>
-            Date: {d.date.toString()}<br/>
-          </Tooltip>
-        ));
-
-        // Set position on next tick.
-        // Otherwise the tooltip has no spatiality.
-        setTimeout(function() {
-          var containerW = $('#site-canvas').outerWidth();
-          var sizeW = tooltip.outerWidth();
-          var sizeH = tooltip.outerHeight();
-
-          var leftOffset = posX  - sizeW / 2;
-          var topOffset = posY - sizeH - 8;
-
-          // If the tooltip would be to appear outside the window on the right
-          // move it to the left by that amount.
-          // And add some padding.
-          var overflowR = (leftOffset + sizeW) - containerW ;
-          if (overflowR > 0) {
-            leftOffset -= overflowR + 16;
-          }
-
-          // Same for the left side.
-          if (leftOffset < 0) {
-            leftOffset = 16;
-          }
-
-          tooltip
-          .css('left', leftOffset + 'px')
-          .css('top', topOffset + 'px');
-        }, 1);
-
-        $('#site-canvas').append(tooltip);
+            Date: {d.date.toString()}
+          </div>
+        ).show(posX, posY);
 
       })
       .on("mouseout", function() {
-        d3.select(this).transition().attr('r', 6) 
-          .style('opacity', 0 );
-        tooltip.remove();
+        d3.select(this).transition().attr('r', 6).style('opacity', 0 );
+        chartPopover.hide();
       });
 
     // Append Axis.
@@ -280,13 +247,3 @@ var d3LineChart = function(el, data) {
   this._init();
   this.setData(data);
 };
-
-var Tooltip = React.createClass({
-  render: function() {
-    return (
-      <div className="popover">
-        {this.props.children}
-      </div>
-    );
-  }
-});
