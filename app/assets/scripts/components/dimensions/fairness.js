@@ -90,13 +90,6 @@ var IndFairness = module.exports = React.createClass({
           </div>
         </section>
 
-        <section className="tile chart-group">
-          <h1 className="tile-title">Concentration of winning</h1>
-          <div className="tile-body">
-            <img src="assets/graphics/content/ch_winning-gov.png"/>
-          </div>
-        </section>
-
         {relationTile}
         {concentrTile}
 
