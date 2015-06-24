@@ -105,6 +105,28 @@
           ]
         }
       ]
+    },
+    {
+      "id": "top-contracts",
+      "title": "Top 5 contracts",
+      "header": [
+        "Purchasing unit",
+        "Supplier",
+        "Amount"
+      ],
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            ["Company 1", "Supplier 1", 684361],
+            ["Company 2", "Supplier 2", 354894],
+            ["Company 3", "Supplier 3", 85453],
+            ["Company 4", "Supplier 4", 54865],
+            ["Company 5", "Supplier 5", 36721]
+          ]
+        }
+      ]
     }
   ]
 }

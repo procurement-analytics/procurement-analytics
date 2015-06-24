@@ -38,7 +38,9 @@ var IndFairness = module.exports = React.createClass({
     var chartData = this.props.data.charts || [];
     var relationChartData = _.find(chartData, {id: 'relationship'});
     var concentrChartData = _.find(chartData, {id: 'concentration-winning'});
-    var relationCharts, concentrCharts;
+    var top5TableData = _.find(chartData, {id: 'top-contracts'});
+
+    var relationCharts, concentrCharts, top5Table;
 
     if (relationChartData) {
       relationCharts = relationChartData.data.map(function(o, i) {
@@ -60,6 +62,27 @@ var IndFairness = module.exports = React.createClass({
       }.bind(this));
     }
 
+    if (top5TableData) {
+      top5Table = top5TableData.data.map(function(d, i) {
+        return (
+          <div className="chart-item" key={i.toString()}>
+            <table>
+              <thead>
+                <tr>
+                  {top5TableData.header.map(function(c) {return <th>{c}</th>;})}
+                </tr>
+              </thead>
+              <tbody>
+                {d.data.map(function(r) {
+                  return <tr>{r.map(function(c) {return <td>{c}</td>;})}</tr>;
+                })}
+              </tbody>
+            </table>
+          </div>
+        );
+      }.bind(this));
+    }
+
     var relationTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : relationChartData.title}</h1>
@@ -74,6 +97,13 @@ var IndFairness = module.exports = React.createClass({
       </section>
     );
 
+    var top5Tile = (
+      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">{ldn ? 'Loading' : top5TableData.title}</h1>
+        {top5Table ? <div className="tile-body">{top5Table}</div> : null}
+      </section>
+    );
+
     return (
       <div className="content">
         <section className="tile intro">
@@ -83,13 +113,7 @@ var IndFairness = module.exports = React.createClass({
           </div>
         </section>
 
-        <section className="tile chart-group">
-          <h1 className="tile-title">Top 5 contracts</h1>
-          <div className="tile-body">
-            <img src="assets/graphics/content/ch_top5-cont-gov.png"/>
-          </div>
-        </section>
-
+        {top5Tile}
         {relationTile}
         {concentrTile}
 
