@@ -12,7 +12,7 @@ var BarChart = module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('BarChart componentDidMount');
+    //console.log('BarChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -21,13 +21,13 @@ var BarChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('BarChart componentWillUnmount');
+    //console.log('BarChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('BarChart componentDidUpdate');
+    //console.log('BarChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -200,7 +200,6 @@ var d3BarChart = function(el, data) {
         .attr("y", -15);
     }
 
-    console.log(this.$el);
   };
 
   this.destroy = function() {
@@ -209,7 +208,6 @@ var d3BarChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };

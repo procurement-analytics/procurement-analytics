@@ -8,12 +8,11 @@ var ScatterplotChart = module.exports = React.createClass({
   chart: null,
 
   onWindowResize: function() {
-    console.log('resize!');
     this.chart.update();
   },
 
   componentDidMount: function() {
-    console.log('ScatterplotChart componentDidMount');
+    //console.log('ScatterplotChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -22,13 +21,13 @@ var ScatterplotChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('ScatterplotChart componentWillUnmount');
+    //console.log('ScatterplotChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('ScatterplotChart componentDidUpdate');
+    //console.log('ScatterplotChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -38,9 +37,6 @@ var ScatterplotChart = module.exports = React.createClass({
     );
   }
 });
-
-
-
 
 var d3ScatterplotChart = function(el, data) {
   this.$el = d3.select(el);
@@ -65,8 +61,6 @@ var d3ScatterplotChart = function(el, data) {
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
     _height = parseInt(this.$el.style('height'), 10) - margin.top - margin.bottom;
-    console.log('_calcSize', _width, 'w');
-    console.log('_calcSize', _height, 'h');
   };
 
   this.setData = function(data) {
@@ -105,7 +99,8 @@ var d3ScatterplotChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
-    // The svg
+
+    // The svg.
     svg = this.$el.append('svg');
     // X scale. Range/Domain updated in function.
     x = d3.scale.linear();
@@ -265,7 +260,6 @@ var d3ScatterplotChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };

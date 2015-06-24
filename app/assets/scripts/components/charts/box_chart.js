@@ -12,8 +12,7 @@ var BoxChart = module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-
-    console.log('BoxChart componentDidMount');
+    //console.log('BoxChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -22,13 +21,13 @@ var BoxChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('BoxChart componentWillUnmount');
+    //console.log('BoxChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('BoxChart componentDidUpdate');
+    //console.log('BoxChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -38,9 +37,6 @@ var BoxChart = module.exports = React.createClass({
     );
   }
 });
-
-
-
 
 var d3BoxChart = function(el, data) {
   this.$el = d3.select(el);
@@ -305,6 +301,7 @@ var d3BoxChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
+
     // The svg.
     svg = this.$el.append('svg')
         .attr('class', 'chart');
@@ -395,7 +392,6 @@ var d3BoxChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };
