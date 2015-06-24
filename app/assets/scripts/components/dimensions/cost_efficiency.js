@@ -12,6 +12,28 @@ var IndCostEfficiency = module.exports = React.createClass({
     data: React.PropTypes.object,
   },
 
+  distributionChartPopover : function(d, i, otherData) {
+    var buckets = otherData.buckets;
+    return (
+      <div>
+        Number of contracts: {d[0]}<br/>
+        Price bucket: {buckets[i]} - {buckets[i + 1]}
+      </div>
+    );
+  },
+
+  variationChartPopover : function(d) {
+    return (
+      <div>
+        min: {d.whisker1}<br/>
+        q1: {d.q1}<br/>
+        median: {d.median}<br/>
+        q3: {d.q3}<br/>
+        max: {d.whisker2}
+      </div>
+    );
+  },
+
   render: function() {
 
     var ldn = this.props.loading;
@@ -24,12 +46,20 @@ var IndCostEfficiency = module.exports = React.createClass({
 
     if (distributionChartData) {
       distributionCharts = distributionChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={i.toString()}><BarChart data={o.data} x={distributionChartData.x}  y={distributionChartData.y}/></div>;
-      });
+        return (
+          <div className="chart-item" key={i.toString()}>
+            <BarChart data={o.data} x={distributionChartData.x}  y={distributionChartData.y} popoverContentFn={this.distributionChartPopover}/>
+          </div>
+        );
+      }.bind(this));
     }
 
     if (variationChartData) {
-      variationCharts = <div className="chart-item"><BoxChart data={variationChartData.data} x={_.omit(variationChartData.x, 'label')}/></div>;
+      variationCharts = (
+        <div className="chart-item">
+          <BoxChart data={variationChartData.data} x={_.omit(variationChartData.x, 'label')} popoverContentFn={this.variationChartPopover}/>
+        </div>
+      );
     }
 
     var distributionTile = (

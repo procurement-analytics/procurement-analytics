@@ -12,6 +12,15 @@ var IndGeneral = module.exports = React.createClass({
     y: React.PropTypes.object
   },
 
+  chartPopover: function(d) {
+    return (
+      <div>
+        Value: {d.value}<br/>
+        Date: {d.date.toString()}
+      </div>
+    );
+  },
+
   render: function() {
     var ldn = this.props.loading;
 
@@ -28,15 +37,23 @@ var IndGeneral = module.exports = React.createClass({
     ////// Chart contracts over time
     if (contractsChartData) {
       contractsCharts = contractsChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={_.omit(contractsChartData.x, 'label')}  y={_.omit(contractsChartData.y, 'label')}/></div>;
-      });
+        return (
+          <div className="chart-item" key={i.toString()}>
+            <LineChart data={o.data} x={_.omit(contractsChartData.x, 'label')}  y={_.omit(contractsChartData.y, 'label')} popoverContentFn={this.chartPopover} />
+          </div>
+        );
+      }.bind(this));
     }
 
     ////// Chart amount over time
     if (amountChartData) {
       amountCharts = amountChartData.data.map(function(o, i) {
-        return <div className="chart-item" key={i.toString()}><LineChart data={o.data} x={_.omit(amountChartData.x, 'label')}  y={_.omit(amountChartData.y, 'label')}/></div>;
-      });
+        return (
+          <div className="chart-item" key={i.toString()}>
+            <LineChart data={o.data} x={_.omit(amountChartData.x, 'label')}  y={_.omit(amountChartData.y, 'label')} popoverContentFn={this.chartPopover} />
+          </div>
+        );
+      }.bind(this));
     }
 
     // Build the tile for this contractsCharts.

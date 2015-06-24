@@ -636,3 +636,14 @@ svg.chart {
     font-size: 11px;
   }
 }
+
+.scatterplotChart {
+  .dot {
+    fill: $primary-color;
+  }
+  .trendline {
+    stroke: $secondary-color;
+    stroke-width: 2px;
+    stroke-dasharray: 2px;
+  }
+}

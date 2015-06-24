@@ -4,18 +4,21 @@
   },
   "charts": [
     {
-      "id": "concentration-winning",
-      "title": "Concentration of Winning",
+      "id": "relationship",
+      "title": "Relationship",
       "x": {
         "domain": [25000,80888],
-        "label": "Price ($)"
+        "label": "Price ($)",
+        "key": "amount"
       },
       "y": {
-        "label": "# Contracts",
-        "domain": [10,100]
+        "label": "# suppliers",
+        "domain": [10,40],
+        "key": "suppliers"
       },
       "r": {
-        "domain": [10,40]
+        "domain": [10,40],
+        "key": "contracts"
       },
       "data": [
         {
@@ -37,7 +40,7 @@
             {
               "name": "company3",
               "suppliers": 22,
-              "contracts": 10,
+              "contracts": 22,
               "amount": 60000
             },
             {
@@ -50,6 +53,53 @@
               "name": "company5",
               "suppliers": 10,
               "contracts": 12,
+              "amount": 80888
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "concentration-winning",
+      "title": "Concentration of Winning",
+      "x": {
+        "domain": [25000,80888],
+        "label": "Price ($)",
+        "key": "amount"
+      },
+      "y": {
+        "label": "# contracts",
+        "domain": [10,100],
+        "key": "contracts"
+      },
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            {
+              "name": "company1",
+              "contracts": 80,
+              "amount": 25000
+            },
+            {
+              "name": "company2",
+              "contracts": 55,
+              "amount": 40000
+            },
+            {
+              "name": "company3",
+              "contracts": 98,
+              "amount": 60000
+            },
+            {
+              "name": "company4",
+              "contracts": 20,
+              "amount": 66000
+            },
+            {
+              "name": "company5",
+              "contracts": 15,
               "amount": 80888
             }
           ]

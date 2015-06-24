@@ -12,7 +12,7 @@ var BarChart = module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('BarChart componentDidMount');
+    //console.log('BarChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -21,13 +21,13 @@ var BarChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('BarChart componentWillUnmount');
+    //console.log('BarChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('BarChart componentDidUpdate');
+    //console.log('BarChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -67,6 +67,7 @@ var d3BarChart = function(el, data) {
     this.data = _data;
     this.xData = _data.x;
     this.yData = _data.y;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -113,6 +114,7 @@ var d3BarChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
     // Create the buckets.
     var xDomain = this.xData.domain;
@@ -166,12 +168,7 @@ var d3BarChart = function(el, data) {
       var posX = (window.pageXOffset + matrix.e) + xBar.rangeBand()/2;
       var posY =  (window.pageYOffset + matrix.f) + _height / 2;
 
-      chartPopover.setContent(
-        <div>
-          Number of contracts: {d[0]}<br/>
-          Price bucket: {bucketsScale[i]} - {bucketsScale[i + 1]}
-        </div>
-      ).show(posX, posY);
+      chartPopover.setContent(_this.popoverContent(d, i, {buckets: bucketsScale})).show(posX, posY);
     });
 
     barG.on('mouseout', function(d) {
@@ -203,7 +200,6 @@ var d3BarChart = function(el, data) {
         .attr("y", -15);
     }
 
-    console.log(this.$el);
   };
 
   this.destroy = function() {
@@ -212,7 +208,6 @@ var d3BarChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };

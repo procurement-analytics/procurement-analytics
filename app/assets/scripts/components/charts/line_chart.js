@@ -12,7 +12,7 @@ var LineChart = module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('LineChart componentDidMount');
+    //console.log('LineChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -21,13 +21,13 @@ var LineChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('LineChart componentWillUnmount');
+    //console.log('LineChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('LineChart componentDidUpdate');
+    //console.log('LineChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -37,7 +37,6 @@ var LineChart = module.exports = React.createClass({
     );
   }
 });
-
 
 var d3LineChart = function(el, data) {
   this.$el = d3.select(el);
@@ -68,13 +67,12 @@ var d3LineChart = function(el, data) {
   this.setData = function(data) {
     var _data = _.cloneDeep(data);
     this.data = _data.data;
-    this.xData = _data.x;
-    this.yData = _data.y;
-
     this.data.forEach(function(d) {
       d.date = parseDate(d.date);
     });
-
+    this.xData = _data.x;
+    this.yData = _data.y;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -142,6 +140,7 @@ var d3LineChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
     x.range([0, _width])
       .domain(d3.extent(this.data, function(d) { return d.date; }));
@@ -187,7 +186,7 @@ var d3LineChart = function(el, data) {
       .remove();
 
     focusCirlces
-      .on("mouseover", function(d) {
+      .on("mouseover", function(d, i) {
         var cr = d3.select(this);
         cr.transition().attr('r', 8).style('opacity', 1);
 
@@ -197,12 +196,7 @@ var d3LineChart = function(el, data) {
         var posX = window.pageXOffset + matrix.e;
         var posY =  window.pageYOffset + matrix.f;
 
-        chartPopover.setContent(
-          <div>
-            Value: {d.value}<br/>
-            Date: {d.date.toString()}
-          </div>
-        ).show(posX, posY);
+        chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
 
       })
       .on("mouseout", function() {
@@ -243,7 +237,6 @@ var d3LineChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };

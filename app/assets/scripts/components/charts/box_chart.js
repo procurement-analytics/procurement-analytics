@@ -12,8 +12,7 @@ var BoxChart = module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-
-    console.log('BoxChart componentDidMount');
+    //console.log('BoxChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -22,13 +21,13 @@ var BoxChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('BoxChart componentWillUnmount');
+    //console.log('BoxChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('BoxChart componentDidUpdate');
+    //console.log('BoxChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -38,9 +37,6 @@ var BoxChart = module.exports = React.createClass({
     );
   }
 });
-
-
-
 
 var d3BoxChart = function(el, data) {
   this.$el = d3.select(el);
@@ -83,6 +79,7 @@ var d3BoxChart = function(el, data) {
     var _data = _.cloneDeep(data);
     this.data = _data.data;
     this.xData = _data.x;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -103,6 +100,7 @@ var d3BoxChart = function(el, data) {
     var domain = null;
     var value = Number;
     var tickFormat = null;
+    var _this = this;
 
     function box(g) {
       g.each(function(d, i) {
@@ -234,21 +232,13 @@ var d3BoxChart = function(el, data) {
           .attr('height', height)
           .attr('width', width);
 
-        trigger.on('mouseover', function(d) {
+        trigger.on('mouseover', function(d, i) {
           var matrix = this.getScreenCTM();
 
           var posX = (window.pageXOffset + matrix.e) + width/2;
           var posY =  (window.pageYOffset + matrix.f);
 
-          chartPopover.setContent(
-            <div>
-              min: {d.whisker1}<br/>
-              q1: {d.q1}<br/>
-              median: {d.median}<br/>
-              q3: {d.q3}<br/>
-              max: {d.whisker2}
-            </div>
-          ).show(posX, posY);
+          chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
         });
 
         trigger.on('mouseout', function(d) {
@@ -311,6 +301,7 @@ var d3BoxChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
+
     // The svg.
     svg = this.$el.append('svg')
         .attr('class', 'chart');
@@ -401,7 +392,6 @@ var d3BoxChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };

@@ -2,17 +2,17 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var popover = require('./popover');
 
 var ScatterplotChart = module.exports = React.createClass({
   chart: null,
 
   onWindowResize: function() {
-    console.log('resize!');
     this.chart.update();
   },
 
   componentDidMount: function() {
-    console.log('ScatterplotChart componentDidMount');
+    //console.log('ScatterplotChart componentDidMount');
     // Debounce event.
     this.onWindowResize = _.debounce(this.onWindowResize, 200);
 
@@ -21,13 +21,13 @@ var ScatterplotChart = module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log('ScatterplotChart componentWillUnmount');
+    //console.log('ScatterplotChart componentWillUnmount');
     window.removeEventListener('resize', this.onWindowResize);
     this.chart.destroy();
   },
 
   componentDidUpdate: function(/*prevProps, prevState*/) {
-    console.log('ScatterplotChart componentDidUpdate');
+    //console.log('ScatterplotChart componentDidUpdate');
     this.chart.setData(this.props);
   },
 
@@ -37,9 +37,6 @@ var ScatterplotChart = module.exports = React.createClass({
     );
   }
 });
-
-
-
 
 var d3ScatterplotChart = function(el, data) {
   this.$el = d3.select(el);
@@ -58,19 +55,22 @@ var d3ScatterplotChart = function(el, data) {
   var x, y, r, xAxis, yAxis;
   // Elements.
   var svg, dataCanvas;
+  // Init the popover.
+  var chartPopover = new popover();
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
     _height = parseInt(this.$el.style('height'), 10) - margin.top - margin.bottom;
-    console.log('_calcSize', _width, 'w');
-    console.log('_calcSize', _height, 'h');
   };
 
   this.setData = function(data) {
-    this.data = data.data;
-    this.xData = data.x;
-    this.yData = data.y;
-    this.rData = data.r;
+    var _data = _.cloneDeep(data);
+
+    this.data = _data.data;
+    this.xData = _data.x;
+    this.yData = _data.y;
+    this.rData = _data.r ? _data.r : false;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -99,7 +99,8 @@ var d3ScatterplotChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
-    // The svg
+
+    // The svg.
     svg = this.$el.append('svg');
     // X scale. Range/Domain updated in function.
     x = d3.scale.linear();
@@ -141,6 +142,7 @@ var d3ScatterplotChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
     // Add some padding to the axes.
     // 1/10th of the difference between min and max.
@@ -162,7 +164,9 @@ var d3ScatterplotChart = function(el, data) {
 
     y.range([_height, 0]).domain(yd);
 
-    r.domain(this.rData.domain);
+    if (this.rData) {
+      r.domain(this.rData.domain);
+    }
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -173,7 +177,7 @@ var d3ScatterplotChart = function(el, data) {
       .attr('height', _height);
 
     // Calc the linear regression.
-    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data,'amount'), _.pluck(this.data, 'suppliers'));
+    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data, this.xData.key), _.pluck(this.data, this.yData.key));
     var x1 = xd[0];
     var x2 = xd[1];
     //y = mx + b
@@ -201,14 +205,28 @@ var d3ScatterplotChart = function(el, data) {
 
     circles.enter().append("circle")
       .attr("class", "dot")
-      .attr("r", function(d) { return r(d.contracts); })
-      .attr("cx", function(d) { return x(d.amount); })
-      .attr("cy", function(d) { return y(d.suppliers); })
+      .attr("r", function(d) { return _this.rData ? r(d[_this.rData.key]) : 4; })
+      .attr("cx", function(d) { return x(d[_this.xData.key]); })
+      .attr("cy", function(d) { return y(d[_this.yData.key]); });
 
     circles
-      .attr("r", function(d) { return r(d.contracts); })
-      .attr("cx", function(d) { return x(d.amount); })
-      .attr("cy", function(d) { return y(d.suppliers); })
+      .attr("r", function(d) { return _this.rData ? r(d[_this.rData.key]) : 4; })
+      .attr("cx", function(d) { return x(d[_this.xData.key]); })
+      .attr("cy", function(d) { return y(d[_this.yData.key]); });
+
+    circles
+      .on("mouseover", function(d, i) {
+        var matrix = this.getScreenCTM()
+          .translate(this.getAttribute("cx"), this.getAttribute("cy"));
+
+        var posX = window.pageXOffset + matrix.e;
+        var posY =  window.pageYOffset + matrix.f;
+
+        chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
+      })
+      .on("mouseout", function() {
+        chartPopover.hide();
+      });
 
     // Append Axis.
     svg.select(".x.axis")
@@ -242,7 +260,6 @@ var d3ScatterplotChart = function(el, data) {
 
   //--------------------------------------------------------------------------//
   // 3... 2... 1... GO...
-
   this._init();
   this.setData(data);
 };
