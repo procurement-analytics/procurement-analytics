@@ -7,13 +7,13 @@
       "id": "relationship",
       "title": "Relationship",
       "x": {
-        "domain": [25000,80888],
+        "domain": [20000,80888],
         "label": "Price ($)",
         "key": "amount"
       },
       "y": {
         "label": "# suppliers",
-        "domain": [10,40],
+        "domain": [0,40],
         "key": "suppliers"
       },
       "r": {
