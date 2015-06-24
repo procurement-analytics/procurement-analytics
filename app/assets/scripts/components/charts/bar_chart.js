@@ -46,12 +46,12 @@ var d3BarChart = function(el, data) {
   this.yData = null;
 
   // Var declaration.
-  var margin = {top: 30, right: 32, bottom: 50, left: 50};
+  var margin = {top: 10, right: 32, bottom: 48, left: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
   // Scales, Axis, and line functions.
-  var x, y, xBar, xAxis, yAxis;
+  var x, y, xBar, xAxis;
   // Elements.
   var svg, dataCanvas;
   // Init the popover.
@@ -89,11 +89,6 @@ var d3BarChart = function(el, data) {
       .scale(x)
       .orient("bottom");
 
-    // Define yAxis function.
-    yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
     // Chart elements
     dataCanvas = svg.append("g")
       .attr('class', 'data-canvas')
@@ -115,6 +110,37 @@ var d3BarChart = function(el, data) {
   this.update = function() {
     this._calcSize();
     var _this = this;
+
+    var yAxisGroup = svg.select('.y.axis');
+
+    yAxisGroup.selectAll('.axis-lines')
+      .data([
+        {x1: 0, x2: _width + margin.left + margin.right, y1: 1, y2: 1},
+        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top + 10, y2: _height + margin.top + 10}
+      ])
+    .enter().append('line')
+      .attr('class', 'axis-lines')
+      .attr('x1', function(d) {return d.x1; })
+      .attr('y1', function(d) {return d.y1; })
+      .attr('x2', function(d) {return d.x2; })
+      .attr('y2', function(d) {return d.y2; });
+
+    yAxisGroup.selectAll('.label-min')
+      .data([this.yData.domain[0]])
+    .enter().append('text')
+      .attr('class', 'label-min')
+      .attr('x', 0)
+      .attr('y', _height + margin.top)
+      .text(function(d) {return d;});
+
+    yAxisGroup.selectAll('.label-max')
+      .data([this.yData.domain[1]])
+    .enter().append('text')
+      .attr('class', 'label-max')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('dy', '14px') // 14 is for the font size.
+      .text(function(d) {return d;});
 
     // Create the buckets.
     var xDomain = this.xData.domain;
@@ -177,27 +203,22 @@ var d3BarChart = function(el, data) {
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
+      .attr("transform", "translate(" + margin.left + "," + (_height + margin.top + 10) + ")").transition()
       .call(xAxis);
 
     if (this.data.x.label) {
       svg.select(".x.axis .label")
-        .text(this.data.x.label)
-        .transition()
-        .attr("x", _width + margin.right)
-        .attr("y", 30);
+        .text(this.xData.label)
+        .attr("x", _width / 2)
+        .attr("y", 35);
     }
-
-    svg.select(".y.axis")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
-      .call(yAxis);
 
     if (this.data.y.label) {
       svg.select(".y.axis .label")
-        .text(this.data.y.label)
-        .transition()
-        .attr("x", 0)
-        .attr("y", -15);
+        .text(this.yData.label)
+        .attr('x', -(_height / 2 + margin.top))
+        .attr('y', 10)
+        .attr('transform', 'rotate(-90)');
     }
 
   };

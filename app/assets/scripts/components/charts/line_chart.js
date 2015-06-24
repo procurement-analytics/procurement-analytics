@@ -46,12 +46,12 @@ var d3LineChart = function(el, data) {
   this.yData = null;
 
   // Var declaration.
-  var margin = {top: 30, right: 32, bottom: 50, left: 50};
+  var margin = {top: 10, right: 32, bottom: 48, left: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
   // Scales, Axis, line and area functions.
-  var x, y, xAxis, yAxis, line, area;
+  var x, y, xAxis, line, area;
   // Elements.
   var svg, dataCanvas;
   // Init the popover.
@@ -81,7 +81,7 @@ var d3LineChart = function(el, data) {
 
     // The svg.
     svg = this.$el.append('svg')
-        .attr('class', 'chart');
+      .attr('class', 'chart');
 
     // X scale. Range updated in function.
     x = d3.time.scale();
@@ -94,11 +94,6 @@ var d3LineChart = function(el, data) {
       .scale(x)
       .ticks(6)
       .orient("bottom");
-
-    // Define yAxis function.
-    yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
 
     // Line function.
     line = d3.svg.line()
@@ -119,14 +114,14 @@ var d3LineChart = function(el, data) {
     svg.append("g")
       .attr("class", "x axis")
       .append("text")
-      .attr("class", "label")
-      .attr("text-anchor", "end");
+        .attr("class", "label")
+        .attr("text-anchor", "middle");
 
     svg.append("g")
       .attr("class", "y axis")
       .append("text")
-      .attr("class", "label")
-      .attr("text-anchor", "middle");
+        .attr("class", "label")
+        .attr("text-anchor", "middle");
 
     dataCanvas.append("path")
       .attr("class", "area");
@@ -142,13 +137,43 @@ var d3LineChart = function(el, data) {
     this._calcSize();
     var _this = this;
 
+    var yAxisGroup = svg.select('.y.axis');
+
+    yAxisGroup.selectAll('.axis-lines')
+      .data([
+        {x1: 0, x2: _width + margin.left + margin.right, y1: 1, y2: 1},
+        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top + 10, y2: _height + margin.top + 10}
+      ])
+    .enter().append('line')
+      .attr('class', 'axis-lines')
+      .attr('x1', function(d) {return d.x1; })
+      .attr('y1', function(d) {return d.y1; })
+      .attr('x2', function(d) {return d.x2; })
+      .attr('y2', function(d) {return d.y2; });
+
+    yAxisGroup.selectAll('.label-min')
+      .data([this.yData.domain[0]])
+    .enter().append('text')
+      .attr('class', 'label-min')
+      .attr('x', 0)
+      .attr('y', _height + margin.top)
+      .text(function(d) {return d;});
+
+    yAxisGroup.selectAll('.label-max')
+      .data([this.yData.domain[1]])
+    .enter().append('text')
+      .attr('class', 'label-max')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('dy', '14px') // 14 is for the font size.
+      .text(function(d) {return d;});
+
     x.range([0, _width])
       .domain(d3.extent(this.data, function(d) { return d.date; }));
       //.domain(this.data.map(function(d) { return d.date; }));
 
     y.range([_height, 0])
       .domain(this.yData.domain);
-
     svg
       .attr('width', _width + margin.left + margin.right)
       .attr('height', _height + margin.top + margin.bottom);
@@ -206,27 +231,22 @@ var d3LineChart = function(el, data) {
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + 32) + ")").transition()
+      .attr("transform", "translate(" + margin.left + "," + (_height + margin.top + 10) + ")").transition()
       .call(xAxis);
 
     if (this.xData && this.xData.label) {
       svg.select(".x.axis .label")
         .text(this.xData.label)
-        .transition()
-        .attr("x", _width + margin.right)
-        .attr("y", 30);
+        .attr("x", _width / 2)
+        .attr("y", 35);
     }
-
-    svg.select(".y.axis")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")").transition()
-      .call(yAxis);
 
     if (this.yData && this.yData.label) {
       svg.select(".y.axis .label")
         .text(this.yData.label)
-        .transition()
-        .attr("x", 0)
-        .attr("y", -15);
+        .attr('x', -(_height / 2 + margin.top))
+        .attr('y', 10)
+        .attr('transform', 'rotate(-90)');
     }
 
   };

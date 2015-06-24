@@ -612,6 +612,29 @@ svg.chart {
   display: block;
 }
 
+
+.lineChart, .barChart, .scatterplotChart {
+  .y.axis {
+    .axis-lines {
+      stroke: #ccc;
+      stroke-width: 1px;
+    }
+  }
+
+  .x.axis {
+    .tick line {
+      display: none;
+    }
+    .domain {
+      display: none;
+    }
+  }
+}
+
+
+
+
+
 .lineChart {
   .area {
     fill: $primary-color;
@@ -643,9 +666,6 @@ svg.chart {
       stroke-width: 1px;
     }
   }
-}
-
-.barChart {
   .bar rect {
     fill: $primary-color;
   }
@@ -679,3 +699,7 @@ svg.chart {
     stroke-dasharray: 2px;
   }
 }
+
+
+
+

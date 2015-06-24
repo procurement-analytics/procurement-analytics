@@ -72,12 +72,12 @@ var IndFairness = module.exports = React.createClass({
             <table>
               <thead>
                 <tr>
-                  {top5TableData.header.map(function(c) {return <th>{c}</th>;})}
+                  {top5TableData.header.map(function(c, i) {return <th key={i.toString()}>{c}</th>;})}
                 </tr>
               </thead>
               <tbody>
-                {d.data.map(function(r) {
-                  return <tr>{r.map(function(c) {return <td>{c}</td>;})}</tr>;
+                {d.data.map(function(r, i) {
+                  return <tr key={i.toString()}>{r.map(function(c, i) {return <td key={i.toString()}>{c}</td>;})}</tr>;
                 })}
               </tbody>
             </table>
