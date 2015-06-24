@@ -10,16 +10,37 @@ var IndTimeliness = module.exports = React.createClass({
     data: React.PropTypes.object
   },
 
-  render: function() {
+  chartPopover: function(d) {
+    return (
+      <div>
+        First phase duration: {d.data[0]}<br/>
+        Second phase duration: {d.data[1]}<br/>
+        Third phase duration: {d.data[2]}<br/>
+      </div>
+    );
+  },
 
+  render: function() {
+    var ldn = this.props.loading;
 
     var chartData = this.props.data.charts || [];
     var timeChartData = _.find(chartData, {id: 'average-timeline'});
     var timeCharts;
 
     if (timeChartData) {
-      timeCharts = <div className="chart-item"><TimeChart data={timeChartData.data} x={timeChartData.x}  y={timeChartData.y} /></div>
+      timeCharts = (
+        <div className="chart-item">
+          <TimeChart data={timeChartData.data} x={timeChartData.x}  y={timeChartData.y} popoverContentFn={this.chartPopover} />
+        </div>
+      );
     }
+
+    var timeTile = (
+      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">{ldn ? 'Loading' : timeChartData.title}</h1>
+        {timeCharts ? <div className="tile-body">{timeCharts}</div> : null}
+      </section>
+    );
 
     return (
       <div className="content">
@@ -30,18 +51,7 @@ var IndTimeliness = module.exports = React.createClass({
           </div>
         </section>
 
-        <section className="tile chart-group">
-          <h1 className="tile-title">Average timeline</h1>
-          {timeCharts ? <div className="tile-body">{timeCharts}</div> : null}
-        </section>
-
-
-        <section className="tile chart-group">
-          <h1 className="tile-title">Average timeline</h1>
-          <div className="tile-body">
-            <img src="assets/graphics/content/ch_average-timeline-gov.png"/>
-          </div>
-        </section>
+        {timeTile}
 
       </div>
     );

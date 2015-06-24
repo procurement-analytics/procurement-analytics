@@ -34,7 +34,7 @@ var IndGeneral = module.exports = React.createClass({
     // Check how many "mini-charts" we need to build for each chart.
     // Because these charts are of the type that spawn "mini-charts".
 
-    ////// Chart contracts over time
+    // Chart contracts over time
     if (contractsChartData) {
       contractsCharts = contractsChartData.data.map(function(o, i) {
         return (
@@ -45,7 +45,7 @@ var IndGeneral = module.exports = React.createClass({
       }.bind(this));
     }
 
-    ////// Chart amount over time
+    // Chart amount over time
     if (amountChartData) {
       amountCharts = amountChartData.data.map(function(o, i) {
         return (
