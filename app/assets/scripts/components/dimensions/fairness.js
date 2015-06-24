@@ -46,6 +46,7 @@ var IndFairness = module.exports = React.createClass({
       relationCharts = relationChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
+            <h2 className="chart-title">{o.label}</h2>
             <ScatterplotChart data={o.data} x={relationChartData.x} y={relationChartData.y} r={relationChartData.r} popoverContentFn={this.relationChartPopover} />
           </div>
         );
@@ -56,6 +57,7 @@ var IndFairness = module.exports = React.createClass({
       concentrCharts = concentrChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
+            <h2 className="chart-title">{o.label}</h2>
             <ScatterplotChart data={o.data} x={concentrChartData.x}  y={concentrChartData.y} popoverContentFn={this.concentrChartPopover} />
           </div>
         );
@@ -66,6 +68,7 @@ var IndFairness = module.exports = React.createClass({
       top5Table = top5TableData.data.map(function(d, i) {
         return (
           <div className="chart-item" key={i.toString()}>
+            <h2 className="chart-title">{d.label}</h2>
             <table>
               <thead>
                 <tr>

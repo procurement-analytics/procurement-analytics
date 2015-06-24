@@ -48,6 +48,7 @@ var IndCostEfficiency = module.exports = React.createClass({
       distributionCharts = distributionChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
+            <h2 className="chart-title">{o.label}</h2>
             <BarChart data={o.data} x={distributionChartData.x}  y={distributionChartData.y} popoverContentFn={this.distributionChartPopover}/>
           </div>
         );

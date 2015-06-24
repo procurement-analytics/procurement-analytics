@@ -39,6 +39,7 @@ var IndGeneral = module.exports = React.createClass({
       contractsCharts = contractsChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
+            <h2 className="chart-title">{o.label}</h2>
             <LineChart data={o.data} x={_.omit(contractsChartData.x, 'label')}  y={_.omit(contractsChartData.y, 'label')} popoverContentFn={this.chartPopover} />
           </div>
         );
@@ -50,6 +51,7 @@ var IndGeneral = module.exports = React.createClass({
       amountCharts = amountChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
+            <h2 className="chart-title">{o.label}</h2>
             <LineChart data={o.data} x={_.omit(amountChartData.x, 'label')}  y={_.omit(amountChartData.y, 'label')} popoverContentFn={this.chartPopover} />
           </div>
         );
