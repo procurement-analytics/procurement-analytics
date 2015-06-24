@@ -2,9 +2,9 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var popover = require('./popover');
 
 var TimeChart = module.exports = React.createClass({
-
   chart: null,
 
   onWindowResize: function() {
@@ -41,23 +41,32 @@ var d3TimeChart = function(el, data) {
   this.xData = null;
   this.yData = null;
 
+  // Var declaration.
   var margin = {top: 5, right: 15, bottom: 15, left: 70};
+  // width and height refer to the data canvas. To know the svg size the margins
+  // must be added.
   var _width, _height;
+  // Scales functions.
   var x, band;
+  // Elements.
   var svg, dataCanvas, rows;
+  // Init the popover.
+  var chartPopover = new popover();
 
   var baseColor = d3.rgb(30, 137, 111);
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
-    _height = /*parseInt(this.$el.style('height'), 10)*/ 300 - margin.top - margin.bottom;
+    // _height will be calculated after.
+    //_height = /*parseInt(this.$el.style('height'), 10)*/ 300 - margin.top - margin.bottom;
   };
 
   this.setData = function(data) {
-    var d = _.cloneDeep(data);
-    this.data = d.data;
-    this.xData = d.x;
-    this.yData = d.y;
+    var _data = _.cloneDeep(data);
+    this.data = _data.data;
+    this.xData = _data.x;
+    this.yData = _data.y;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -92,15 +101,21 @@ var d3TimeChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
-    var max = d3.max(_.map(this.data, function(d) { return d.data.reduce(function(a, b) {
-      return a + b;
-    })}));
+    var max = d3.max(_.map(this.data, function(d) {
+      return d.data.reduce(function(a, b) {
+        return a + b;
+      });
+    }));
+
     x.range([0, _width])
       .domain([0, max]);
 
-    band = Math.floor(_height / this.data.length);
-    console.log(band);
+    //band = Math.floor(_height / this.data.length);
+    // Each band has a fixed size and the chart grows based on that.
+    band = 80;
+    _height = band * this.data.length;
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -115,16 +130,16 @@ var d3TimeChart = function(el, data) {
     // Make sure we always end up at the base color
     var color = baseColor.brighter((stack[0].d.length - 1) * .3);
 
-    rows = dataCanvas.selectAll('.row')
+    rows = dataCanvas.selectAll('.time-row')
       .data(stack);
 
     rows.enter()
       .append('g')
-      .attr('class', 'row')
-      .attr('transform', function(d, i) { return 'translate(0,' + i*band + ')'; });
+      .attr('class', 'time-row')
+      .attr('transform', function(d, i) { return 'translate(0,' + i * band + ')'; });
 
     rows.selectAll('.small-label')
-      .data(function(d) { return [d.label.toUpperCase()] })
+      .data(function(d) { return [d.label] })
       .enter()
     .append('text')
       .attr('class', 'small-label')
@@ -179,10 +194,50 @@ var d3TimeChart = function(el, data) {
       .transition()
       .attr('x', function(d) { return d.x + d.width})
       .attr('y', band * .5);
+
+    rows.selectAll('.trigger')
+      .data(function(d) {
+        var data = _.omit(d, 'd');
+        var dlast = d.d[d.d.length - 1]
+        data.x = d.d[0].x;
+        data.width = dlast.x + dlast.width;
+        return [data];
+      })
+    .enter().append('rect')
+      .attr('class', 'trigger')
+      .attr('x', function(d) { return d.x })
+      .attr('width', function(d) { return d.width; })
+      .attr('y', 0)
+      .attr('height', band * .5)
+      .style('opacity', 0);
+
+    rows.selectAll('.trigger')
+      .transition()
+      .attr('x', function(d) { return d.x })
+      .attr('width', function(d) { return d.width; })
+      .attr('y', 0)
+      .attr('height', band * .5);
+
+    rows.selectAll('.trigger')
+      .on("mouseover", function(d, i) {
+          var matrix = this.getScreenCTM();
+
+          var posX = (window.pageXOffset + matrix.e) + d.width/2;
+          var posY =  (window.pageYOffset + matrix.f);
+
+          chartPopover.setContent(_this.popoverContent(_.omit(d, ['width', 'x']), i)).show(posX, posY);
+      })
+      .on("mouseout", function() {
+        chartPopover.hide();
+      });
   };
 
-  this.destroy = function() {};
+  this.destroy = function() {
 
+  };
+
+  //--------------------------------------------------------------------------//
+  // 3... 2... 1... GO...
   this._init();
   this.setData(data);
 };
