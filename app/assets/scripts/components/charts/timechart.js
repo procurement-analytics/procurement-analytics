@@ -138,6 +138,8 @@ var d3TimeChart = function(el, data) {
       .attr('class', 'time-row')
       .attr('transform', function(d, i) { return 'translate(0,' + i * band + ')'; });
 
+    rows.exit().remove();
+
     rows.selectAll('.small-label')
       .data(function(d) { return [d.label] })
       .enter()
