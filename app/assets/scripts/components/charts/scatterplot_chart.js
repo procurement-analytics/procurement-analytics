@@ -220,14 +220,14 @@ var d3ScatterplotChart = function(el, data) {
       .attr("cy", function(d) { return y(d[_this.yData.key]); });
 
     circles
-      .on("mouseover", function(d) {
+      .on("mouseover", function(d, i) {
         var matrix = this.getScreenCTM()
           .translate(this.getAttribute("cx"), this.getAttribute("cy"));
 
         var posX = window.pageXOffset + matrix.e;
         var posY =  window.pageYOffset + matrix.f;
 
-        chartPopover.setContent(_this.popoverContent(d)).show(posX, posY);
+        chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
       })
       .on("mouseout", function() {
         chartPopover.hide();

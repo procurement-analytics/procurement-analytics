@@ -67,6 +67,7 @@ var d3BarChart = function(el, data) {
     this.data = _data;
     this.xData = _data.x;
     this.yData = _data.y;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -113,6 +114,7 @@ var d3BarChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
     // Create the buckets.
     var xDomain = this.xData.domain;
@@ -166,12 +168,7 @@ var d3BarChart = function(el, data) {
       var posX = (window.pageXOffset + matrix.e) + xBar.rangeBand()/2;
       var posY =  (window.pageYOffset + matrix.f) + _height / 2;
 
-      chartPopover.setContent(
-        <div>
-          Number of contracts: {d[0]}<br/>
-          Price bucket: {bucketsScale[i]} - {bucketsScale[i + 1]}
-        </div>
-      ).show(posX, posY);
+      chartPopover.setContent(_this.popoverContent(d, i, {buckets: bucketsScale})).show(posX, posY);
     });
 
     barG.on('mouseout', function(d) {

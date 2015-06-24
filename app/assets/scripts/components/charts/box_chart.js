@@ -83,6 +83,7 @@ var d3BoxChart = function(el, data) {
     var _data = _.cloneDeep(data);
     this.data = _data.data;
     this.xData = _data.x;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -103,6 +104,7 @@ var d3BoxChart = function(el, data) {
     var domain = null;
     var value = Number;
     var tickFormat = null;
+    var _this = this;
 
     function box(g) {
       g.each(function(d, i) {
@@ -234,21 +236,13 @@ var d3BoxChart = function(el, data) {
           .attr('height', height)
           .attr('width', width);
 
-        trigger.on('mouseover', function(d) {
+        trigger.on('mouseover', function(d, i) {
           var matrix = this.getScreenCTM();
 
           var posX = (window.pageXOffset + matrix.e) + width/2;
           var posY =  (window.pageYOffset + matrix.f);
 
-          chartPopover.setContent(
-            <div>
-              min: {d.whisker1}<br/>
-              q1: {d.q1}<br/>
-              median: {d.median}<br/>
-              q3: {d.q3}<br/>
-              max: {d.whisker2}
-            </div>
-          ).show(posX, posY);
+          chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
         });
 
         trigger.on('mouseout', function(d) {

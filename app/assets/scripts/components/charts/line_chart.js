@@ -75,6 +75,8 @@ var d3LineChart = function(el, data) {
       d.date = parseDate(d.date);
     });
 
+    this.popoverContent = _data.popoverContentFn;
+
     this.update();
   };
 
@@ -142,6 +144,7 @@ var d3LineChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
     x.range([0, _width])
       .domain(d3.extent(this.data, function(d) { return d.date; }));
@@ -187,7 +190,7 @@ var d3LineChart = function(el, data) {
       .remove();
 
     focusCirlces
-      .on("mouseover", function(d) {
+      .on("mouseover", function(d, i) {
         var cr = d3.select(this);
         cr.transition().attr('r', 8).style('opacity', 1);
 
@@ -197,12 +200,7 @@ var d3LineChart = function(el, data) {
         var posX = window.pageXOffset + matrix.e;
         var posY =  window.pageYOffset + matrix.f;
 
-        chartPopover.setContent(
-          <div>
-            Value: {d.value}<br/>
-            Date: {d.date.toString()}
-          </div>
-        ).show(posX, posY);
+        chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
 
       })
       .on("mouseout", function() {
