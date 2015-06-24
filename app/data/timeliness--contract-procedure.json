@@ -1,24 +1,32 @@
 {
   "metadata": {
-    "id": "timeliness--all"
+    "id": "timeliness--contract-procedure"
   },
   "charts": [
     {
       "id": "average-timeline",
       "title": "Average Timeline",
       "x": {
-        "label": "All"
+        "label": "Contract procedure"
       },
       "y": {
         "label": "Days"
       },
       "data": [
         {
-          "label": "Full dataset",
+          "label": "Direct award",
           "data": [
+            32,
             50,
-            70,
-            40
+            21
+          ]
+        },
+        {
+          "label": "Open call",
+          "data": [
+            80,
+            20,
+            33
           ]
         }
       ]
