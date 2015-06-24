@@ -198,6 +198,12 @@ a:active{
   float: left;
   max-width: 40rem;
   @include animation(fade-in 0.64s ease 0s);
+  @include media(large-up) {
+    max-width: 28rem;
+  }
+  @include media(xlarge-up) {
+    max-width: 40rem;
+  }
 }
 
 .page-title {
@@ -241,9 +247,6 @@ a:active{
 // CONTENT + TILES
 
 .content {
-  // @include display(flex);
-  // @include flex-flow(row wrap);
-  // @include justify-content(flex-start);
   @include display(flex);
   @include flex-flow(row wrap);
   @include justify-content(flex-start);
@@ -276,6 +279,9 @@ a:active{
   }
   @include media(xlarge-up) {
     padding: $inner-pad*4;
+  }
+  &:last-child {
+    box-shadow: inset -1px 0 0 0 rgba($base-color, 0.08);
   }
 }
 
