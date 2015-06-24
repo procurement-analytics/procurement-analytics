@@ -132,8 +132,8 @@ a:active{
   a {
     display: block;
     width: 4rem;
-    height: 4rem;
-    line-height: 4rem;
+    height: 5.25rem;
+    line-height: 5.25rem;
     box-shadow: -1px 0 0 0 rgba(#fff, 0.16);
     font-size: 1.25rem;
     text-align: center;
@@ -148,6 +148,12 @@ a:active{
   .about a:before { @extend .icn20-info; }
   li:first-child a {
     box-shadow: none;
+  }
+  @include media(small-up) {
+    a {
+      height: 4rem;
+      line-height: 4rem;
+    }
   }
 }
 
@@ -272,17 +278,6 @@ a:active{
   order: 20;
   @include flex(0 1 24rem);
 }
-
-// .content > * {
-//   width: 100%;
-//   @include media(small-up) {
-//     width: calc(100% / 2);
-//   }
-//   @include media(large-up) {
-//     width: calc(100% / 3);
-//   }
-// }
-
 
 .tile-title {
   display: inline-block;
