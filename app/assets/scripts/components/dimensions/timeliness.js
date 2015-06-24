@@ -44,14 +44,19 @@ var IndTimeliness = module.exports = React.createClass({
 
     return (
       <div className="content">
-        <section className="tile intro">
-          <h1 className="tile-title">Overview</h1>
-          <div className="tile-body">
-            <p>Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
-          </div>
-        </section>
 
-        {timeTile}
+        <div className="col-intro">
+          <section className="tile">
+            <h1 className="tile-title">Overview</h1>
+            <div className="tile-body">
+              <p>Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
+            </div>
+          </section>
+        </div>
+
+        <div className="col-main">
+          {timeTile}
+        </div>
 
       </div>
     );
