@@ -2,6 +2,7 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var popover = require('./popover');
 
 var ScatterplotChart = module.exports = React.createClass({
   chart: null,
@@ -58,6 +59,8 @@ var d3ScatterplotChart = function(el, data) {
   var x, y, r, xAxis, yAxis;
   // Elements.
   var svg, dataCanvas;
+  // Init the popover.
+  var chartPopover = new popover();
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
@@ -67,10 +70,13 @@ var d3ScatterplotChart = function(el, data) {
   };
 
   this.setData = function(data) {
-    this.data = data.data;
-    this.xData = data.x;
-    this.yData = data.y;
-    this.rData = data.r;
+    var _data = _.cloneDeep(data);
+
+    this.data = _data.data;
+    this.xData = _data.x;
+    this.yData = _data.y;
+    this.rData = _data.r ? _data.r : false;
+    this.popoverContent = _data.popoverContentFn;
     this.update();
   };
 
@@ -141,6 +147,7 @@ var d3ScatterplotChart = function(el, data) {
 
   this.update = function() {
     this._calcSize();
+    var _this = this;
 
     // Add some padding to the axes.
     // 1/10th of the difference between min and max.
@@ -162,7 +169,9 @@ var d3ScatterplotChart = function(el, data) {
 
     y.range([_height, 0]).domain(yd);
 
-    r.domain(this.rData.domain);
+    if (this.rData) {
+      r.domain(this.rData.domain);
+    }
 
     svg
       .attr('width', _width + margin.left + margin.right)
@@ -173,7 +182,7 @@ var d3ScatterplotChart = function(el, data) {
       .attr('height', _height);
 
     // Calc the linear regression.
-    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data,'amount'), _.pluck(this.data, 'suppliers'));
+    var leastSquaresCoeff = this.leastSquares(_.pluck(this.data, this.xData.key), _.pluck(this.data, this.yData.key));
     var x1 = xd[0];
     var x2 = xd[1];
     //y = mx + b
@@ -201,14 +210,28 @@ var d3ScatterplotChart = function(el, data) {
 
     circles.enter().append("circle")
       .attr("class", "dot")
-      .attr("r", function(d) { return r(d.contracts); })
-      .attr("cx", function(d) { return x(d.amount); })
-      .attr("cy", function(d) { return y(d.suppliers); })
+      .attr("r", function(d) { return _this.rData ? r(d[_this.rData.key]) : 4; })
+      .attr("cx", function(d) { return x(d[_this.xData.key]); })
+      .attr("cy", function(d) { return y(d[_this.yData.key]); });
 
     circles
-      .attr("r", function(d) { return r(d.contracts); })
-      .attr("cx", function(d) { return x(d.amount); })
-      .attr("cy", function(d) { return y(d.suppliers); })
+      .attr("r", function(d) { return _this.rData ? r(d[_this.rData.key]) : 4; })
+      .attr("cx", function(d) { return x(d[_this.xData.key]); })
+      .attr("cy", function(d) { return y(d[_this.yData.key]); });
+
+    circles
+      .on("mouseover", function(d) {
+        var matrix = this.getScreenCTM()
+          .translate(this.getAttribute("cx"), this.getAttribute("cy"));
+
+        var posX = window.pageXOffset + matrix.e;
+        var posY =  window.pageYOffset + matrix.f;
+
+        chartPopover.setContent(_this.popoverContent(d)).show(posX, posY);
+      })
+      .on("mouseout", function() {
+        chartPopover.hide();
+      });
 
     // Append Axis.
     svg.select(".x.axis")
