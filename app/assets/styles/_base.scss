@@ -278,7 +278,7 @@ a:active{
     padding: $inner-pad*2;
   }
   @include media(xlarge-up) {
-    padding: $inner-pad*4;
+    padding: $inner-pad*2 $inner-pad*4;
   }
   &:last-child {
     box-shadow: inset -1px 0 0 0 rgba($base-color, 0.08);
@@ -287,15 +287,19 @@ a:active{
 
 .tile-title {
   display: inline-block;
-  font-size: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   text-transform: uppercase;
   font-weight: $base-font-bold;
-  margin: 0 0 1.5rem -1rem;
+  margin: 0 0 1rem -1rem;
   background: $base-font-color;
   padding: 0.5rem 1rem;
   color: #fff;
   @extend .antialiased;
   @include media(small-up) {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.5rem;
     margin-left: -$inner-pad*2;
     padding-left: $inner-pad*2;
   }
@@ -307,6 +311,10 @@ a:active{
 
 .tile-body {
   color: tint($base-color, 44%);
+  @extend .clearfix;
+  .chart-group & {
+    margin: 0 -0.5rem;
+  }
   p {
     margin-bottom: 1.5rem;
   }
@@ -344,6 +352,7 @@ a:active{
   max-width: 64rem;
   float: left;
   width: 100%;
+  padding: 0.5rem;
   .chart-group-2 & {
     width: calc(100% / 2);
   }
@@ -354,6 +363,15 @@ a:active{
   .chart-group-4 & {
     width: calc(100% / 4);
   }
+}
+
+.chart-title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+  font-weight: $base-font-bold;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 
@@ -581,6 +599,7 @@ a:active{
   font-size: 0.85rem;
   line-height: 1.25rem;
   pointer-events: none;
+  max-width: 16rem;
 }
 
 
