@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "id": "timeliness--all"
+  },
+  "charts": [
+    {
+      "id": "average-timeline",
+      "title": "Average Timeline",
+      "x": {
+        "label": "All"
+      },
+      "y": {
+        "label": "Days"
+      },
+      "data": [
+        {
+          "label": "State",
+          "data": [
+            50,
+            70,
+            40
+          ]
+        },
+        {
+          "label": "Federal",
+          "data": [
+            50,
+            30,
+            75
+          ]
+        }
+      ]
+    }
+  ]
+}
