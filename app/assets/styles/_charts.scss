@@ -1,0 +1,173 @@
+// GLOBAL
+
+.chart-item {
+  float: left;
+  width: 100%;
+  padding: 0.5rem;
+  @include media(small-up) {
+    .chart-group-2 & {
+      width: calc(100% / 2);
+    }
+    .chart-group-3 & {
+      min-width: 16rem;
+      width: calc(100% / 3);
+    }
+    .chart-group-4 & {
+      width: calc(100% / 4);
+    }
+  }
+}
+
+.chart-title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+  font-weight: $base-font-bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+
+.timeChart, .lineChart, .barChart, .scatterplotChart {
+  width: 100%;
+  min-height: 300px;
+}
+
+.line, .trendline {
+  fill: none;
+  stroke: blue;
+}
+
+.charts .lineChart {
+    width: 50%;
+    float: left;
+}
+
+.boxplot {
+  line {
+    stroke: red;
+  }
+
+  .box {
+    fill: white;
+    stroke: red;
+    stroke-width: 1px;
+  }
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+svg.chart {
+  display: block;
+}
+
+.lineChart, .barChart, .scatterplotChart, .boxChart {
+  .y.axis {
+    .axis-lines {
+      stroke: #ccc;
+      stroke-width: 1px;
+    }
+  }
+
+  .x.axis {
+    .tick line {
+      display: none;
+    }
+    .domain {
+      display: none;
+    }
+  }
+}
+
+.lineChart {
+  .area {
+    fill: $primary-color;
+  }
+  .line {
+    stroke: $secondary-color;
+    stroke-width: 2px;
+  }
+
+  .focus-circle {
+    fill: $secondary-color;
+  }
+}
+
+.boxChart {
+  .boxplot-container {
+    .small-label {
+      @extend .antialiased;
+      font-size: 0.785rem;
+      font-weight: $base-font-bold;
+      fill: $base-font-color;
+    }
+
+    line {
+      stroke: $secondary-color;
+      stroke-width: 1px;
+    }
+
+    .box {
+      fill: $primary-color;
+      stroke: $secondary-color;
+      stroke-width: 1px;
+    }
+  }
+  .bar rect {
+    fill: $primary-color;
+  }
+}
+
+.timeChart {
+  .small-label {
+    @extend .antialiased;
+    font-size: 0.785rem;
+    font-weight: $base-font-bold;
+    fill: $base-font-color;
+  }
+  .bar-tick {
+    text-anchor: middle;
+    fill: #fff;
+  }
+  .bar-axis-tick {
+    text-anchor: middle;
+    fill: $base-font-color;
+    font-size: 11px;
+  }
+}
+
+.scatterplotChart {
+  .dot {
+    fill: $primary-color;
+  }
+  .trendline {
+    stroke: $secondary-color;
+    stroke-width: 2px;
+    stroke-dasharray: 2px;
+  }
+}
+
+
+// POPOVER
+
+.popover {
+  @extend .antialiased;
+  background: rgba($base-color, 0.8);
+  position: absolute;
+  z-index: 9999;
+  color: #fff;
+  padding: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.25rem;
+  pointer-events: none;
+  max-width: 16rem;
+}
