@@ -7,18 +7,20 @@
       "id": "average-timeline",
       "title": "Average Timeline",
       "x": {
-        "label": "All"
-      },
-      "y": {
-        "label": "Days"
+        "label": "Days",
+        "bands": [
+           "First phase",
+           "Second phase",
+           "Third phase"
+        ]
       },
       "data": [
         {
           "label": "Full dataset",
           "data": [
-            50,
             70,
-            40
+            20,
+            50
           ]
         }
       ]
