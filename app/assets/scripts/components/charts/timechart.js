@@ -70,7 +70,8 @@ var d3TimeChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
-    svg = this.$el.append('svg');
+    svg = this.$el.append('svg')
+        .attr('class', 'chart');
 
     x = d3.scale.linear();
 

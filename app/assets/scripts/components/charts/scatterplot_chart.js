@@ -101,7 +101,9 @@ var d3ScatterplotChart = function(el, data) {
     this._calcSize();
 
     // The svg.
-    svg = this.$el.append('svg');
+    svg = this.$el.append('svg')
+        .attr('class', 'chart');
+
     // X scale. Range/Domain updated in function.
     x = d3.scale.linear();
 
