@@ -42,18 +42,16 @@ var d3TimeChart = function(el, data) {
   this.yData = null;
 
   // Var declaration.
-  var margin = {top: 5, right: 15, bottom: 15, left: 70};
+  var margin = {top: 0, right: 32, bottom: 48, left: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
   // Scales functions.
-  var x, band;
+  var x, xAxis, band;
   // Elements.
   var svg, dataCanvas, rows;
   // Init the popover.
   var chartPopover = new popover();
-
-  var baseColor = d3.rgb(30, 137, 111);
 
   this._calcSize = function() {
     _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
@@ -72,13 +70,28 @@ var d3TimeChart = function(el, data) {
 
   this._init = function() {
     this._calcSize();
-    svg = this.$el.append('svg');
+    svg = this.$el.append('svg')
+        .attr('class', 'chart');
 
     x = d3.scale.linear();
+
+    // Define xAxis function.
+    xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
 
     dataCanvas = svg.append("g")
       .attr('class', 'data-canvas')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .append("text")
+        .attr("class", "label")
+        .attr("text-anchor", "middle");
+
+    svg.append("g")
+      .attr("class", "legend")
   };
 
   // Construct a stacked bar array.
@@ -106,7 +119,7 @@ var d3TimeChart = function(el, data) {
     var max = d3.max(_.map(this.data, function(d) {
       return d.data.reduce(function(a, b) {
         return a + b;
-      });
+      }, 0);
     }));
 
     x.range([0, _width])
@@ -116,19 +129,60 @@ var d3TimeChart = function(el, data) {
     // Each band has a fixed size and the chart grows based on that.
     band = 80;
     _height = band * this.data.length;
+    var legendItemHeight = 24;
+    var legendBlockHeight = legendItemHeight * this.xData.bands.length;
 
     svg
       .attr('width', _width + margin.left + margin.right)
-      .attr('height', _height + margin.top + margin.bottom);
+      .attr('height', _height + margin.top + margin.bottom + legendBlockHeight);
 
     dataCanvas
       .attr('width', _width)
       .attr('height', _height);
 
-    var stack = this.stack(this.data);
+    // Bottom line.
+    svg.selectAll('.axis-lines')
+      .data([
+        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top, y2: _height + margin.top}
+      ])
+    .enter().append('line')
+      .attr('class', 'axis-lines')
+      .attr('x1', function(d) { return d.x1; })
+      .attr('y1', function(d) { return d.y1; })
+      .attr('x2', function(d) { return d.x2; })
+      .attr('y2', function(d) { return d.y2; });
 
-    // Make sure we always end up at the base color
-    var color = baseColor.brighter((stack[0].d.length - 1) * .3);
+    svg.selectAll('.axis-lines')
+      .attr('x1', function(d) { return d.x1; })
+      .attr('y1', function(d) { return d.y1; })
+      .attr('x2', function(d) { return d.x2; })
+      .attr('y2', function(d) { return d.y2; });
+
+    // Legend block
+    var legend = svg.select('.legend')
+      .attr("transform", "translate(0," + (_height + margin.top + 32) + ")");
+
+    var legendItem = legend.selectAll('.legend-item')
+      .data(this.xData.bands)
+    .enter().append('g')
+      .attr('class', function(d, i) { return 'legend-item color-phase-' + (i + 1); })
+      .attr("transform", function(d, i) { return "translate(0," + (i * legendItemHeight) + ")"; });
+
+    legendItem.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 16)
+      .attr('height', 16);
+
+    legendItem.append('text')
+      .attr('x', 24)
+      .attr('y', 0)
+      .attr('dy', 13)
+      .text(function(d) { return d; });
+
+    // END Legend block
+
+    var stack = this.stack(this.data);
 
     rows = dataCanvas.selectAll('.time-row')
       .data(stack);
@@ -145,58 +199,54 @@ var d3TimeChart = function(el, data) {
       .enter()
     .append('text')
       .attr('class', 'small-label')
-      .style('text-anchor', 'end')
       .text(function(d) { return d })
-      .attr('x', '-10px')
-      .attr('y', band * .25)
-      .attr('dy', '6px');
+      .attr('x', 0)
+      .attr('y', 14);
 
     rows.selectAll('.bar')
       .data(function(d) { return d.d; })
     .enter().append('rect')
-      .attr('class', 'bar')
+      .attr('class', function(d, i) { return 'bar color-phase-' + (i + 1); })
       .attr('x', function(d) { return d.x })
       .attr('width', function(d) { return d.width; })
-      .attr('y', 0)
-      .attr('height', band * .5)
-      .style('fill', function(d, i) { return color.darker(i * .3).toString(); });
+      .attr('y', 20)
+      .attr('height', band * .5);
 
     rows.selectAll('.bar')
       .transition()
       .attr('x', function(d) { return d.x })
       .attr('width', function(d) { return d.width; })
-      .attr('y', 0)
-      .attr('height', band * .5)
-      .style('fill', function(d, i) { return color.darker(i * .3).toString(); });
+      .attr('y', 20)
+      .attr('height', band * .5);
 
     rows.selectAll('.bar-tick')
       .data(function(d) { return d.d; })
     .enter().append('text')
       .attr('class', 'bar-tick')
       .attr('x', function(d) { return d.x + d.width / 2 })
-      .attr('y', band * .25)
+      .attr('y', band * .25 + 20)
       .attr('dy', '6px')
-      .text(function(d, i) { return i+1 });
+      .text(function(d, i) { return d.val });
 
     rows.selectAll('.bar-tick')
       .transition()
       .attr('x', function(d) { return d.x + d.width / 2 })
-      .attr('y', band * .25);
-
+      .attr('y', band * .25 + 20);
+/*
     rows.selectAll('.bar-axis-tick')
       .data(function(d) { return [{sum: 0, x: 0, width: 0 }].concat(d.d); })
     .enter().append('text')
       .attr('class', 'bar-axis-tick')
       .attr('x', function(d) { return d.x + d.width})
-      .attr('y', band * .5)
+      .attr('y', band * .5 + 20)
       .attr('dy', '12px')
       .text(function(d, i) { return d.sum });
 
     rows.selectAll('.bar-axis-tick')
       .transition()
       .attr('x', function(d) { return d.x + d.width})
-      .attr('y', band * .5);
-
+      .attr('y', band * .5 + 20);
+*/
     rows.selectAll('.trigger')
       .data(function(d) {
         var data = _.omit(d, 'd');
@@ -209,7 +259,7 @@ var d3TimeChart = function(el, data) {
       .attr('class', 'trigger')
       .attr('x', function(d) { return d.x })
       .attr('width', function(d) { return d.width; })
-      .attr('y', 0)
+      .attr('y', 20)
       .attr('height', band * .5)
       .style('opacity', 0);
 
@@ -217,21 +267,34 @@ var d3TimeChart = function(el, data) {
       .transition()
       .attr('x', function(d) { return d.x })
       .attr('width', function(d) { return d.width; })
-      .attr('y', 0)
+      .attr('y', 20)
       .attr('height', band * .5);
 
     rows.selectAll('.trigger')
       .on("mouseover", function(d, i) {
+          // Returns the position of the group.
           var matrix = this.getScreenCTM();
 
           var posX = (window.pageXOffset + matrix.e) + d.width/2;
-          var posY =  (window.pageYOffset + matrix.f);
+          var posY =  (window.pageYOffset + matrix.f) + 20;
 
-          chartPopover.setContent(_this.popoverContent(_.omit(d, ['width', 'x']), i)).show(posX, posY);
+          chartPopover.setContent(_this.popoverContent(_.omit(d, ['width', 'x']), i, {bands: _this.xData.bands})).show(posX, posY);
       })
       .on("mouseout", function() {
         chartPopover.hide();
       });
+
+    // Append Axis.
+    svg.select(".x.axis")
+      .attr("transform", "translate(" + margin.left + "," + (_height + margin.top) + ")").transition()
+      .call(xAxis);
+
+    if (this.xData && this.xData.label) {
+      svg.select(".x.axis .label")
+        .text(this.xData.label)
+        .attr("x", _width / 2)
+        .attr("y", 35);
+    }
   };
 
   this.destroy = function() {

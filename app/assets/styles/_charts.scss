@@ -27,55 +27,17 @@
   margin-bottom: 1rem;
 }
 
-
-.timeChart, .lineChart, .barChart, .scatterplotChart {
+.chart {
   width: 100%;
-  min-height: 300px;
-}
-
-.line, .trendline {
-  fill: none;
-  stroke: blue;
-}
-
-.charts .lineChart {
-    width: 50%;
-    float: left;
-}
-
-.boxplot {
-  line {
-    stroke: red;
-  }
-
-  .box {
-    fill: white;
-    stroke: red;
-    stroke-width: 1px;
-  }
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-
-svg.chart {
   display: block;
-}
 
-.lineChart, .barChart, .scatterplotChart, .boxChart {
-  .y.axis {
-    .axis-lines {
-      stroke: #ccc;
-      stroke-width: 1px;
-    }
+  .axis text {
+    font-size: 0.750rem;
+  }
+
+  .axis-lines {
+    stroke: #ccc;
+    stroke-width: 1px;
   }
 
   .x.axis {
@@ -88,6 +50,10 @@ svg.chart {
   }
 }
 
+.lineChart, .barChart, .scatterplotChart {
+  min-height: 300px;
+}
+
 .lineChart {
   .area {
     fill: $primary-color;
@@ -95,10 +61,17 @@ svg.chart {
   .line {
     stroke: $secondary-color;
     stroke-width: 2px;
+    fill: none;
   }
 
   .focus-circle {
     fill: $secondary-color;
+  }
+}
+
+.barChart {
+  .bar {
+    fill: $primary-color;
   }
 }
 
@@ -130,7 +103,7 @@ svg.chart {
 .timeChart {
   .small-label {
     @extend .antialiased;
-    font-size: 0.785rem;
+    font-size: 0.750rem;
     font-weight: $base-font-bold;
     fill: $base-font-color;
   }
@@ -141,7 +114,26 @@ svg.chart {
   .bar-axis-tick {
     text-anchor: middle;
     fill: $base-font-color;
-    font-size: 11px;
+    font-size: 0.750rem;
+  }
+
+  .legend {
+    .legend-item text {
+      @extend .antialiased;
+      font-size: 0.750rem;
+      font-weight: $base-font-bold;
+      fill: $base-font-color;
+    }
+  }
+
+  .color-phase-1 {
+    fill: green;
+  }
+  .color-phase-2 {
+    fill: yellow;
+  }
+  .color-phase-3 {
+    fill: red;
   }
 }
 

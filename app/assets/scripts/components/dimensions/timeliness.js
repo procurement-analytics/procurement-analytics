@@ -10,12 +10,12 @@ var IndTimeliness = module.exports = React.createClass({
     data: React.PropTypes.object
   },
 
-  chartPopover: function(d) {
+  chartPopover: function(d, i, otherData) {
     return (
       <div>
-        First phase duration: {d.data[0]}<br/>
-        Second phase duration: {d.data[1]}<br/>
-        Third phase duration: {d.data[2]}<br/>
+        {otherData.bands[0]}: {d.data[0]} days<br/>
+        {otherData.bands[1]}: {d.data[1]} days<br/>
+        {otherData.bands[2]}: {d.data[2]} days<br/>
       </div>
     );
   },
