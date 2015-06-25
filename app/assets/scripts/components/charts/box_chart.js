@@ -361,7 +361,7 @@ var d3BoxChart = function(el, data) {
 
     yAxisGroup.selectAll('.axis-lines')
       .data([
-        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top, y2: _height + margin.top}
+        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top + 0.5, y2: _height + margin.top + 0.5}
       ])
     .enter().append('line')
       .attr('class', 'axis-lines')
