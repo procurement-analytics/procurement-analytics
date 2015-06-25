@@ -3,17 +3,15 @@
 .chart-item {
   float: left;
   width: 100%;
-  padding: 0.5rem;
   @include media(small-up) {
     .chart-group-2 & {
-      width: calc(100% / 2);
+      width: calc(100% / 2 - 1rem);
+      margin: 0.5rem;
     }
     .chart-group-3 & {
       min-width: 16rem;
-      width: calc(100% / 3);
-    }
-    .chart-group-4 & {
-      width: calc(100% / 4);
+      width: calc(100% / 3 - 1rem);
+      margin: 0.5rem;
     }
   }
 }
@@ -31,13 +29,21 @@
   width: 100%;
   display: block;
 
+  .small-label {
+    @extend .chart-title;
+    fill: tint($base-color, 44%);
+  }
+
   .axis text {
-    font-size: 0.750rem;
+    font-size: 0.875rem;
+    fill: rgba($base-color, 0.64);
+    font-weight: $base-font-regular;
   }
 
   .axis-lines {
-    stroke: #ccc;
+    stroke: rgba($base-color, 0.12);
     stroke-width: 1px;
+    fill: none;
   }
 
   .x.axis {
@@ -56,60 +62,52 @@
 
 .lineChart {
   .area {
-    fill: $primary-color;
+    fill: $primary-color;;
   }
   .line {
-    stroke: $secondary-color;
-    stroke-width: 2px;
+    stroke: shade($primary-color, 48%);
+    stroke-width: 1px;
     fill: none;
   }
 
   .focus-circle {
-    fill: $secondary-color;
+    fill: shade($primary-color, 48%);
   }
 }
 
 .barChart {
   .bar {
     fill: $primary-color;
+    stroke: #fff;
+    stroke-width: 0.5px;
   }
 }
 
 .boxChart {
   .boxplot-container {
-    .small-label {
-      @extend .antialiased;
-      font-size: 0.785rem;
-      font-weight: $base-font-bold;
-      fill: $base-font-color;
-    }
 
     line {
-      stroke: $secondary-color;
+      stroke: shade($primary-color, 48%);
       stroke-width: 1px;
+      fill: none;
     }
 
     .box {
       fill: $primary-color;
-      stroke: $secondary-color;
+      stroke: shade($primary-color, 48%);
       stroke-width: 1px;
     }
   }
-  .bar rect {
-    fill: $primary-color;
-  }
 }
 
+
+
 .timeChart {
-  .small-label {
-    @extend .antialiased;
-    font-size: 0.750rem;
-    font-weight: $base-font-bold;
-    fill: $base-font-color;
-  }
+
   .bar-tick {
     text-anchor: middle;
     fill: #fff;
+    @extend .antialiased;
   }
   .bar-axis-tick {
     text-anchor: middle;
@@ -119,21 +117,24 @@
 
   .legend {
     .legend-item text {
-      @extend .antialiased;
-      font-size: 0.750rem;
-      font-weight: $base-font-bold;
-      fill: $base-font-color;
+      font-size: 0.875rem;
+      fill: rgba($base-color, 0.64);
+      font-weight: $base-font-regular;
     }
   }
 
   .color-phase-1 {
-    fill: green;
+    fill: $primary-color;
   }
   .color-phase-2 {
-    fill: yellow;
+    fill: #c5d152;
   }
   .color-phase-3 {
-    fill: red;
+    fill: #b7a448;
+  }
+  .bar {
+    stroke: #fff;
+    stroke-width: 0.5px;
   }
 }
 
@@ -142,9 +143,10 @@
     fill: $primary-color;
   }
   .trendline {
-    stroke: $secondary-color;
-    stroke-width: 2px;
-    stroke-dasharray: 2px;
+    stroke: rgba($base-color, 0.32);
+    stroke-width: 1px;
+    stroke-dasharray: 4px;
+    fill: none;
   }
 }
 

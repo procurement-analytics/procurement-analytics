@@ -225,7 +225,7 @@ var d3LineChart = function(el, data) {
           .translate(this.getAttribute("cx"), this.getAttribute("cy"));
         
         var posX = window.pageXOffset + matrix.e;
-        var posY =  window.pageYOffset + matrix.f;
+        var posY =  window.pageYOffset + matrix.f - 8;
 
         chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
 

@@ -160,7 +160,7 @@ var d3TimeChart = function(el, data) {
 
     // Legend block
     var legend = svg.select('.legend')
-      .attr("transform", "translate(0," + (_height + margin.top + 32) + ")");
+      .attr("transform", "translate(0," + (_height + margin.top + 48) + ")");
 
     var legendItem = legend.selectAll('.legend-item')
       .data(this.xData.bands)
