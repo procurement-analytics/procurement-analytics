@@ -1,23 +1,22 @@
 // GLOBAL
 
 .chart-item {
-  float: left;
   width: 100%;
-  .chart-group-1 & {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 44rem;
-    float: none;
-  }
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 44rem;
+  float: none;
   @include media(small-up) {
     .chart-group-2 & {
       width: calc(100% / 2 - 1rem);
       margin: 0.5rem;
+      float: left;
     }
     .chart-group-3 & {
       min-width: 16rem;
       width: calc(100% / 3 - 1rem);
       margin: 0.5rem;
+      float: left;
     }
   }
 }
