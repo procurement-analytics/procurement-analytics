@@ -19,8 +19,8 @@ table {
   > thead > tr > th {
     vertical-align: bottom !important;
     border-bottom: 2px solid tint($base-color, 92%);
-    @extend .hd-suptitle;
-    color: rgba($base-color, 0.48);
+    color: $base-color, 0.48;
+    font-weight: $base-font-bold;
   }
 
   > thead > tr > th,
