@@ -141,8 +141,8 @@ var d3LineChart = function(el, data) {
 
     yAxisGroup.selectAll('.axis-lines')
       .data([
-        {x1: 0, x2: _width + margin.left + margin.right, y1: 1, y2: 1},
-        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top + 10, y2: _height + margin.top + 10}
+        {x1: 0, x2: _width + margin.left + margin.right, y1: 0.5, y2: 0.5},
+        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top + 10.5, y2: _height + margin.top + 10.5}
       ])
     .enter().append('line')
       .attr('class', 'axis-lines')
