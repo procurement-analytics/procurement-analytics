@@ -151,6 +151,12 @@ var d3LineChart = function(el, data) {
       .attr('x2', function(d) {return d.x2; })
       .attr('y2', function(d) {return d.y2; });
 
+    yAxisGroup.selectAll('.axis-lines')
+      .attr('x1', function(d) {return d.x1; })
+      .attr('y1', function(d) {return d.y1; })
+      .attr('x2', function(d) {return d.x2; })
+      .attr('y2', function(d) {return d.y2; });
+
     yAxisGroup.selectAll('.label-min')
       .data([this.yData.domain[0]])
     .enter().append('text')
