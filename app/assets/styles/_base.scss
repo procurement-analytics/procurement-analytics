@@ -280,9 +280,10 @@ a:active{
   @include media(xlarge-up) {
     padding: $inner-pad*2 $inner-pad*4;
   }
-  &:last-child {
-    box-shadow: inset -1px 0 0 0 rgba($base-color, 0.08);
-  }
+}
+
+.col-intro .tile:last-child {
+  box-shadow: inset -1px 0 0 0 rgba($base-color, 0.08);
 }
 
 .tile-title {
@@ -616,12 +617,10 @@ svg.chart {
 }
 
 
-.lineChart, .barChart, .scatterplotChart, .boxChart {
-  .y.axis {
-    .axis-lines {
-      stroke: #ccc;
-      stroke-width: 1px;
-    }
+.lineChart, .barChart, .scatterplotChart, .boxChart, .timeChart {
+  .axis-lines {
+    stroke: #ccc;
+    stroke-width: 1px;
   }
 
   .x.axis {
@@ -689,6 +688,25 @@ svg.chart {
     text-anchor: middle;
     fill: $base-font-color;
     font-size: 11px;
+  }
+
+  .legend {
+    .legend-item text {
+      @extend .antialiased;
+      font-size: 0.785rem;
+      font-weight: $base-font-bold;
+      fill: $base-font-color;
+    }
+  }
+
+  .color-phase-1 {
+    fill: red;
+  }
+  .color-phase-2 {
+    fill: yellow;
+  }
+  .color-phase-3 {
+    fill: green;
   }
 }
 

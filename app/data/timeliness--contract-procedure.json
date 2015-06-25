@@ -7,10 +7,12 @@
       "id": "average-timeline",
       "title": "Average Timeline",
       "x": {
-        "label": "Contract procedure"
-      },
-      "y": {
-        "label": "Days"
+        "label": "Days",
+        "bands": [
+           "First phase",
+           "Second phase",
+           "Third phase"
+        ]
       },
       "data": [
         {

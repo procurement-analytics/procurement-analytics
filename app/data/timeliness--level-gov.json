@@ -7,10 +7,12 @@
       "id": "average-timeline",
       "title": "Average Timeline",
       "x": {
-        "label": "Level of government"
-      },
-      "y": {
-        "label": "Days"
+        "label": "Days",
+        "bands": [
+           "First phase",
+           "Second phase",
+           "Third phase"
+        ]
       },
       "data": [
         {
