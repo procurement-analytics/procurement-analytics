@@ -616,7 +616,7 @@ svg.chart {
 }
 
 
-.lineChart, .barChart, .scatterplotChart {
+.lineChart, .barChart, .scatterplotChart, .boxChart {
   .y.axis {
     .axis-lines {
       stroke: #ccc;
@@ -635,9 +635,6 @@ svg.chart {
 }
 
 
-
-
-
 .lineChart {
   .area {
     fill: $primary-color;
@@ -654,8 +651,11 @@ svg.chart {
 
 .boxChart {
   .boxplot-container {
-    .label {
-      color: tint($base-color, 44%);
+    .small-label {
+      @extend .antialiased;
+      font-size: 0.785rem;
+      font-weight: $base-font-bold;
+      fill: $base-font-color;
     }
 
     line {

@@ -53,7 +53,7 @@ var d3BoxChart = function(el, data) {
   //   Called before destroying the chart.
 
   // Var declaration.
-  var margin = {top: 30, right: 32, bottom: 50, left: 50, gap: 32};
+  var margin = {top: 0, right: 32, bottom: 50, left: 32, gap: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
@@ -121,11 +121,11 @@ var d3BoxChart = function(el, data) {
             .domain(domain && domain.call(this, d, i) || [min, max])
             .range([0, width]);
 
-        var label = g.selectAll('text.label')
+        var label = g.selectAll('text.small-label')
           .data([d.label]);
 
         label.enter().append('text')
-          .attr('class', 'label')
+          .attr('class', 'small-label')
           .attr('font-size', 14)
           .attr('y', textSize)
           .text(function(v) { return v; });
@@ -325,6 +325,9 @@ var d3BoxChart = function(el, data) {
       .attr("class", "label")
       .attr("text-anchor", "end");
 
+    svg.append("g")
+      .attr("class", "y axis");
+
     boxChart = this._box();
 
   };
@@ -350,13 +353,32 @@ var d3BoxChart = function(el, data) {
     x.range([0, _width])
       .domain(domain);
 
-    svg
-      .attr('width', _width + margin.left + margin.right)
-      .attr('height', _height + margin.top + margin.bottom);
-
     dataCanvas
       .attr('width', _width)
       .attr('height', _height);
+
+    var yAxisGroup = svg.select('.y.axis');
+
+    yAxisGroup.selectAll('.axis-lines')
+      .data([
+        {x1: 0, x2: _width + margin.left + margin.right, y1: _height + margin.top, y2: _height + margin.top}
+      ])
+    .enter().append('line')
+      .attr('class', 'axis-lines')
+      .attr('x1', function(d) {return d.x1; })
+      .attr('y1', function(d) {return d.y1; })
+      .attr('x2', function(d) {return d.x2; })
+      .attr('y2', function(d) {return d.y2; });
+
+    yAxisGroup.selectAll('.axis-lines')
+      .attr('x1', function(d) {return d.x1; })
+      .attr('y1', function(d) {return d.y1; })
+      .attr('x2', function(d) {return d.x2; })
+      .attr('y2', function(d) {return d.y2; });
+
+    svg
+      .attr('width', _width + margin.left + margin.right)
+      .attr('height', _height + margin.top + margin.bottom);
 
     var boxes = dataCanvas.selectAll("g.boxplot-container")
       .data(this.data);
@@ -373,15 +395,14 @@ var d3BoxChart = function(el, data) {
 
     // Append Axis.
     svg.select(".x.axis")
-      .attr("transform", "translate(" + margin.left + "," + (_height + margin.top) + ")").transition()
+      .attr("transform", "translate(" + margin.left + "," + (_height + margin.top + 10) + ")").transition()
       .call(xAxis);
 
-    if (this.xData) {
+    if (this.xData && this.xData.label) {
       svg.select(".x.axis .label")
         .text(this.xData.label)
-        .transition()
-        .attr("x", _width + margin.right)
-        .attr("y", 30);
+        .attr("x", _width / 2)
+        .attr("y", 35);
     }
 
   };
