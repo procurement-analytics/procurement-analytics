@@ -165,6 +165,11 @@ var d3LineChart = function(el, data) {
       .attr('y', _height + margin.top)
       .text(function(d) {return d;});
 
+    yAxisGroup.selectAll('.label-min')
+      .attr('x', 0)
+      .attr('y', _height + margin.top)
+      .text(function(d) {return d;});
+
     yAxisGroup.selectAll('.label-max')
       .data([this.yData.domain[1]])
     .enter().append('text')
@@ -172,6 +177,11 @@ var d3LineChart = function(el, data) {
       .attr('x', 0)
       .attr('y', 0)
       .attr('dy', '14px') // 14 is for the font size.
+      .text(function(d) {return d;});
+
+    yAxisGroup.selectAll('.label-max')
+      .attr('x', 0)
+      .attr('y', 0)
       .text(function(d) {return d;});
 
     x.range([0, _width])
