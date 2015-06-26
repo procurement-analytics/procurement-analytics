@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "id": "timeliness--level-gov"
+  },
+  "charts": [
+    {
+      "id": "average-timeline",
+      "title": "Average Timeline",
+      "x": {
+        "label": "Level of government"
+      },
+      "y": {
+        "label": "Days"
+      },
+      "data": [
+        {
+          "label": "State",
+          "data": [
+            50,
+            70,
+            40
+          ]
+        },
+        {
+          "label": "Federal",
+          "data": [
+            50,
+            30,
+            75
+          ]
+        },
+        {
+          "label": "Municipal",
+          "data": [
+            30,
+            50,
+            75
+          ]
+        }
+      ]
+    }
+  ]
+}
