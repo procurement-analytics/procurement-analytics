@@ -158,7 +158,7 @@ var d3TimeChart = function(el, data) {
       .attr('x2', function(d) { return d.x2; })
       .attr('y2', function(d) { return d.y2; });
 
-    // Legend block
+    // Legend block.
     var legend = svg.select('.legend')
       .attr("transform", "translate(0," + (_height + margin.top + 48) + ")");
 
@@ -202,6 +202,9 @@ var d3TimeChart = function(el, data) {
       .text(function(d) { return d })
       .attr('x', 0)
       .attr('y', 14);
+
+    rows.selectAll('.small-label')
+      .text(function(d) { return d });
 
     rows.selectAll('.bar')
       .data(function(d) { return d.d; })
