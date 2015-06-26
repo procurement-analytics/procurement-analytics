@@ -62,7 +62,14 @@ var IndGeneral = module.exports = React.createClass({
     var contractsTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (contractsCharts ? ' chart-group-' + contractsCharts.length : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
-        {contractsCharts ? <div className="tile-body">{contractsCharts}</div> : null}
+        {contractsCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {contractsCharts}
+          </div>
+        ) : null}
       </section>
     );
 
@@ -70,7 +77,14 @@ var IndGeneral = module.exports = React.createClass({
     var amountTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (amountCharts ? ' chart-group-' + amountCharts.length : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
-        {amountCharts ? <div className="tile-body">{amountCharts}</div> : null}
+        {amountCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {amountCharts}
+          </div>
+        ) : null}
       </section>
     );
 
@@ -79,7 +93,7 @@ var IndGeneral = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">Overview</h1>
+            <h1 className="tile-title">About summary</h1>
             <div className="tile-body">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
               <dl className="facts-list">

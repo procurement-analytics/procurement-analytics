@@ -2,7 +2,11 @@
 $base-color: #001e25;                   // Swamp (Very Dark Blue)
 $primary-color: #1e896f;              	// Elm (Green)
 $secondary-color: #004358;          	  // Teal Blue
-// $tertiary-color: #ffffff;            // Undefined
+
+// We use this for the infographic/chart's colors.
+$infograph-color-a: $primary-color;
+$infograph-color-b: #c5d152;
+$infograph-color-c: #b7a448;
 
 // We use these to control various font styles
 // $base-* refers to the base styles when there's nothing else to override them.

@@ -344,6 +344,14 @@ a:active{
   }
 }
 
+.tile-prose {
+  margin-bottom: 2rem;
+  max-width: 32rem;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
 
 // INDICATORS SELECTION AKA NL SELECT
 

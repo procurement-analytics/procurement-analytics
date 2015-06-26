@@ -21,6 +21,10 @@
       float: left;
     }
   }
+
+  .chart-group-none & {
+    max-width: 64rem;
+  }
 }
 
 .chart-title {
@@ -69,22 +73,22 @@
 
 .lineChart {
   .area {
-    fill: $primary-color;;
+    fill: $infograph-color-a;
   }
   .line {
-    stroke: shade($primary-color, 48%);
+    stroke: shade($infograph-color-a, 48%);
     stroke-width: 1px;
     fill: none;
   }
 
   .focus-circle {
-    fill: shade($primary-color, 48%);
+    fill: shade($infograph-color-a, 48%);
   }
 }
 
 .barChart {
   .bar {
-    fill: $primary-color;
+    fill: $infograph-color-a;
     stroke: #fff;
     stroke-width: 0.5px;
   }
@@ -94,14 +98,14 @@
   .boxplot-container {
 
     line {
-      stroke: shade($primary-color, 48%);
+      stroke: shade($infograph-color-a, 48%);
       stroke-width: 1px;
       fill: none;
     }
 
     .box {
-      fill: $primary-color;
-      stroke: shade($primary-color, 48%);
+      fill: $infograph-color-a;
+      stroke: shade($infograph-color-a, 48%);
       stroke-width: 1px;
     }
   }
@@ -131,13 +135,13 @@
   }
 
   .color-phase-1 {
-    fill: $primary-color;
+    fill: $infograph-color-a;
   }
   .color-phase-2 {
-    fill: #c5d152;
+    fill: $infograph-color-b;
   }
   .color-phase-3 {
-    fill: #b7a448;
+    fill: $infograph-color-c;
   }
   .bar {
     stroke: #fff;
@@ -147,7 +151,7 @@
 
 .scatterplotChart {
   .dot {
-    fill: $primary-color;
+    fill: $infograph-color-a;
   }
   .trendline {
     stroke: rgba($base-color, 0.32);

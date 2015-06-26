@@ -89,21 +89,42 @@ var IndFairness = module.exports = React.createClass({
     var relationTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (relationCharts ? ' chart-group-' + relationCharts.length : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : relationChartData.title}</h1>
-        {relationCharts ? <div className="tile-body">{relationCharts}</div> : null}
+        {relationCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {relationCharts}
+          </div>
+        ) : null}
       </section>
     );
 
     var concentrTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (concentrCharts ? ' chart-group-' + concentrCharts.length : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : concentrChartData.title}</h1>
-        {concentrCharts ? <div className="tile-body">{concentrCharts}</div> : null}
+        {concentrCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {concentrCharts}
+          </div>
+        ) : null}
       </section>
     );
 
     var top5Tile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (top5Table ? ' chart-group-' + top5Table.length : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : top5TableData.title}</h1>
-        {top5Table ? <div className="tile-body">{top5Table}</div> : null}
+        {top5Table ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {top5Table}
+          </div>
+        ) : null}
       </section>
     );
 
@@ -112,7 +133,7 @@ var IndFairness = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">Overview</h1>
+            <h1 className="tile-title">About fairness</h1>
             <div className="tile-body">
               <p>A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
             </div>

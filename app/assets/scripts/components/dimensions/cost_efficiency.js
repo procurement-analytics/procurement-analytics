@@ -66,14 +66,28 @@ var IndCostEfficiency = module.exports = React.createClass({
     var distributionTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (distributionCharts ? ' chart-group-' + distributionCharts.length : '')}>
         <h1 className="tile-title">Price distribution</h1>
-        {distributionCharts && distributionCharts.length ? <div className="tile-body">{distributionCharts}</div> : null}
+        {distributionCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {distributionCharts}
+          </div>
+        ) : null}
       </section>
     );
 
     var variationTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+      <section className={"tile chart-group chart-group-none" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">Price variation</h1>
-        {variationCharts ? <div className="tile-body">{variationCharts}</div> : null}
+        {variationCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {variationCharts}
+          </div>
+        ) : null}
       </section>
     );
 
@@ -82,7 +96,7 @@ var IndCostEfficiency = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">Overview</h1>
+            <h1 className="tile-title">About cost efficiency</h1>
             <div className="tile-body">
               <p>Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
             </div>

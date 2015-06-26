@@ -36,9 +36,16 @@ var IndTimeliness = module.exports = React.createClass({
     }
 
     var timeTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '')}>
+      <section className={"tile chart-group chart-group-none" + (ldn ? ' loading' : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : timeChartData.title}</h1>
-        {timeCharts ? <div className="tile-body">{timeCharts}</div> : null}
+        {timeCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {timeCharts}
+          </div>
+        ) : null}
       </section>
     );
 
@@ -47,7 +54,7 @@ var IndTimeliness = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">Overview</h1>
+            <h1 className="tile-title">About timeliness</h1>
             <div className="tile-body">
               <p>Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
             </div>
