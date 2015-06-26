@@ -7,14 +7,17 @@
       "id": "average-timeline",
       "title": "Average Timeline",
       "x": {
-        "label": "Level of government"
-      },
-      "y": {
-        "label": "Days"
+        "label": "Days",
+        "bands": [
+           "First phase",
+           "Second phase",
+           "Third phase"
+        ]
       },
       "data": [
         {
-          "label": "State",
+          "id": "micro-supplier",
+          "label": "Micro",
           "data": [
             50,
             70,
@@ -22,7 +25,8 @@
           ]
         },
         {
-          "label": "Federal",
+          "id": "small-supplier",
+          "label": "Small",
           "data": [
             50,
             30,
@@ -30,11 +34,21 @@
           ]
         },
         {
-          "label": "Municipal",
+          "id": "medium-supplier",
+          "label": "Medium",
           "data": [
-            30,
             50,
+            30,
             75
+          ]
+        },
+        {
+          "id": "big-supplier",
+          "label": "No SME",
+          "data": [
+            80,
+            85,
+            60
           ]
         }
       ]
