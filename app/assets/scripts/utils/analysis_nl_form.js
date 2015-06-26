@@ -15,8 +15,8 @@ var fields = [
         }
       },
       {
-        key: 'level_gov',
-        value: 'level of government',
+        key: 'size_supplier',
+        value: 'size of the supplier',
         tokens: {
           'comparisonArticle': 'for'
         }
