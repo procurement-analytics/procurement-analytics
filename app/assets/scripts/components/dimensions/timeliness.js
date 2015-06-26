@@ -1,62 +1,70 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
+var _ = require('lodash');
+var TimeChart = require('../charts/timechart');
 
 var IndTimeliness = module.exports = React.createClass({
 
   propTypes: {
-    data: React.PropTypes.array
+    data: React.PropTypes.object
+  },
+
+  chartPopover: function(d, i, otherData) {
+    return (
+      <div>
+        {otherData.bands[0]}: {d.data[0]} days<br/>
+        {otherData.bands[1]}: {d.data[1]} days<br/>
+        {otherData.bands[2]}: {d.data[2]} days<br/>
+      </div>
+    );
   },
 
   render: function() {
+    var ldn = this.props.loading;
 
-    // THIS NEEDS TO BE CLEANED.
-    // DEV NOTE: For now we're doing here a switch based on comparison.
-    // This should be done in the parent and the data passed through props.data
+    var chartData = this.props.data.charts || [];
+    var timeChartData = _.find(chartData, {id: 'average-timeline'});
+    var timeCharts;
 
-    var data = null;
-    var comparison = this.props.comparison || 'all';
-    switch(comparison) {
-      case 'all':
-        data = (
-          <section className="tile chart-group">
-            <h1 className="tile-title">Average timeline</h1>
-            <div className="tile-body">
-              <img src="assets/graphics/content/ch_average-timeline-all.png"/>
-            </div>
-          </section>
-        );
-      break;
-      case 'contract_procedure':
-        data = (
-          <section className="tile chart-group">
-            <h1 className="tile-title">Average timeline</h1>
-            <div className="tile-body">
-              <img src="assets/graphics/content/ch_average-timeline-contr.png"/>
-            </div>
-          </section>
-        );
-      break;
-      case 'level_gov':
-        data = (
-          <section className="tile chart-group">
-            <h1 className="tile-title">Average timeline</h1>
-            <div className="tile-body">
-              <img src="assets/graphics/content/ch_average-timeline-gov.png"/>
-            </div>
-          </section>
-        );
-      break;
+    if (timeChartData) {
+      timeCharts = (
+        <div className="chart-item">
+          <TimeChart data={timeChartData.data} x={timeChartData.x}  y={timeChartData.y} popoverContentFn={this.chartPopover} />
+        </div>
+      );
     }
+
+    var timeTile = (
+      <section className={"tile chart-group chart-group-none" + (ldn ? ' loading' : '')}>
+        <h1 className="tile-title">{ldn ? 'Loading' : timeChartData.title}</h1>
+        {timeCharts ? (
+          <div className="tile-body">
+            <div className="tile-prose">
+              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+            </div>
+            {timeCharts}
+          </div>
+        ) : null}
+      </section>
+    );
+
     return (
       <div className="content">
-        <section className="tile intro">
-          <h1 className="tile-title">Overview</h1>
-          <div className="tile-body">
-            <p>Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
-          </div>
-        </section>
-        {data}
+
+        <div className="col-intro">
+          <section className="tile">
+            <h1 className="tile-title">About timeliness</h1>
+            <div className="tile-body">
+              <p>Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.</p>
+            </div>
+          </section>
+        </div>
+
+        <div className="col-main">
+          {timeTile}
+        </div>
+
       </div>
     );
   }

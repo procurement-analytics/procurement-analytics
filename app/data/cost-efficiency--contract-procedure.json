@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "id": "cost-efficiency--contract-procedure"
+  },
+  "charts": [
+    {
+      "id": "price-distribution",
+      "title": "Price Distribution",
+      "x": {
+        "domain": [30,150000],
+        "label": "Price"
+      },
+      "y": {
+        "label": "# of contracts",
+        "domain": [30,400]
+      },
+      "data": [
+        {
+          "id": "direct-award",
+          "label": "Direct award",
+          "data": [
+            45,
+            80,
+            250,
+            300,
+            100
+          ]
+        },
+        {
+          "id": "open-call",
+          "label": "Open call",
+          "data": [
+            200,
+            280,
+            390,
+            360,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "price-variation",
+      "title": "Price Variation",
+      "x": {
+        "label": "Price variation",
+        "domain": [1200,12500]
+      },
+      "data": [
+        {
+          "id": "direct-award",
+          "label": "Direct award",
+          "min": 1500,
+          "max": 12000,
+          "whisker1": 1500,
+          "q1": 3120,
+          "median": 5000,
+          "q3": 7500,
+          "whisker2": 12000
+        },
+        {
+          "id": "open-call",
+          "label": "Open call",
+          "min": 5000,
+          "max": 10000,
+          "whisker1": 5550,
+          "q1": 6320,
+          "median": 7000,
+          "q3": 9500,
+          "whisker2": 10000
+        }
+      ]
+    }
+  ]
+}

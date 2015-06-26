@@ -1,7 +1,7 @@
 {
-  "name": "procurement-dashboards",
+  "name": "mex-procurement-performance",
   "version": "1.0.0",
-  "description": "",
+  "description": "A set of dashboards that provides insight into the procurement performance of the Mexican government.",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"

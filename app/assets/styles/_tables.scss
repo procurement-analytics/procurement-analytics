@@ -1,0 +1,56 @@
+// TABLES
+
+table {
+  width: 100%;
+  max-width: 100%;
+  background-color: transparent;
+  border-spacing: 0;
+  border-collapse: collapse;
+
+  td, th {
+    padding: 0;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  > thead > tr > th {
+    vertical-align: bottom !important;
+    border-bottom: 1px solid tint($base-color, 92%);
+    color: $base-color, 0.48;
+    font-weight: $base-font-bold;
+    background: rgba($base-color, 0.04)
+  }
+
+  > thead > tr > th,
+  > tbody > tr > th,
+  > tfoot > tr > th,
+  > thead > tr > td,
+  > tbody > tr > td,
+  > tfoot > tr > td {
+    padding: 0.5rem;
+    vertical-align: top;
+    border-top: 1px solid tint($base-color, 92%);
+  }
+
+  > caption+thead > tr:first-child > th,
+  > colgroup+thead > tr:first-child > th,
+  > thead:first-child > tr:first-child > th,
+  > caption+thead > tr:first-child > td,
+  > colgroup+thead > tr:first-child > td,
+  > thead:first-child > tr:first-child > td {
+    border-top: 0;
+  }
+}
+
+.table-responsive {
+  position: relative;
+  min-height: .01%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -16,11 +16,16 @@ var About = module.exports = React.createClass({
         <div className="page-body">
           <div className="inner">
             <div className="prose">
-              <h2>Lorem ipsum dolor sit amet</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
-              <p>Ut sodales pellentesque tempus. Nulla ac velit tempor, vestibulum lectus et, dapibus quam. Donec molestie cursus enim, quis eleifend lectus mollis at. Integer nec augue eleifend velit tempus ullamcorper eget ac ex. Integer finibus eget ex eu pulvinar. Mauris id nulla dui. Nulla fringilla tellus vitae purus tempus, id fermentum nisl maximus.</p>
-              <h3>Vestibulum lectus et</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
+              <h2>The project</h2>
+              <p>Intro to the project and partners...</p>
+              <h2>Data sources</h2>
+              <ul>
+                <li><strong><a href="https://sites.google.com/site/cnetuc/contrataciones">Compranet</a></strong> is the main data source that powers these dashboards.</li>
+                <li>...</li>
+              </ul>
+              <h2>License</h2>
+              <p>The codebase of the application has been released into the public domain using the unlicense[link to license in GH repo].</p>
+              <p>Feel free to use Feel free to fork... [link to Github]</p>
             </div>
           </div>
         </div>

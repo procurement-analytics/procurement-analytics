@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "id": "timeliness--contract-procedure"
+  },
+  "charts": [
+    {
+      "id": "average-timeline",
+      "title": "Average Timeline",
+      "x": {
+        "label": "Days",
+        "bands": [
+           "First phase",
+           "Second phase",
+           "Third phase"
+        ]
+      },
+      "data": [
+        {
+          "id": "lic-publica-osd",
+          "label": "Licitación Pública con OSD",
+          "data": [
+            32,
+            50,
+            21
+          ]
+        },
+        {
+          "id": "lic-publica",
+          "label": "Licitación Pública",
+          "data": [
+            80,
+            20,
+            33
+          ]
+        },
+        {
+          "id": "adj-directa",
+          "label": "Adjudicación Directa Federal",
+          "data": [
+            10,
+            20,
+            30
+          ]
+        },
+        {
+          "id": "lic-estatal",
+          "label": "Licitación Publica Estatal",
+          "data": [
+            50,
+            40,
+            20
+          ]
+        },
+        {
+          "id": "invitacion",
+          "label": "Invitación a Cuando Menos 3 Personas",
+          "data": [
+            50,
+            34,
+            22
+          ]
+        }
+      ]
+    }
+  ]
+}

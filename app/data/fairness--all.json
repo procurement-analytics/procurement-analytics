@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "id": "summary--all"
+  },
+  "charts": [
+    {
+      "id": "relationship",
+      "title": "Relationship",
+      "x": {
+        "domain": [25000,80888],
+        "label": "Price ($)",
+        "key": "amount"
+      },
+      "y": {
+        "label": "# suppliers",
+        "domain": [10,40],
+        "key": "suppliers"
+      },
+      "r": {
+        "domain": [10,40],
+        "key": "contracts"
+      },
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            {
+              "name": "company1",
+              "suppliers": 10,
+              "contracts": 30,
+              "amount": 25000
+            },
+            {
+              "name": "company2",
+              "suppliers": 15,
+              "contracts": 18,
+              "amount": 40000
+            },
+            {
+              "name": "company3",
+              "suppliers": 22,
+              "contracts": 22,
+              "amount": 60000
+            },
+            {
+              "name": "company4",
+              "suppliers": 26,
+              "contracts": 40,
+              "amount": 66000
+            },
+            {
+              "name": "company5",
+              "suppliers": 10,
+              "contracts": 12,
+              "amount": 80888
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "concentration-winning",
+      "title": "Concentration of Winning",
+      "x": {
+        "domain": [25000,80888],
+        "label": "Price ($)",
+        "key": "amount"
+      },
+      "y": {
+        "label": "# contracts",
+        "domain": [10,100],
+        "key": "contracts"
+      },
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            {
+              "name": "company1",
+              "contracts": 80,
+              "amount": 25000
+            },
+            {
+              "name": "company2",
+              "contracts": 55,
+              "amount": 40000
+            },
+            {
+              "name": "company3",
+              "contracts": 98,
+              "amount": 60000
+            },
+            {
+              "name": "company4",
+              "contracts": 20,
+              "amount": 66000
+            },
+            {
+              "name": "company5",
+              "contracts": 15,
+              "amount": 80888
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "top-contracts",
+      "title": "Top 5 contracts",
+      "header": [
+        "Purchasing unit",
+        "Supplier",
+        "Amount"
+      ],
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            ["Company 1", "Supplier 1", 684361],
+            ["Company 2", "Supplier 2", 354894],
+            ["Company 3", "Supplier 3", 85453],
+            ["Company 4", "Supplier 4", 54865],
+            ["Company 5", "Supplier 5", 36721]
+          ]
+        }
+      ]
+    }
+  ]
+}

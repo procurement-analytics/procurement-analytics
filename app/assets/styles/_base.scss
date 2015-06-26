@@ -49,9 +49,6 @@ a:active{
 
 // Rows
 
-
-// Rows
-
 .row {
   @extend .clearfix;
   padding-left: $inner-pad;
@@ -60,7 +57,7 @@ a:active{
     padding-left: $inner-pad*2;
     padding-right: $inner-pad*2;
   }
-  @include media(large-up) {
+  @include media(xlarge-up) {
     padding-left: $inner-pad*4;
     padding-right: $inner-pad*4;
   }
@@ -71,7 +68,6 @@ a:active{
   margin-left: auto;
   margin-right: auto;
 }
-
 
 // SITE CANVAS
 
@@ -132,8 +128,8 @@ a:active{
   a {
     display: block;
     width: 4rem;
-    height: 4rem;
-    line-height: 4rem;
+    height: 5.25rem;
+    line-height: 5.25rem;
     box-shadow: -1px 0 0 0 rgba(#fff, 0.16);
     font-size: 1.25rem;
     text-align: center;
@@ -149,8 +145,13 @@ a:active{
   li:first-child a {
     box-shadow: none;
   }
+  @include media(small-up) {
+    a {
+      height: 4rem;
+      line-height: 4rem;
+    }
+  }
 }
-
 
 // PAGE
 
@@ -172,11 +173,11 @@ a:active{
     height: 1px;
     width: 100%;
     z-index: 1;
-    background: rgba($base-color, 0.08);
+    background: rgba($base-color, 0.12);
     content: "";
   }
   > .inner {
-    padding-top: 6rem;
+    padding-top: 6.5rem;
     padding-bottom: 2rem;
     @extend .row;
   }
@@ -192,6 +193,12 @@ a:active{
   float: left;
   max-width: 40rem;
   @include animation(fade-in 0.64s ease 0s);
+  @include media(large-up) {
+    max-width: 28rem;
+  }
+  @include media(xlarge-up) {
+    max-width: 40rem;
+  }
 }
 
 .page-title {
@@ -232,70 +239,93 @@ a:active{
   }
 }
 
-.content {
-  @include display(flex);
-  @include flex-direction(row);
-  @include flex-wrap(wrap);
-  box-shadow: inset 0 1px 0 0 rgba($base-color, 0.08);
+.page-footer {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  box-shadow: inset 0 1px 0 0 $brdr-rgba;
+  > .inner {
+    @extend .row;
+    @extend .clearfix;
+  }
 }
 
-.content > * {
+// CONTENT + TILES
+
+.content {
+  @include display(flex);
+  @include flex-flow(column wrap);
+  @include justify-content(flex-start);
+  box-shadow: inset 0 1px 0 0 rgba($base-color, 0.08);
+  @include media(large-up) {
+    @include flex-flow(row wrap);
+  }
+}
+
+.col-intro {
+  background: tint($base-color, 44%);
+  color: #fff;
+  @extend .antialiased;
+  @include media(large-up) {
+    @include flex(0 0 24rem);
+  }
+}
+
+.col-main {
+  @include flex(1 1);
+}
+
+.tile {
   box-shadow: inset -1px -1px 0 0 rgba($base-color, 0.08);
   @extend .clearfix;
+  order: 0;
   padding: $inner-pad;
   @include media(small-up) {
     padding: $inner-pad*2;
   }
-  @include media(large-up) {
-    padding: $inner-pad*4;
+  @include media(xlarge-up) {
+    padding: $inner-pad*2 $inner-pad*4;
   }
 }
 
-.content > * {
-  width: 100%;
-  @include media(small-up) {
-    width: calc(100% / 2);
-  }
-  @include media(large-up) {
-    width: calc(100% / 3);
-  }
-}
-
-// TILE
-
-.intro {
-  background: tint($base-color, 44%);
-  color: #fff;
-  @extend .antialiased;
+.col-intro .tile:last-child {
+  box-shadow: inset -1px 0 0 0 rgba($base-color, 0.08);
 }
 
 .tile-title {
   display: inline-block;
-  font-size: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   text-transform: uppercase;
   font-weight: $base-font-bold;
-  margin: 0 0 1.5rem -1rem;
+  margin: 0 0 1rem -1rem;
   background: $base-font-color;
   padding: 0.5rem 1rem;
   color: #fff;
   @extend .antialiased;
   @include media(small-up) {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.5rem;
     margin-left: -$inner-pad*2;
     padding-left: $inner-pad*2;
   }
-  @include media(large-up) {
+  @include media(xlarge-up) {
     margin-left: -$inner-pad*4;
     padding-left: $inner-pad*4;
   }
 }
 
 .tile-body {
-  // @extend .prose;
   color: tint($base-color, 44%);
+  @extend .clearfix;
+  .col-intro & {
+    max-width: 32rem;
+  }
   p {
     margin-bottom: 1.5rem;
   }
-  .intro & {
+  .col-intro & {
     color: inherit;
   }
   .facts-list {
@@ -314,21 +344,14 @@ a:active{
   }
 }
 
-.chart-group img {
-  max-width: 100%;
-}
+.tile-prose {
+  margin-bottom: 2rem;
+  max-width: 32rem;
 
-.page-footer {
-  margin-top: 3rem;
-  padding-top: 3rem;
-  box-shadow: inset 0 1px 0 0 $brdr-rgba;
-  > .inner {
-    @extend .row;
-    @extend .clearfix;
+  > *:last-child {
+    margin-bottom: 0;
   }
 }
-
-
 
 // INDICATORS SELECTION AKA NL SELECT
 
@@ -352,10 +375,10 @@ a:active{
 // For the animation
 
 .nl-curtain-appear {
-  transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+  transition: opacity 0.24s ease 0s, visibility 0.24s linear 0s;
   opacity: 0;
   visibility: hidden;
-  
+
   &.nl-curtain-appear-active {
     opacity: 1;
     visibility: visible;
@@ -363,7 +386,7 @@ a:active{
 }
 
 .nl-curtain-leave {
-  transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+  transition: opacity 0.24s ease 0s, visibility 0.24s linear 0s;
   opacity: 1;
   visibility: visible;
 
@@ -380,7 +403,7 @@ a:active{
   background: $primary-color;
   @include transform(translate(-25%, -25%) scale(1));
   @include transform-origin(25% 25% 0);
-  transition: all 0.32s ease 0s;
+  transition: all 0.24s ease 0s;
   font-weight: $base-font-light;
   line-height: 1;
   @extend .antialiased;
@@ -448,71 +471,6 @@ a:active{
     }
   }
 }
-
-
-// CLEAN ME
-
-#indicators {
-  @include clearfix();
-  margin-top: 3rem;
-  margin-bottom: -1px; 
-
-  li {
-    display: block;
-    float: left;
-    margin-right: 0.5rem; 
-
-    a {
-      border: 1px solid #bbb;
-      background-color: #eee;
-      padding: 0.5rem;
-      display: block;
-
-      &.active {
-        border-bottom-color: white;
-        background-color: white;
-      }
-    }
-  }
-}
-
-.lineChart, .boxChart, .barChart, .scatterplotChart {
-  width: 100%;
-  min-height: 300px;
-}
-
-.line, .trendline {
-  fill: none;
-  stroke: blue;
-}
-
-.charts .lineChart {
-    width: 50%;
-    float: left;
-}
-
-.boxplot {
-  line {
-    stroke: red;
-  }
-
-  .box {
-    fill: white;
-    stroke: red;
-    stroke-width: 1px;
-  }
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
 
 // ABOUT
 

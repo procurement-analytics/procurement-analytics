@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "id": "cost-efficiency--level-gov"
+  },
+  "charts": [
+    {
+      "id": "price-distribution",
+      "title": "Price Distribution",
+      "x": {
+        "domain": [30,150000],
+        "label": "Price"
+      },
+      "y": {
+        "label": "# of contracts",
+        "domain": [40,400]
+      },
+      "data": [
+        {
+          "id": "federal",
+          "label": "Federal",
+          "data": [
+            400,
+            200,
+            298,
+            380,
+            200
+          ]
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "data": [
+            200,
+            300,
+            298,
+            380,
+            160
+          ]
+        },
+        {
+          "id": "municipal",
+          "label": "Municipal",
+          "data": [
+            380,
+            200,
+            100,
+            90,
+            50
+          ]
+        }
+      ]
+    },
+    {
+      "id": "price-variation",
+      "title": "Price Variation",
+      "x": {
+        "label": "Price variation",
+        "domain": [200,5500]
+      },
+      "data": [
+        {
+          "id": "federal",
+          "label": "Federal",
+          "min": 500,
+          "max": 5000,
+          "whisker1": 1235,
+          "q1": 1300,
+          "median": 2294,
+          "q3": 3000,
+          "whisker2": 4410
+        },
+        {
+          "id": "state",
+          "label": "State",
+          "min": 500,
+          "max": 5000,
+          "whisker1": 800,
+          "q1": 1200,
+          "median": 1500,
+          "q3": 1800,
+          "whisker2": 3200
+        },
+        {
+          "id": "municipal",
+          "label": "Municipal",
+          "min": 500,
+          "max": 3000,
+          "whisker1": 520,
+          "q1": 580,
+          "median": 1000,
+          "q3": 2500,
+          "whisker2": 2980
+        }
+      ]
+    }
+  ]
+}

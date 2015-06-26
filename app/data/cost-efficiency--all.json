@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "id": "cost-efficiency--all"
+  },
+  "charts": [
+    {
+      "id": "price-distribution",
+      "title": "Price Distribution",
+      "x": {
+        "domain": [30,150000],
+        "label": "Price"
+      },
+      "y": {
+        "label": "# of contracts",
+        "domain": [160,400]
+      },
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "data": [
+            200,
+            400,
+            380,
+            298,
+            180
+          ]
+        }
+      ]
+    },
+    {
+      "id": "price-variation",
+      "title": "Price Variation",
+      "x": {
+        "label": "Price variation",
+        "domain": [100,10099]
+      },
+      "data": [
+        {
+          "id": "all",
+          "label": "Full data set",
+          "min": 590,
+          "max": 8090,
+          "whisker1": 590,
+          "q1": 1090,
+          "median": 2294,
+          "q3": 2890,
+          "whisker2": 7797
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "id": "timeliness--level-gov"
+  },
+  "charts": [
+    {
+      "id": "average-timeline",
+      "title": "Average Timeline",
+      "x": {
+        "label": "Days",
+        "bands": [
+           "First phase",
+           "Second phase",
+           "Third phase"
+        ]
+      },
+      "data": [
+        {
+          "id": "micro-supplier",
+          "label": "Micro",
+          "data": [
+            50,
+            70,
+            40
+          ]
+        },
+        {
+          "id": "small-supplier",
+          "label": "Small",
+          "data": [
+            50,
+            30,
+            75
+          ]
+        },
+        {
+          "id": "medium-supplier",
+          "label": "Medium",
+          "data": [
+            50,
+            30,
+            75
+          ]
+        },
+        {
+          "id": "big-supplier",
+          "label": "No SME",
+          "data": [
+            80,
+            85,
+            60
+          ]
+        }
+      ]
+    }
+  ]
+}
