@@ -130,37 +130,195 @@
       ]
     },
     {
-      "id": "top-contracts",
-      "title": "Top 5 contracts",
       "header": [
-        "Purchasing unit",
+        "Buyer",
         "Supplier",
         "Amount"
       ],
       "data": [
         {
-          "id": "open-call",
-          "label": "Open call",
           "data": [
-            ["Company 1.1", "Supplier 1.1", 94361],
-            ["Company 1.2", "Supplier 1.2", 64894],
-            ["Company 1.3", "Supplier 1.3", 6453],
-            ["Company 1.4", "Supplier 1.4", 2865],
-            ["Company 1.5", "Supplier 1.5", 1721]
-          ]
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "TRAFIGURA PTE LTD",
+              4517071650
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "GLENCORE INTERNATIONAL AG",
+              3478153809
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "SOLUCIONES PETRONAVALES S DE RL DE CV",
+              3013316124
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "SOLUCIONES PETRONAVALES S DE RL DE CV",
+              2054010699
+            ],
+            [
+              "SEP",
+              "Secretaría de Educación Pública",
+              "IUSA Medicion",
+              1038012688
+            ]
+          ],
+          "id": "lic-publica-osd",
+          "label": "Licitación Pública con OSD"
         },
         {
-          "id": "direct-award",
-          "label": "Direct award",
           "data": [
-            ["Company 2.1", "Supplier 2.1", 44361],
-            ["Company 2.2", "Supplier 2.2", 34894],
-            ["Company 2.3", "Supplier 2.3", 1453],
-            ["Company 2.4", "Supplier 2.4", 865],
-            ["Company 2.5", "Supplier 2.5", 721]
-          ]
+            [
+              "NL",
+              "_Gobierno del Estado de Nuevo León",
+              "CONSTRUCCIONES Y MAQUINARIA GUTIERREZ SA DE CV",
+              22652578577
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "FREYSSINET DE MEXICO SA DE CV",
+              17972984620
+            ],
+            [
+              "AGS",
+              "_Gobierno del Estado de Aguascalientes",
+              "CBG CONSTRUCCIONES SA DE CV",
+              16195330360
+            ],
+            [
+              "SCT",
+              "Secretaría de Comunicaciones y Transportes",
+              "CAF MEXICO SA DE CV",
+              11698357222
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "ARTECHE MEDICIÓN Y TECNOLOGÍA S.A. DE C.V.",
+              9100011050
+            ]
+          ],
+          "id": "lic-publica",
+          "label": "Licitación Pública"
+        },
+        {
+          "data": [
+            [
+              "ISSSTE",
+              "Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado",
+              "Impromed",
+              12215034397
+            ],
+            [
+              "MEX",
+              "_Gobierno del Estado de México",
+              "SEGURITECH PRIVADA SA DE CV",
+              5793345245
+            ],
+            [
+              "SEGOB",
+              "Secretaría de Gobernación",
+              "COMERCIALIZADORA SIETE DE MEXICO SA DE CV",
+              4500017093
+            ],
+            [
+              "SEGOB",
+              "Secretaría de Gobernación",
+              "NOTMUSA SA DE CV",
+              4500017028
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "CASANOVA VALLEJO SA DE CV",
+              3677217377
+            ]
+          ],
+          "id": "adj-directa",
+          "label": "Adjudicación Directa Federal"
+        },
+        {
+          "data": [
+            [
+              "VER",
+              "_Gobierno del Estado de Veracruz de Ignacio de la Llave",
+              "FARMACIA DE GENERICOS SA DE CV",
+              500000000
+            ],
+            [
+              "DGO",
+              "_Gobierno del Estado de Durango",
+              "TIENDAS SORIANA SA DE CV",
+              122672041
+            ],
+            [
+              "SON",
+              "_Gobierno del Estado de Sonora",
+              "CONFECCION INDUSTRIAL ",
+              91327210
+            ],
+            [
+              "SON",
+              "_Gobierno del Estado de Sonora",
+              "CAPICUA INGENIERIA",
+              86171543
+            ],
+            [
+              "SON",
+              "_Gobierno del Estado de Sonora",
+              "ROSA MARIA ZEPEDA GARCIA",
+              56752182
+            ]
+          ],
+          "id": "lic-estatal",
+          "label": "Licitación Publica Estatal"
+        },
+        {
+          "data": [
+            [
+              "CONAGUA",
+              "Comisión Nacional del Agua",
+              "PREFABRICADOS Y EDIFICACIONES DE OCCIDENTE SA DE CV",
+              39530413070
+            ],
+            [
+              "PEP",
+              "Pemex-Exploración y Producción",
+              "GUAYACAN DEL SURESTE SA DE CV",
+              7450455420
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "COMPAÑIA NACIONAL DE HERRAJES ELECTRICOS SA DE CV",
+              6575438286
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "FEZACON INGENIERIA Y CONSULTORIA EMPRESARIAL SA DE CV",
+              6427644620
+            ],
+            [
+              "NAY",
+              "_Gobierno Municipal del Estado de Nayarit",
+              "SS INGENIERIA DE NAYARIT SA DE CV",
+              4068943880
+            ]
+          ],
+          "id": "invitacion",
+          "label": "Invitación a Cuando Menos 3 Personas"
         }
-      ]
+      ],
+      "id": "top-contracts",
+      "title": "Top 5 contracts"
     }
   ]
 }

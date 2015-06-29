@@ -107,26 +107,51 @@
       ]
     },
     {
-      "id": "top-contracts",
-      "title": "Top 5 contracts",
       "header": [
-        "Purchasing unit",
+        "Buyer",
         "Supplier",
         "Amount"
       ],
       "data": [
         {
-          "id": "all",
-          "label": "Full data set",
           "data": [
-            ["Company 1", "Supplier 1", 684361],
-            ["Company 2", "Supplier 2", 354894],
-            ["Company 3", "Supplier 3", 85453],
-            ["Company 4", "Supplier 4", 54865],
-            ["Company 5", "Supplier 5", 36721]
-          ]
+            [
+              "CONAGUA",
+              "Comisión Nacional del Agua",
+              "PREFABRICADOS Y EDIFICACIONES DE OCCIDENTE SA DE CV",
+              39530413070
+            ],
+            [
+              "NL",
+              "_Gobierno del Estado de Nuevo León",
+              "CONSTRUCCIONES Y MAQUINARIA GUTIERREZ SA DE CV",
+              22652578577
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "FREYSSINET DE MEXICO SA DE CV",
+              17972984620
+            ],
+            [
+              "AGS",
+              "_Gobierno del Estado de Aguascalientes",
+              "CBG CONSTRUCCIONES SA DE CV",
+              16195330360
+            ],
+            [
+              "ISSSTE",
+              "Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado",
+              "Impromed",
+              12215034397
+            ]
+          ],
+          "id": "full",
+          "label": "Full dataset"
         }
-      ]
+      ],
+      "id": "top-contracts",
+      "title": "Top 5 contracts"
     }
   ]
 }

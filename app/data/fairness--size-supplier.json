@@ -241,48 +241,159 @@
       ]
     },
     {
-      "id": "top-contracts",
-      "title": "Top 5 contracts",
       "header": [
-        "Purchasing unit",
+        "Buyer",
         "Supplier",
         "Amount"
       ],
       "data": [
         {
-          "id": "federal",
-          "label": "Federal",
           "data": [
-            ["Company 1.1", "Supplier 1.1", 584361],
-            ["Company 1.2", "Supplier 1.2", 454894],
-            ["Company 1.3", "Supplier 1.3", 35453],
-            ["Company 1.4", "Supplier 1.4", 24865],
-            ["Company 1.5", "Supplier 1.5", 16721]
-          ]
+            [
+              "PEMEX",
+              "Petróleos Mexicanos (Corporativo)",
+              "CONSORCIO INDUSTRIAL EN JARDINERIA SA DE CV",
+              6771450000
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "COMPAÑIA NACIONAL DE HERRAJES ELECTRICOS SA DE CV",
+              6575438286
+            ],
+            [
+              "SCT",
+              "Secretaría de Comunicaciones y Transportes",
+              "INTEGRADORA LATINOAMERICANA DE INFRAESTRUCTURA CONSTRUCTIVA S A P I DE CV",
+              3597924364
+            ],
+            [
+              "AGS",
+              "_Gobierno del Estado de Aguascalientes",
+              "CONCORDIA GUANAJUATO SA DE CV",
+              2889655040
+            ],
+            [
+              "NAY",
+              "_Gobierno del Estado de Nayarit",
+              "GADEL CONSTRUCCIONES SA DE CV",
+              2815392320
+            ]
+          ],
+          "id": "micro-supplier",
+          "label": "Micro"
         },
         {
-          "id": "state",
-          "label": "State",
           "data": [
-            ["Company 2.1", "Supplier 2.1", 84361],
-            ["Company 2.2", "Supplier 2.2", 54894],
-            ["Company 2.3", "Supplier 2.3", 5453],
-            ["Company 2.4", "Supplier 2.4", 4865],
-            ["Company 2.5", "Supplier 2.5", 6721]
-          ]
+            [
+              "CONAGUA",
+              "Comisión Nacional del Agua",
+              "PREFABRICADOS Y EDIFICACIONES DE OCCIDENTE SA DE CV",
+              39530413070
+            ],
+            [
+              "SLP",
+              "_Gobierno del Estado de San Luis Potosí",
+              "CONSTRUCCIONES IMPOCA SA DE CV",
+              6531448342
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "FEZACON INGENIERIA Y CONSULTORIA EMPRESARIAL SA DE CV",
+              6427644620
+            ],
+            [
+              "VER",
+              "_Gobierno Municipal del Estado de Veracruz de Ignacio de la Llave",
+              "GERARDO NAVA SAN MARTIN",
+              4816003499
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "EDGAR ROJO MEDINA",
+              4503167065
+            ]
+          ],
+          "id": "small-supplier",
+          "label": "Small"
         },
         {
-          "id": "municipal",
-          "label": "Municipal",
           "data": [
-            ["Company 3.1", "Supplier 3.1", 6841],
-            ["Company 3.2", "Supplier 3.2", 3544],
-            ["Company 3.3", "Supplier 3.3", 854],
-            ["Company 3.4", "Supplier 3.4", 548],
-            ["Company 3.5", "Supplier 3.5", 367]
-          ]
+            [
+              "NL",
+              "_Gobierno del Estado de Nuevo León",
+              "CONSTRUCCIONES Y MAQUINARIA GUTIERREZ SA DE CV",
+              22652578577
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "FREYSSINET DE MEXICO SA DE CV",
+              17972984620
+            ],
+            [
+              "PEP",
+              "Pemex-Exploración y Producción",
+              "GUAYACAN DEL SURESTE SA DE CV",
+              7450455420
+            ],
+            [
+              "SEGOB",
+              "Secretaría de Gobernación",
+              "COMERCIALIZADORA SIETE DE MEXICO SA DE CV",
+              4500017093
+            ],
+            [
+              "MICH",
+              "_Gobierno del Estado de Michoacán de Ocampo",
+              "PLASTICOS Y FERTILIZANTES DE MORELOS, S.A. DE C.V.",
+              4200600971
+            ]
+          ],
+          "id": "medium-supplier",
+          "label": "Medium"
+        },
+        {
+          "data": [
+            [
+              "AGS",
+              "_Gobierno del Estado de Aguascalientes",
+              "CBG CONSTRUCCIONES SA DE CV",
+              16195330360
+            ],
+            [
+              "ISSSTE",
+              "Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado",
+              "Impromed",
+              12215034397
+            ],
+            [
+              "SCT",
+              "Secretaría de Comunicaciones y Transportes",
+              "CAF MEXICO SA DE CV",
+              11698357222
+            ],
+            [
+              "CFE",
+              "Comisión Federal de Electricidad",
+              "ARTECHE MEDICIÓN Y TECNOLOGÍA S.A. DE C.V.",
+              9100011050
+            ],
+            [
+              "SCT",
+              "Secretaría de Comunicaciones y Transportes",
+              "LA PENINSULAR COMPAÑIA CONSTRUCTORA S.A. DE C.V",
+              8748554195
+            ]
+          ],
+          "id": "big-supplier",
+          "label": "No SME"
         }
-      ]
+      ],
+      "id": "top-contracts",
+      "title": "Top 5 contracts"
     }
   ]
 }
