@@ -84,6 +84,27 @@
   .focus-circle {
     fill: shade($infograph-color-a, 48%);
   }
+
+  .hgl-on {
+    .area {
+      opacity: 0.48;
+    }
+    .line {
+      opacity: 0.48;
+    }
+
+    .hgl-back {
+      fill: #ccc;
+    }
+    .hgl-area {
+      fill: $infograph-color-a;
+    }
+    .hgl-line {
+      stroke: shade($infograph-color-a, 48%);
+      stroke-width: 2px;
+      fill: none;
+    }
+  }
 }
 
 .barChart {

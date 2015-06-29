@@ -1,15 +1,24 @@
 'use strict';
 var React = require('react/addons');
 var $ = require('jquery');
+var _ = require('lodash');
 
 function popover() {
 
-  var _content = null;
+  var _id = _.uniqueId('ds-popover-');
   var $popover = null;
+  var _working = false;
+  var _content = null;
+  var _prev_content = null;
+  var _x = null;
+  var _y = null;
+  var _prev_x = null;
+  var _prev_y = null;
 
   this.setContent = function(ReactElement) {
+    _prev_content = _content;
     _content = React.renderToStaticMarkup(
-      <div className="popover">
+      <div className="popover" id={_id}>
         {ReactElement}
       </div>
     );
@@ -17,49 +26,80 @@ function popover() {
   }
 
   this.show = function(anchorX, anchorY) {
+    _prev_x = _x;
+    _prev_y = _y;
+    _x = anchorX;
+    _y = anchorY;
+
+    if (_working) return;
+
     if (_content === null) {
       console.warn('Content must be set before showing the popover.');
       return this;
     }
 
-    $popover = $(_content);
-    $popover.hide();
-    $('#site-canvas').append($popover);
+    var changePos = !(_prev_x == _x && _prev_y == _y);
 
-    // Set position on next tick.
-    // Otherwise the popover has no spatiality.
-    setTimeout(function() {
-      var containerW = $('#site-canvas').outerWidth();
-      var sizeW = $popover.outerWidth();
-      var sizeH = $popover.outerHeight();
-
-      var leftOffset = anchorX  - sizeW / 2;
-      var topOffset = anchorY - sizeH - 8;
-
-      // If the popover would be to appear outside the window on the right
-      // move it to the left by that amount.
-      // And add some padding.
-      var overflowR = (leftOffset + sizeW) - containerW ;
-      if (overflowR > 0) {
-        leftOffset -= overflowR + 16;
+    // Different content?
+    if (_content != _prev_content) {
+      $popover = $('#' + _id);
+      if ($popover.length > 0) {
+        $popover.replaceWith(_content);
       }
-
-      // Same for the left side.
-      if (leftOffset < 0) {
-        leftOffset = 16;
+      else {
+        $popover = $(_content);
+        $('#site-canvas').append($popover);
       }
+      // With a change in content, position has to change.
+      changePos = true;
+    }
 
-      $popover
-      .css('left', leftOffset + 'px')
-      .css('top', topOffset + 'px')
-      .show();
-    }, 1);
+    if (changePos) {
+      _working = true;
+      $popover = $('#' + _id);
+      // Set position on next tick.
+      // Otherwise the popover has no spatiality.
+      setTimeout(function() {
+        var containerW = $('#site-canvas').outerWidth();
+        var sizeW = $popover.outerWidth();
+        var sizeH = $popover.outerHeight();
+
+        var leftOffset = anchorX  - sizeW / 2;
+        var topOffset = anchorY - sizeH - 8;
+
+        // If the popover would be to appear outside the window on the right
+        // move it to the left by that amount.
+        // And add some padding.
+        var overflowR = (leftOffset + sizeW) - containerW ;
+        if (overflowR > 0) {
+          leftOffset -= overflowR + 16;
+        }
+
+        // Same for the left side.
+        if (leftOffset < 0) {
+          leftOffset = 16;
+        }
+
+        $popover
+        .css('left', leftOffset + 'px')
+        .css('top', topOffset + 'px')
+        .show();
+
+        _working = false;
+      }, 1);
+    }
 
     return this;
   }
 
   this.hide = function() {
-    $popover.remove();
+    $('#' + _id).remove();
+    _content = null;
+    _prev_content = null;
+    _x = null;
+    _y = null;
+    _prev_x = null;
+    _prev_y = null;
     return this;
   }
 
