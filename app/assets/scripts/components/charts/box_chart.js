@@ -104,6 +104,8 @@ var d3BoxChart = function(el, data) {
 
     function box(g) {
       g.each(function(d, i) {
+        var label = d.label;
+        d = d.data;
         var g = d3.select(this).attr('class', 'boxplot-container');
         var min = d.min;
         var max = d.max;
@@ -122,7 +124,7 @@ var d3BoxChart = function(el, data) {
             .range([0, width]);
 
         var label = g.selectAll('text.small-label')
-          .data([d.label]);
+          .data([label]);
 
         label.enter().append('text')
           .attr('class', 'small-label')
