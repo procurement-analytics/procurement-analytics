@@ -1,6 +1,7 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
+var d3 = require('d3');
 var _ = require('lodash');
 var LineChart = require('../charts/line_chart');
 
@@ -10,6 +11,12 @@ var IndGeneral = module.exports = React.createClass({
     data: React.PropTypes.object,
     x: React.PropTypes.object,
     y: React.PropTypes.object
+  },
+
+  getInitialState: function() {
+    return {
+      generalStats: []
+    };
   },
 
   chartPopover: function(d, i, otherData) {
@@ -40,6 +47,15 @@ var IndGeneral = module.exports = React.createClass({
         <dd>{variation}</dd>
       </dl>
     );
+  },
+
+  componentDidMount: function() {
+    d3.json('data/general.json', function(error, json) {
+      if (error) {
+        return;
+      }
+      this.setState({generalStats: json});
+    }.bind(this));
   },
 
   render: function() {
@@ -109,6 +125,14 @@ var IndGeneral = module.exports = React.createClass({
       </section>
     );
 
+    var generalStats = this.state.generalStats.length == 0 ? null : (
+      <dl className="facts-list">
+        {this.state.generalStats.map(function(d) {
+          return [(<dt>{d.label}</dt>), (<dd>{d.value}</dd>)];
+        })}
+      </dl>
+    );
+
     return (
       <div className="content">
 
@@ -117,18 +141,7 @@ var IndGeneral = module.exports = React.createClass({
             <h1 className="tile-title">About summary</h1>
             <div className="tile-body">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
-              <dl className="facts-list">
-                <dt>total procurement procedures</dt>
-                <dd>520.167</dd>
-                <dt>total amount</dt>
-                <dd>$4.239.000.120.758</dd>
-                <dt>biggest contract</dt>
-                <dd>API-Coatzacoalcos with PUENTES Y ESTRUCTURAS TOVEGO S.A DE C.V. for $51.375.215</dd>
-                <dt>most active supplier</dt>
-                <dd>INGENIERIA Y SERVICIOS ELECTROMECANICOS J &amp; M SA</dd>
-                <dt>most active purchasing unit</dt>
-                <dd>API-Coatzacoalcos</dd>
-              </dl>
+              {generalStats}
             </div>
           </section>
         </div>
