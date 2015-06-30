@@ -248,7 +248,7 @@ var d3ScatterplotChart = function(el, data) {
           .translate(this.getAttribute("cx"), this.getAttribute("cy"));
 
         var posX = window.pageXOffset + matrix.e;
-        var posY =  window.pageYOffset + matrix.f;
+        var posY =  window.pageYOffset + matrix.f - parseInt(this.getAttribute("r"));
 
         chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
       })
