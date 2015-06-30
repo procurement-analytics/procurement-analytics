@@ -14,10 +14,12 @@ var IndGeneral = module.exports = React.createClass({
 
   chartPopover: function(d) {
     return (
-      <div>
-        Value: {d.value}<br/>
-        Date: {d.date.toString()}
-      </div>
+      <dl className="popover-list">
+        <dt>Value</dt>
+        <dd>{d.value}</dd>
+        <dt>Date</dt>
+        <dd>{d.date.toString()}</dd>
+      </dl>
     );
   },
 

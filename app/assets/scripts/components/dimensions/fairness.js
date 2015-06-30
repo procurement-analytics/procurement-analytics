@@ -13,22 +13,29 @@ var IndFairness = module.exports = React.createClass({
 
   relationChartPopover: function(d) {
     return (
-      <div>
-        Buyer: {d.name}<br/>
-        Suppliers: {d.suppliers}<br/>
-        Contracts: {d.contracts}<br/>
-        Amount: {d.amount}
-      </div>
+      <dl className="popover-list">
+        <dt>Buyer</dt>
+        <dd>{d.name}</dd>
+        <dt>Suppliers</dt>
+        <dd>{d.suppliers}</dd>
+        <dt>Contracts</dt>
+        <dd>{d.contracts}</dd>
+        <dt>Amount</dt>
+        <dd>{d.amount}</dd>
+      </dl>
     );
   },
 
   concentrChartPopover: function(d) {
     return (
-      <div>
-        Buyer: {d.name}<br/>
-        Contracts: {d.contracts}<br/>
-        Amount: {d.amount}
-      </div>
+      <dl className="popover-list">
+        <dt>Buyer</dt>
+        <dd>{d.name}</dd>
+        <dt>Contracts</dt>
+        <dd>{d.contracts}</dd>
+        <dt>Amount</dt>
+        <dd>{d.amount}</dd>
+      </dl>
     );
   },
 
