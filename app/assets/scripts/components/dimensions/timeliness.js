@@ -3,6 +3,7 @@ var Reflux = require('reflux');
 var React = require('react/addons');
 var _ = require('lodash');
 var TimeChart = require('../charts/timechart');
+var utils = require('../../utils/utils');
 
 var IndTimeliness = module.exports = React.createClass({
 
@@ -46,7 +47,9 @@ var IndTimeliness = module.exports = React.createClass({
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {timeCharts}
+            <div className="chart-container">
+              {timeCharts}
+            </div>
           </div>
         ) : null}
       </section>

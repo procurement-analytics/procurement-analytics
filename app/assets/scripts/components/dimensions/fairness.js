@@ -2,6 +2,8 @@
 var Reflux = require('reflux');
 var React = require('react/addons');
 var _ = require('lodash');
+var numeral = require('numeral');
+var utils = require('../../utils/utils');
 
 var ScatterplotChart = require('../charts/scatterplot_chart');
 
@@ -12,6 +14,13 @@ var IndFairness = module.exports = React.createClass({
   },
 
   relationChartPopover: function(d) {
+    var suffix = '';
+    if (d.amount / 1e6 >= 1) {
+      suffix= ' M';
+      d.amount = d.amount / 1e6;
+    }
+    d.amount = numeral(d.amount).format('0,0[.]0') + suffix;
+
     return (
       <dl className="popover-list">
         <dt>Buyer</dt>
@@ -76,66 +85,74 @@ var IndFairness = module.exports = React.createClass({
         return (
           <div className="chart-item" key={i.toString()}>
             <h2 className="chart-title">{d.label}</h2>
-            <table>
-              <thead>
-                <tr>
-                  {top5TableData.header.map(function(c, i) {return <th key={i.toString()}>{c}</th>;})}
-                </tr>
-              </thead>
-              <tbody>
-                {d.data.map(function(r, i) {
-                  return <tr key={i.toString()}>{r.map(function(c, i) {
-                    var opts = { key: i.toString() };
-                    if (c.tooltip) {
-                      opts['data-title'] = c.tooltip;
-                    }
-                    return <td {...opts}>{c.value}</td>;
-                  })}</tr>;
-                })}
-              </tbody>
-            </table>
+            <div className="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    {top5TableData.header.map(function(c, i) {return <th key={i.toString()}>{c}</th>;})}
+                  </tr>
+                </thead>
+                <tbody>
+                  {d.data.map(function(r, i) {
+                    return <tr key={i.toString()}>{r.map(function(c, i) {
+                      var opts = { key: i.toString() };
+                      if (c.tooltip) {
+                        opts['data-title'] = c.tooltip;
+                      }
+                      return <td {...opts}>{c.value}</td>;
+                    })}</tr>;
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         );
       }.bind(this));
     }
 
     var relationTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (relationCharts ? ' chart-group-' + relationCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(relationCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : relationChartData.title}</h1>
         {relationCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {relationCharts}
+            <div className="chart-container">
+              {relationCharts}
+            </div>
           </div>
         ) : null}
       </section>
     );
 
 /*    var concentrTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (concentrCharts ? ' chart-group-' + concentrCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(concentrCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : concentrChartData.title}</h1>
         {concentrCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {concentrCharts}
+            <div className="chart-container">
+              {concentrCharts}
+            </div>
           </div>
         ) : null}
       </section>
     );*/
 
     var top5Tile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (top5Table ? ' chart-group-' + top5Table.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(top5Table)}>
         <h1 className="tile-title">{ldn ? 'Loading' : top5TableData.title}</h1>
         {top5Table ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {top5Table}
+            <div className="chart-container">
+              {top5Table}
+            </div>
           </div>
         ) : null}
       </section>
