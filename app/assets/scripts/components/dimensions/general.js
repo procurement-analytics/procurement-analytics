@@ -13,6 +13,7 @@ var IndGeneral = module.exports = React.createClass({
   },
 
   chartPopover: function(d, i, otherData) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Set', 'Oct', 'Nov', 'Dec'];
     // Get the charts we want from the data.
     var variation = 'N/A';
     if (i > 0) {
@@ -34,7 +35,7 @@ var IndGeneral = module.exports = React.createClass({
         <dt>Value</dt>
         <dd>{d.value}</dd>
         <dt>Date</dt>
-        <dd>{d.date.toString()}</dd>
+        <dd>{months[d.date.getMonth()]} {d.date.getFullYear()}</dd>
         <dt>Variation</dt>
         <dd>{variation}</dd>
       </dl>
