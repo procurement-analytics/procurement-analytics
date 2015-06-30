@@ -223,28 +223,26 @@ var d3LineChart = function(el, data) {
 
       _this.showHighlight(dat);
 
-      // Refers to the parent group. (data-canvas);
-      var matrix = this.getScreenCTM();
+      // Hide other focus circles.
+      focusCirlces
+        .filter(function(d, i) { return i != closestIndex})
+          .attr('r', 6).style('opacity', 0 );
+
+      // Show focus circle.
+      var activeCircle = focusCirlces
+        .filter(function(d, i) { return i == closestIndex});
+      activeCircle.attr('r', 8).style('opacity', 1);
+
+      var activeCircleNode = activeCircle.node();
+      var matrix = activeCircleNode.getScreenCTM()
+        .translate(activeCircleNode.getAttribute("cx"), activeCircleNode.getAttribute("cy"));
+
       var posX = window.pageXOffset + matrix.e;
-      var posY =  window.pageYOffset + matrix.f + _height / 2;
-      // Ensure that the tooltip is in the middle of the highlight area.
-      posX += x(d[closestIndex - 1].date) + (x(d[closestIndex].date) - x(d[closestIndex - 1].date)) / 2;
+      var posY =  window.pageYOffset + matrix.f - 8;
 
       chartPopover.setContent(_this.popoverContent(d[closestIndex], closestIndex, {full: _this.data})).show(posX, posY);
       svg.classed({'hgl-on': true});
 
-      // Hide other focus circles.
-      focusCirlces
-        .filter(function(d, i) { return i != closestIndex})
-        //.transition()
-        //.duration(100)
-          .attr('r', 6).style('opacity', 0 );
-      // Show focus circle.
-      focusCirlces
-        .filter(function(d, i) { return i == closestIndex})
-        //.transition()
-        //.duration(200)
-          .attr('r', 8).style('opacity', 1);
     });
 
     pathArea.on("mouseout", function(d) {
