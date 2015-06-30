@@ -14,7 +14,7 @@ var IndFairness = module.exports = React.createClass({
   relationChartPopover: function(d) {
     return (
       <div>
-        Company: {d.name}<br/>
+        Buyer: {d.name}<br/>
         Suppliers: {d.suppliers}<br/>
         Contracts: {d.contracts}<br/>
         Amount: {d.amount}
@@ -25,7 +25,7 @@ var IndFairness = module.exports = React.createClass({
   concentrChartPopover: function(d) {
     return (
       <div>
-        Company: {d.name}<br/>
+        Buyer: {d.name}<br/>
         Contracts: {d.contracts}<br/>
         Amount: {d.amount}
       </div>
@@ -37,7 +37,7 @@ var IndFairness = module.exports = React.createClass({
 
     var chartData = this.props.data.charts || [];
     var relationChartData = _.find(chartData, {id: 'relationship'});
-    var concentrChartData = _.find(chartData, {id: 'concentration-winning'});
+    //var concentrChartData = _.find(chartData, {id: 'concentration-winning'});
     var top5TableData = _.find(chartData, {id: 'top-contracts'});
 
     var relationCharts, concentrCharts, top5Table;
@@ -53,7 +53,7 @@ var IndFairness = module.exports = React.createClass({
       }.bind(this));
     }
 
-    if (concentrChartData) {
+/*    if (concentrChartData) {
       concentrCharts = concentrChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
@@ -62,7 +62,7 @@ var IndFairness = module.exports = React.createClass({
           </div>
         );
       }.bind(this));
-    }
+    }*/
 
     if (top5TableData) {
       top5Table = top5TableData.data.map(function(d, i) {
@@ -100,7 +100,7 @@ var IndFairness = module.exports = React.createClass({
       </section>
     );
 
-    var concentrTile = (
+/*    var concentrTile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (concentrCharts ? ' chart-group-' + concentrCharts.length : '')}>
         <h1 className="tile-title">{ldn ? 'Loading' : concentrChartData.title}</h1>
         {concentrCharts ? (
@@ -112,7 +112,7 @@ var IndFairness = module.exports = React.createClass({
           </div>
         ) : null}
       </section>
-    );
+    );*/
 
     var top5Tile = (
       <section className={"tile chart-group" + (ldn ? ' loading' : '') + (top5Table ? ' chart-group-' + top5Table.length : '')}>
@@ -143,7 +143,7 @@ var IndFairness = module.exports = React.createClass({
         <div className="col-main">
           {top5Tile}
           {relationTile}
-          {concentrTile}
+          {/*concentrTile*/}
         </div>
 
       </div>
