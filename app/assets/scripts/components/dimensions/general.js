@@ -30,11 +30,14 @@ var IndGeneral = module.exports = React.createClass({
     }
 
     return (
-      <div>
-        Value: {d.value}<br/>
-        Date: {d.date.toString()}<br/>
-        Variation: {variation}
-      </div>
+      <dl className="popover-list">
+        <dt>Value</dt>
+        <dd>{d.value}</dd>
+        <dt>Date</dt>
+        <dd>{d.date.toString()}</dd>
+        <dt>Variation</dt>
+        <dd>{variation}</dd>
+      </dl>
     );
   },
 

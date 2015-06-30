@@ -12,11 +12,14 @@ var IndTimeliness = module.exports = React.createClass({
 
   chartPopover: function(d, i, otherData) {
     return (
-      <div>
-        {otherData.bands[0]}: {d.data[0]} days<br/>
-        {otherData.bands[1]}: {d.data[1]} days<br/>
-        {otherData.bands[2]}: {d.data[2]} days<br/>
-      </div>
+      <dl className="popover-list">
+        <dt>{otherData.bands[0]}</dt>
+        <dd>{d.data[0]} days</dd>
+        <dt>{otherData.bands[1]}</dt>
+        <dd>{d.data[1]} days</dd>
+        <dt>{otherData.bands[2]}</dt>
+        <dd>{d.data[2]} days</dd>
+      </dl>
     );
   },
 

@@ -15,22 +15,29 @@ var IndCostEfficiency = module.exports = React.createClass({
   distributionChartPopover : function(d, i, otherData) {
     var buckets = otherData.buckets;
     return (
-      <div>
-        Number of contracts: {d[0]}<br/>
-        Price bucket: {buckets[i]} - {buckets[i + 1]}
-      </div>
+      <dl className="popover-list">
+        <dt>Contracts</dt>
+        <dd>{d[0]}</dd>
+        <dt>Price bucket</dt>
+        <dd>{buckets[i]} - {buckets[i + 1]}</dd>
+      </dl>
     );
   },
 
   variationChartPopover : function(d) {
     return (
-      <div>
-        min: {d.whisker1}<br/>
-        q1: {d.q1}<br/>
-        median: {d.median}<br/>
-        q3: {d.q3}<br/>
-        max: {d.whisker2}
-      </div>
+      <dl className="popover-list">
+        <dt>Min</dt>
+        <dd>{d.whisker1}</dd>
+        <dt>1st Quartile</dt>
+        <dd>{d.q1}</dd>
+        <dt>Median</dt>
+        <dd>{d.median}</dd>
+        <dt>3rd Quartile</dt>
+        <dd>{d.q3}</dd>
+        <dt>Max</dt>
+        <dd>{d.whisker2}</dd>
+      </dl>
     );
   },
 

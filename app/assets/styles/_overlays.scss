@@ -1,0 +1,60 @@
+// TITLED
+
+*[data-title]:hover {
+  position: relative;
+  cursor: help;
+  &:after {
+    content: attr(data-title);
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    z-index: 1400;
+    max-width: 12rem;
+    padding: 0.125rem 0.5rem;
+    background: rgba($base-color, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 0 rgba($primary-color, 0.05);
+    background-clip: padding-box;
+    margin-bottom: 0.125rem;
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-family: $base-font-family;
+    font-weight: normal;
+    //@extend .truncated;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-align: center;
+  }
+}
+
+.popover-list {
+  margin: 0;
+  padding: 0;
+  font-size: 0.750rem;
+  overflow: hidden;
+
+  dt, dd {
+    float: left;
+    margin: 0;
+    padding: 0.25rem 0;
+    border-top: 1px solid rgba(#fff, 0.12);
+    line-height: 1.25rem;
+    &:first-of-type {
+      border-top: none;
+    }
+  }
+
+  dt {
+    clear: left;
+    width: 40%;
+    padding-right: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  dd {
+    text-align: right;
+    width: 60%;
+    padding-left: 0.5rem;
+  }
+}
