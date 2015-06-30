@@ -2,6 +2,7 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var numeral = require('numeral');
 var popover = require('./popover');
 
 var LineChart = module.exports = React.createClass({
@@ -185,7 +186,15 @@ var d3LineChart = function(el, data) {
     yAxisGroup.selectAll('.label-max')
       .attr('x', 0)
       .attr('y', 0)
-      .text(function(d) {return d;});
+      .text(function(d) {
+        var value = d;
+        var suffix = '';
+        if (value / 1e6 >= 1) {
+          suffix = ' M';
+          value = Math.round(value / 1e6);
+        }
+        return numeral(value).format('0,0[.]0') + suffix;
+      });
 
     x.range([0, _width])
       .domain(d3.extent(this.data, function(d) { return d.date; }));

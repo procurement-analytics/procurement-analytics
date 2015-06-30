@@ -91,4 +91,10 @@
   @if $arg == xlarge-up {
     @media #{$screen} and (min-width: lower-bound($xlarge-range)) { @content; }
   }
+  @if $arg == xlarge-only {
+    @media #{$screen} and (min-width: lower-bound($xlarge-range)) and (max-width: upper-bound($xlarge-range)) { @content; }
+  }
+  @if $arg == xxlarge-up {
+    @media #{$screen} and (min-width: lower-bound($xxlarge-range)) { @content; }
+  }
 }

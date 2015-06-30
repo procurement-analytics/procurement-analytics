@@ -53,7 +53,7 @@ var d3BoxChart = function(el, data) {
   //   Called before destroying the chart.
 
   // Var declaration.
-  var margin = {top: 0, right: 32, bottom: 50, left: 32, gap: 32};
+  var margin = {top: 0, right: 48, bottom: 50, left: 32, gap: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;

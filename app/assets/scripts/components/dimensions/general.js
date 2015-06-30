@@ -3,7 +3,9 @@ var Reflux = require('reflux');
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var numeral = require('numeral');
 var LineChart = require('../charts/line_chart');
+var utils = require('../../utils/utils');
 
 var IndGeneral = module.exports = React.createClass({
 
@@ -37,10 +39,18 @@ var IndGeneral = module.exports = React.createClass({
       variation += '%';
     }
 
+    var value = d.value;
+    var suffix = '';
+    if (value / 1e6 >= 1) {
+      suffix = ' M';
+      value = Math.round(value / 1e6);
+    }
+    value = numeral(value).format('0,0[.]0') + suffix;
+
     return (
       <dl className="popover-list">
         <dt>Value</dt>
-        <dd>{d.value}</dd>
+        <dd>{value}</dd>
         <dt>Date</dt>
         <dd>{months[d.date.getMonth()]} {d.date.getFullYear()}</dd>
         <dt>Variation</dt>
@@ -97,14 +107,16 @@ var IndGeneral = module.exports = React.createClass({
 
     // Build the tile for this contractsCharts.
     var contractsTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (contractsCharts ? ' chart-group-' + contractsCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(contractsCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
         {contractsCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {contractsCharts}
+            <div className="chart-container">
+              {contractsCharts}
+            </div>
           </div>
         ) : null}
       </section>
@@ -112,14 +124,16 @@ var IndGeneral = module.exports = React.createClass({
 
     // Build the tile for this amountCharts.
     var amountTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (amountCharts ? ' chart-group-' + amountCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(amountCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
         {amountCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {amountCharts}
+            <div className="chart-container">
+              {amountCharts}
+            </div>
           </div>
         ) : null}
       </section>
