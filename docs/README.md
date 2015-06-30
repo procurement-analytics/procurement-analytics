@@ -6,9 +6,12 @@ The tech stack for the procurements dashboards consists of react and reflux. The
 ## Structure
 
 ### Dimension vs comparison
-The web application is structured with dimensions (one, two, three) and comparisons (foo, bar, baz). The dimensions relate to what data is being presented and comparison to how it is presented. By default the presented data consists of a general overview (dimension) of the full dataset, i.e. no comparison.
+The web application is structured with dimensions (one, two, three) and comparisons (foo, bar, baz). The dimensions relate to what aspect of procurement performance is being analyzed. The comparisons allow to the users to slice the data and see how each slice performs for that dimension. By default the presented data consists of a general overview (dimension) of the full dataset, i.e. no comparison.
+
 The dimensions are what we can consider pages and each one of them is managed by a react component located in `scripts/components/dimensions/*.js`. The appropriate component is loaded in `scripts/components/analysis.js` according the the active route.
+
 All the data that doesn't change from comparison to comparison (of a given dimension) is set directly in the dimension component (`render()` method), while the remaining data (mostly chart data) is loaded from a json file.
+
 The data is loaded every time the analysis component gets updated (`componentDidMount()` and `componentWillReceiveProps()` methods) using a reflux action. The `app_store` responds to this action by loading a file named according to the pattern `[dimension]--[comparison].json`.
 The `analysis` component is listening for changes in the store's data and when there's new data sends it to the dimension component.
 
