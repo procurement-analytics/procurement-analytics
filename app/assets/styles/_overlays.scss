@@ -1,0 +1,29 @@
+// TITLED
+
+*[data-title]:hover {
+  position: relative;
+  cursor: help;
+  &:after {
+    content: attr(data-title);
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    z-index: 1400;
+    max-width: 12rem;
+    padding: 0.125rem 0.5rem;
+    background: rgba($base-color, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 0 rgba($primary-color, 0.05);
+    background-clip: padding-box;
+    margin-bottom: 0.125rem;
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-family: $base-font-family;
+    font-weight: normal;
+    //@extend .truncated;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-align: center;
+  }
+}

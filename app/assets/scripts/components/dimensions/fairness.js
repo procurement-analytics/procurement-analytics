@@ -77,7 +77,13 @@ var IndFairness = module.exports = React.createClass({
               </thead>
               <tbody>
                 {d.data.map(function(r, i) {
-                  return <tr key={i.toString()}>{r.map(function(c, i) {return <td key={i.toString()}>{c}</td>;})}</tr>;
+                  return <tr key={i.toString()}>{r.map(function(c, i) {
+                    var opts = { key: i.toString() };
+                    if (c.tooltip) {
+                      opts['data-title'] = c.tooltip;
+                    }
+                    return <td {...opts}>{c.value}</td>;
+                  })}</tr>;
                 })}
               </tbody>
             </table>
