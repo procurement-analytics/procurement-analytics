@@ -51,7 +51,7 @@ var d3LineChart = function(el, data) {
   // must be added.
   var _width, _height;
   // Scales, Axis, line and area functions.
-  var x, y, xAxis, line, area;
+  var x, y, xAxis, line, area, bisector;
   // Elements.
   var svg, dataCanvas;
   // Init the popover.
@@ -88,6 +88,9 @@ var d3LineChart = function(el, data) {
 
     // Y scale. Range updated in function.
     y = d3.scale.linear();
+
+    // Bisector function.
+    bisector = d3.bisector(function(d) { return d.date; }).left;
 
     // Define xAxis function.
     xAxis = d3.svg.axis()
@@ -206,6 +209,52 @@ var d3LineChart = function(el, data) {
       .datum(this.data)
       .attr("d", area);
 
+    pathArea.on("mousemove", function(d) {
+      // Calculate index of the closest value.
+      var mousex = x.invert(d3.mouse(this)[0]);
+      var closestIndex = bisector(d, mousex);
+      // There's no area for the first value.
+      // Nothing to do here.
+      if (closestIndex === 0) {
+        return;
+      }
+      // Get the two values to used for the highlight.
+      var dat = [d[closestIndex - 1], d[closestIndex]];
+
+      _this.showHighlight(dat);
+
+      // Hide other focus circles.
+      focusCirlces
+        .filter(function(d, i) { return i != closestIndex})
+          .attr('r', 6).style('opacity', 0 );
+
+      // Show focus circle.
+      var activeCircle = focusCirlces
+        .filter(function(d, i) { return i == closestIndex});
+      activeCircle.attr('r', 8).style('opacity', 1);
+
+      var activeCircleNode = activeCircle.node();
+      var matrix = activeCircleNode.getScreenCTM()
+        .translate(activeCircleNode.getAttribute("cx"), activeCircleNode.getAttribute("cy"));
+
+      var posX = window.pageXOffset + matrix.e;
+      var posY =  window.pageYOffset + matrix.f - 8;
+
+      chartPopover.setContent(_this.popoverContent(d[closestIndex], closestIndex, {full: _this.data})).show(posX, posY);
+      svg.classed({'hgl-on': true});
+
+    });
+
+    pathArea.on("mouseout", function(d) {
+      // Hide highlight.
+      _this.hideHighlight();
+      chartPopover.hide();
+      svg.classed({'hgl-on': false});
+      focusCirlces
+        .transition()
+        .attr('r', 6).style('opacity', 0 );
+    });
+
     var focusCirlces = dataCanvas.select(".focus-circles").selectAll('.focus-circle')
       .data(this.data);
 
@@ -237,12 +286,25 @@ var d3LineChart = function(el, data) {
         var posX = window.pageXOffset + matrix.e;
         var posY =  window.pageYOffset + matrix.f - 8;
 
-        chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
+        chartPopover.setContent(_this.popoverContent(d, i, {full: _this.data})).show(posX, posY);
+        svg.classed({'hgl-on': true});
+
+        // There's no area for the first value.
+        // Nothing to do here.
+        if (i === 0) {
+          return;
+        }
+        // Get the two values to used for the highlight.
+        var dat = [_this.data[i - 1], _this.data[i]];
+        _this.showHighlight(dat);
 
       })
       .on("mouseout", function() {
         d3.select(this).transition().attr('r', 6).style('opacity', 0 );
+        // Hide highlight.
+        _this.hideHighlight();
         chartPopover.hide();
+        svg.classed({'hgl-on': false});
       });
 
     // Append Axis.
@@ -265,6 +327,44 @@ var d3LineChart = function(el, data) {
         .attr('transform', 'rotate(-90)');
     }
 
+  };
+
+  this.showHighlight = function(dat) {
+    // Check if we need to insert stuff.
+    if (d3.select('.hgl-back').empty()) {
+      // Highlight element.
+      dataCanvas.insert("rect", 'path.area')
+        .attr("pointer-events", 'none')
+        .attr("class", "hgl hgl-back");
+
+      dataCanvas.insert("path", '.focus-circles')
+        .attr("pointer-events", 'none')
+        .attr("class", "hgl hgl-area");
+
+      dataCanvas.insert("path", '.focus-circles')
+        .attr("pointer-events", 'none')
+        .attr("class", "hgl hgl-line");
+    }
+
+    // Position back highlight.
+    dataCanvas.select('.hgl-back')
+      .datum(dat)
+      .attr("x", function(d) { return x(d[0].date); })
+      .attr("y", function(d) { return 0; })
+      .attr("width", function(d) { return x(d[1].date) - x(d[0].date); })
+      .attr("height", _height);
+    // Position area.
+    dataCanvas.select('.hgl-area')
+      .datum(dat)
+      .attr("d", area);
+    // Position line.
+    dataCanvas.select('.hgl-line')
+      .datum(dat)
+      .attr("d", line);
+  };
+
+  this.hideHighlight = function() {
+    dataCanvas.selectAll('.hgl').remove();
   };
 
   this.destroy = function() {

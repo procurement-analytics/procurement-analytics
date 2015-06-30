@@ -12,13 +12,32 @@ var IndGeneral = module.exports = React.createClass({
     y: React.PropTypes.object
   },
 
-  chartPopover: function(d) {
+  chartPopover: function(d, i, otherData) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Set', 'Oct', 'Nov', 'Dec'];
+    // Get the charts we want from the data.
+    var variation = 'N/A';
+    if (i > 0) {
+      var a = otherData.full[i - 1].value;
+      var b = otherData.full[i].value;
+      var min = _.min([a, b]);
+      var max = _.max([a, b]);
+      var variation = max / min * 100;
+      // Count only the difference between the values.
+      variation -= 100;
+      // Check whether is increasing or decreasing.
+      variation *= b < a ? -1 : 1;
+      variation = Math.round(variation * 100) / 100;
+      variation += '%';
+    }
+
     return (
       <dl className="popover-list">
         <dt>Value</dt>
         <dd>{d.value}</dd>
         <dt>Date</dt>
-        <dd>{d.date.toString()}</dd>
+        <dd>{months[d.date.getMonth()]} {d.date.getFullYear()}</dd>
+        <dt>Variation</dt>
+        <dd>{variation}</dd>
       </dl>
     );
   },
