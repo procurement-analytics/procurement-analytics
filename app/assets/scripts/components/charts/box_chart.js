@@ -53,7 +53,7 @@ var d3BoxChart = function(el, data) {
   //   Called before destroying the chart.
 
   // Var declaration.
-  var margin = {top: 0, right: 32, bottom: 50, left: 32, gap: 32};
+  var margin = {top: 0, right: 48, bottom: 50, left: 32, gap: 32};
   // width and height refer to the data canvas. To know the svg size the margins
   // must be added.
   var _width, _height;
@@ -104,6 +104,8 @@ var d3BoxChart = function(el, data) {
 
     function box(g) {
       g.each(function(d, i) {
+        var label = d.label;
+        d = d.data;
         var g = d3.select(this).attr('class', 'boxplot-container');
         var min = d.min;
         var max = d.max;
@@ -122,7 +124,7 @@ var d3BoxChart = function(el, data) {
             .range([0, width]);
 
         var label = g.selectAll('text.small-label')
-          .data([d.label]);
+          .data([label]);
 
         label.enter().append('text')
           .attr('class', 'small-label')

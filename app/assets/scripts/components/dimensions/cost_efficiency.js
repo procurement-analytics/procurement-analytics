@@ -2,6 +2,8 @@
 var React = require('react/addons');
 var Reflux = require('reflux');
 var _ = require('lodash');
+var numeral = require('numeral');
+var utils = require('../../utils/utils');
 
 var BoxChart = require('../charts/box_chart');
 var BarChart = require('../charts/bar_chart');
@@ -15,22 +17,29 @@ var IndCostEfficiency = module.exports = React.createClass({
   distributionChartPopover : function(d, i, otherData) {
     var buckets = otherData.buckets;
     return (
-      <div>
-        Number of contracts: {d[0]}<br/>
-        Price bucket: {buckets[i]} - {buckets[i + 1]}
-      </div>
+      <dl className="popover-list">
+        <dt>Contracts</dt>
+        <dd>{d[0]}</dd>
+        <dt>Price bucket</dt>
+        <dd>{buckets[i]} - {buckets[i + 1]}</dd>
+      </dl>
     );
   },
 
   variationChartPopover : function(d) {
     return (
-      <div>
-        min: {d.whisker1}<br/>
-        q1: {d.q1}<br/>
-        median: {d.median}<br/>
-        q3: {d.q3}<br/>
-        max: {d.whisker2}
-      </div>
+      <dl className="popover-list">
+        <dt>Min</dt>
+        <dd>{numeral(d.whisker1).format('0,0[.]0')}</dd>
+        <dt>1st Quartile</dt>
+        <dd>{numeral(d.q1).format('0,0[.]0')}</dd>
+        <dt>Median</dt>
+        <dd>{numeral(d.median).format('0,0[.]0')}</dd>
+        <dt>3rd Quartile</dt>
+        <dd>{numeral(d.q3).format('0,0[.]0')}</dd>
+        <dt>Max</dt>
+        <dd>{numeral(d.whisker2).format('0,0[.]0')}</dd>
+      </dl>
     );
   },
 
@@ -64,14 +73,16 @@ var IndCostEfficiency = module.exports = React.createClass({
     }
 
     var distributionTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (distributionCharts ? ' chart-group-' + distributionCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(distributionCharts)}>
         <h1 className="tile-title">Price distribution</h1>
         {distributionCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {distributionCharts}
+            <div className="chart-container">
+              {distributionCharts}
+            </div>
           </div>
         ) : null}
       </section>
@@ -85,7 +96,9 @@ var IndCostEfficiency = module.exports = React.createClass({
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {variationCharts}
+            <div className="chart-container">
+              {variationCharts}
+            </div>
           </div>
         ) : null}
       </section>

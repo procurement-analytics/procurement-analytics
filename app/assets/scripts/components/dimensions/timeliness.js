@@ -3,6 +3,7 @@ var Reflux = require('reflux');
 var React = require('react/addons');
 var _ = require('lodash');
 var TimeChart = require('../charts/timechart');
+var utils = require('../../utils/utils');
 
 var IndTimeliness = module.exports = React.createClass({
 
@@ -12,11 +13,14 @@ var IndTimeliness = module.exports = React.createClass({
 
   chartPopover: function(d, i, otherData) {
     return (
-      <div>
-        {otherData.bands[0]}: {d.data[0]} days<br/>
-        {otherData.bands[1]}: {d.data[1]} days<br/>
-        {otherData.bands[2]}: {d.data[2]} days<br/>
-      </div>
+      <dl className="popover-list">
+        <dt>{otherData.bands[0]}</dt>
+        <dd>{d.data[0]} days</dd>
+        <dt>{otherData.bands[1]}</dt>
+        <dd>{d.data[1]} days</dd>
+        <dt>{otherData.bands[2]}</dt>
+        <dd>{d.data[2]} days</dd>
+      </dl>
     );
   },
 
@@ -43,7 +47,9 @@ var IndTimeliness = module.exports = React.createClass({
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {timeCharts}
+            <div className="chart-container">
+              {timeCharts}
+            </div>
           </div>
         ) : null}
       </section>

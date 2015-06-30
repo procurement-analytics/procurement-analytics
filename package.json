@@ -34,6 +34,7 @@
     "jquery": "^2.1.4",
     "lodash": "^3.8.0",
     "node-bourbon": "^4.2.3",
+    "numeral": "^1.5.3",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "reflux": "^0.2.7"

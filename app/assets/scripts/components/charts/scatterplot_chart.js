@@ -2,6 +2,7 @@
 var React = require('react/addons');
 var d3 = require('d3');
 var _ = require('lodash');
+var numeral = require('numeral');
 var popover = require('./popover');
 
 var ScatterplotChart = module.exports = React.createClass({
@@ -116,6 +117,15 @@ var d3ScatterplotChart = function(el, data) {
     // Define xAxis function.
     xAxis = d3.svg.axis()
       .scale(x)
+      .ticks(5)
+      .tickFormat(function(d) {
+        var suffix = '';
+        if (d / 1e6 >= 1) {
+          suffix = ' M';
+          d = Math.round(d / 1e6);
+        }
+        return numeral(d).format('0,0[.]0') + suffix;
+      })
       .orient("bottom");
 
     // Chart elements
@@ -127,7 +137,7 @@ var d3ScatterplotChart = function(el, data) {
       .attr("class", "x axis")
       .append("text")
       .attr("class", "label")
-      .attr("text-anchor", "end");
+      .attr("text-anchor", "middle");
 
     svg.append("g")
       .attr("class", "y axis")
@@ -248,7 +258,7 @@ var d3ScatterplotChart = function(el, data) {
           .translate(this.getAttribute("cx"), this.getAttribute("cy"));
 
         var posX = window.pageXOffset + matrix.e;
-        var posY =  window.pageYOffset + matrix.f;
+        var posY =  window.pageYOffset + matrix.f - parseInt(this.getAttribute("r"));
 
         chartPopover.setContent(_this.popoverContent(d, i)).show(posX, posY);
       })

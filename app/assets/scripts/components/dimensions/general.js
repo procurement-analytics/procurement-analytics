@@ -1,8 +1,11 @@
 'use strict';
 var Reflux = require('reflux');
 var React = require('react/addons');
+var d3 = require('d3');
 var _ = require('lodash');
+var numeral = require('numeral');
 var LineChart = require('../charts/line_chart');
+var utils = require('../../utils/utils');
 
 var IndGeneral = module.exports = React.createClass({
 
@@ -12,13 +15,57 @@ var IndGeneral = module.exports = React.createClass({
     y: React.PropTypes.object
   },
 
-  chartPopover: function(d) {
+  getInitialState: function() {
+    return {
+      generalStats: []
+    };
+  },
+
+  chartPopover: function(d, i, otherData) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Set', 'Oct', 'Nov', 'Dec'];
+    // Get the charts we want from the data.
+    var variation = 'N/A';
+    if (i > 0) {
+      var a = otherData.full[i - 1].value;
+      var b = otherData.full[i].value;
+      var min = _.min([a, b]);
+      var max = _.max([a, b]);
+      var variation = max / min * 100;
+      // Count only the difference between the values.
+      variation -= 100;
+      // Check whether is increasing or decreasing.
+      variation *= b < a ? -1 : 1;
+      variation = Math.round(variation * 100) / 100;
+      variation += '%';
+    }
+
+    var value = d.value;
+    var suffix = '';
+    if (value / 1e6 >= 1) {
+      suffix = ' M';
+      value = Math.round(value / 1e6);
+    }
+    value = numeral(value).format('0,0[.]0') + suffix;
+
     return (
-      <div>
-        Value: {d.value}<br/>
-        Date: {d.date.toString()}
-      </div>
+      <dl className="popover-list">
+        <dt>Value</dt>
+        <dd>{value}</dd>
+        <dt>Date</dt>
+        <dd>{months[d.date.getMonth()]} {d.date.getFullYear()}</dd>
+        <dt>Variation</dt>
+        <dd>{variation}</dd>
+      </dl>
     );
+  },
+
+  componentDidMount: function() {
+    d3.json('data/general.json', function(error, json) {
+      if (error) {
+        return;
+      }
+      this.setState({generalStats: json});
+    }.bind(this));
   },
 
   render: function() {
@@ -60,14 +107,16 @@ var IndGeneral = module.exports = React.createClass({
 
     // Build the tile for this contractsCharts.
     var contractsTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (contractsCharts ? ' chart-group-' + contractsCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(contractsCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
         {contractsCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {contractsCharts}
+            <div className="chart-container">
+              {contractsCharts}
+            </div>
           </div>
         ) : null}
       </section>
@@ -75,17 +124,27 @@ var IndGeneral = module.exports = React.createClass({
 
     // Build the tile for this amountCharts.
     var amountTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (amountCharts ? ' chart-group-' + amountCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(amountCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
         {amountCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {amountCharts}
+            <div className="chart-container">
+              {amountCharts}
+            </div>
           </div>
         ) : null}
       </section>
+    );
+
+    var generalStats = this.state.generalStats.length == 0 ? null : (
+      <dl className="facts-list">
+        {this.state.generalStats.map(function(d) {
+          return [(<dt>{d.label}</dt>), (<dd>{d.value}</dd>)];
+        })}
+      </dl>
     );
 
     return (
@@ -96,18 +155,7 @@ var IndGeneral = module.exports = React.createClass({
             <h1 className="tile-title">About summary</h1>
             <div className="tile-body">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
-              <dl className="facts-list">
-                <dt>total procurement procedures</dt>
-                <dd>520.167</dd>
-                <dt>total amount</dt>
-                <dd>$4.239.000.120.758</dd>
-                <dt>biggest contract</dt>
-                <dd>API-Coatzacoalcos with PUENTES Y ESTRUCTURAS TOVEGO S.A DE C.V. for $51.375.215</dd>
-                <dt>most active supplier</dt>
-                <dd>INGENIERIA Y SERVICIOS ELECTROMECANICOS J &amp; M SA</dd>
-                <dt>most active purchasing unit</dt>
-                <dd>API-Coatzacoalcos</dd>
-              </dl>
+              {generalStats}
             </div>
           </section>
         </div>

@@ -2,6 +2,8 @@
 var Reflux = require('reflux');
 var React = require('react/addons');
 var _ = require('lodash');
+var numeral = require('numeral');
+var utils = require('../../utils/utils');
 
 var ScatterplotChart = require('../charts/scatterplot_chart');
 
@@ -12,23 +14,37 @@ var IndFairness = module.exports = React.createClass({
   },
 
   relationChartPopover: function(d) {
+    var suffix = '';
+    if (d.amount / 1e6 >= 1) {
+      suffix= ' M';
+      d.amount = d.amount / 1e6;
+    }
+    d.amount = numeral(d.amount).format('0,0[.]0') + suffix;
+
     return (
-      <div>
-        Company: {d.name}<br/>
-        Suppliers: {d.suppliers}<br/>
-        Contracts: {d.contracts}<br/>
-        Amount: {d.amount}
-      </div>
+      <dl className="popover-list">
+        <dt>Buyer</dt>
+        <dd>{d.name}</dd>
+        <dt>Suppliers</dt>
+        <dd>{d.suppliers}</dd>
+        <dt>Contracts</dt>
+        <dd>{d.contracts}</dd>
+        <dt>Amount</dt>
+        <dd>{d.amount}</dd>
+      </dl>
     );
   },
 
   concentrChartPopover: function(d) {
     return (
-      <div>
-        Company: {d.name}<br/>
-        Contracts: {d.contracts}<br/>
-        Amount: {d.amount}
-      </div>
+      <dl className="popover-list">
+        <dt>Buyer</dt>
+        <dd>{d.name}</dd>
+        <dt>Contracts</dt>
+        <dd>{d.contracts}</dd>
+        <dt>Amount</dt>
+        <dd>{d.amount}</dd>
+      </dl>
     );
   },
 
@@ -37,7 +53,7 @@ var IndFairness = module.exports = React.createClass({
 
     var chartData = this.props.data.charts || [];
     var relationChartData = _.find(chartData, {id: 'relationship'});
-    var concentrChartData = _.find(chartData, {id: 'concentration-winning'});
+    //var concentrChartData = _.find(chartData, {id: 'concentration-winning'});
     var top5TableData = _.find(chartData, {id: 'top-contracts'});
 
     var relationCharts, concentrCharts, top5Table;
@@ -53,7 +69,7 @@ var IndFairness = module.exports = React.createClass({
       }.bind(this));
     }
 
-    if (concentrChartData) {
+/*    if (concentrChartData) {
       concentrCharts = concentrChartData.data.map(function(o, i) {
         return (
           <div className="chart-item" key={i.toString()}>
@@ -62,67 +78,81 @@ var IndFairness = module.exports = React.createClass({
           </div>
         );
       }.bind(this));
-    }
+    }*/
 
     if (top5TableData) {
       top5Table = top5TableData.data.map(function(d, i) {
         return (
           <div className="chart-item" key={i.toString()}>
             <h2 className="chart-title">{d.label}</h2>
-            <table>
-              <thead>
-                <tr>
-                  {top5TableData.header.map(function(c, i) {return <th key={i.toString()}>{c}</th>;})}
-                </tr>
-              </thead>
-              <tbody>
-                {d.data.map(function(r, i) {
-                  return <tr key={i.toString()}>{r.map(function(c, i) {return <td key={i.toString()}>{c}</td>;})}</tr>;
-                })}
-              </tbody>
-            </table>
+            <div className="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    {top5TableData.header.map(function(c, i) {return <th key={i.toString()}>{c}</th>;})}
+                  </tr>
+                </thead>
+                <tbody>
+                  {d.data.map(function(r, i) {
+                    return <tr key={i.toString()}>{r.map(function(c, i) {
+                      var opts = { key: i.toString() };
+                      if (c.tooltip) {
+                        opts['data-title'] = c.tooltip;
+                      }
+                      return <td {...opts}>{c.value}</td>;
+                    })}</tr>;
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         );
       }.bind(this));
     }
 
     var relationTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (relationCharts ? ' chart-group-' + relationCharts.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(relationCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : relationChartData.title}</h1>
         {relationCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {relationCharts}
+            <div className="chart-container">
+              {relationCharts}
+            </div>
           </div>
         ) : null}
       </section>
     );
 
-    var concentrTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (concentrCharts ? ' chart-group-' + concentrCharts.length : '')}>
+/*    var concentrTile = (
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(concentrCharts)}>
         <h1 className="tile-title">{ldn ? 'Loading' : concentrChartData.title}</h1>
         {concentrCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {concentrCharts}
+            <div className="chart-container">
+              {concentrCharts}
+            </div>
           </div>
         ) : null}
       </section>
-    );
+    );*/
 
     var top5Tile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + (top5Table ? ' chart-group-' + top5Table.length : '')}>
+      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(top5Table)}>
         <h1 className="tile-title">{ldn ? 'Loading' : top5TableData.title}</h1>
         {top5Table ? (
           <div className="tile-body">
             <div className="tile-prose">
               <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
             </div>
-            {top5Table}
+            <div className="chart-container">
+              {top5Table}
+            </div>
           </div>
         ) : null}
       </section>
@@ -143,7 +173,7 @@ var IndFairness = module.exports = React.createClass({
         <div className="col-main">
           {top5Tile}
           {relationTile}
-          {concentrTile}
+          {/*concentrTile*/}
         </div>
 
       </div>
