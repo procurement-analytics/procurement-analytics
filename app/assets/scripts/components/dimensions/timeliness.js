@@ -45,7 +45,7 @@ var IndTimeliness = module.exports = React.createClass({
         {timeCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>On average, how long the procurement process takes.</p>
             </div>
             <div className="chart-container">
               {timeCharts}
