@@ -112,7 +112,7 @@ var IndGeneral = module.exports = React.createClass({
         {contractsCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>The number of contracts in the dataset over time, optionally broken down by size of supplier and contract procedure.</p>
             </div>
             <div className="chart-container">
               {contractsCharts}
@@ -129,7 +129,7 @@ var IndGeneral = module.exports = React.createClass({
         {amountCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>The value of the contracts in the dataset, optionally broken down by size of supplier and contract procedure.</p>
             </div>
             <div className="chart-container">
               {amountCharts}
@@ -152,9 +152,9 @@ var IndGeneral = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">About summary</h1>
+            <h1 className="tile-title">Summary</h1>
             <div className="tile-body">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non nibh justo. Phasellus ac eros quis risus molestie molestie quis sit amet ipsum. Donec posuere augue tellus, ut volutpat ipsum feugiat in.</p>
+              <p>Here you can see summary information about the full dataset.</p>
               {generalStats}
             </div>
           </section>
