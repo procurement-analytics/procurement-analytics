@@ -4,9 +4,9 @@ node_js:
 
 env:
   global:
-  - GH_REF=github.com/developmentseed/procurement-dashboards.git
+  - GH_REF=github.com/procurement-analytics/procurement-analytics.git
   - DEPLOY_BRANCH=master
-  - secure: "FXCKPnBGdG2giuORVQdt3C8FwZ4NEPhAmwFPSLCbqtu4c6DnOOm9+uxs8zzNd8Dnt/DVF/dSEWjVkLngT/pVQcdWd3sUh9BS3TEKoe8nGDTHnXERw2P6h4wtw73X/pjwOTmC1lOP0dyE50xIqQns9sOHaHsmuRaJonXjH5wGoHc="
+  - secure: "gg07LMj5Xah+/+MAsEcIk3YI3LGtjd11mjene6zhzbgREYsZpS/eLz44aY/p6xNheTeJg66Z22kyZRStXgZ7Rlb0uenYjHIIl57/Quk2XJ6IJ+Jwci18HCgLR0muhD6y8gmf8kUBTnyWmlbu1f1w82KQyuTs/WhQ2YHn/0N2hJs="
 
 before_install:
 - chmod +x ./.build_scripts/deploy.sh
