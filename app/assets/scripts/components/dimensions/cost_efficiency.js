@@ -78,7 +78,7 @@ var IndCostEfficiency = module.exports = React.createClass({
         {distributionCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>The distribution of prices of contracts in the dataset, grouped into price buckets.</p>
             </div>
             <div className="chart-container">
               {distributionCharts}
@@ -94,7 +94,7 @@ var IndCostEfficiency = module.exports = React.createClass({
         {variationCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>The variation in prices in the dataset. The width of the box shows the range of prices, and the vertical line in the middle shows the average.</p>
             </div>
             <div className="chart-container">
               {variationCharts}
