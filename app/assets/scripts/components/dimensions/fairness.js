@@ -116,7 +116,7 @@ var IndFairness = module.exports = React.createClass({
         {relationCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>The relationship between the amount spent by a buyer and the number of different suppliers that contract with that buyer.</p>
             </div>
             <div className="chart-container">
               {relationCharts}
@@ -148,7 +148,7 @@ var IndFairness = module.exports = React.createClass({
         {top5Table ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>Vivamus nec sem sed libero placerat fermentum. Sed eget sem vel risus molestie ultricies massa feugiat.</p>
+              <p>The five largest contracts in the dataset.</p>
             </div>
             <div className="chart-container">
               {top5Table}
