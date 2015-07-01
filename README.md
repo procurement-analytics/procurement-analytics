@@ -1,6 +1,6 @@
 # Procurement Dashboards [![Build Status](https://magnum.travis-ci.com/developmentseed/procurement-dashboards.svg?token=Ns1LRJH6eWb8X2DgdBto&branch=master)](https://magnum.travis-ci.com/developmentseed/procurement-dashboards)
 
-Procurement Dashboards
+This dashboard provides analysis of publicly-available Mexican procurement data. It has been funded by the [World Bank](http://www.worldbank.org/) and designed by [Development Seed](https://developmentseed.org/).
 
 ## Development environment
 To set up the development environment for this website, you'll need to install the following on your system:
