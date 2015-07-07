@@ -32,7 +32,7 @@ var About = module.exports = React.createClass({
               <p>The first three of these dimensions are analysed in this portal; the other two could be assessed when more data becomes available.</p>
               <p>It is also possible to slice the data according to the <strong>size of supplier</strong> or the <strong>contract procedure</strong>.</p>
               <h2>Data sources</h2>
-              <p><strong><a href="https://sites.google.com/site/cnetuc/contrataciones">Compranet</a></strong> is the main data source that powers these dashboards.</p>
+              <p><strong><a href="https://compranet.funcionpublica.gob.mx/">Compranet</a></strong> is the main data source that powers these dashboards.</p>
               <h2>License</h2>
               <p>The codebase of the application has been released into the public domain using the <a href="https://github.com/procurement-analytics/procurement-analytics/blob/develop/UNLICENSE">unlicense</a>.</p>
               <p>Feel free to fork, use re-use or build upon the visualisation and data without restriction.
