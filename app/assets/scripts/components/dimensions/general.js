@@ -30,13 +30,16 @@ var IndGeneral = module.exports = React.createClass({
       var b = otherData.full[i].value;
       var min = _.min([a, b]);
       var max = _.max([a, b]);
-      var variation = max / min * 100;
-      // Count only the difference between the values.
-      variation -= 100;
-      // Check whether is increasing or decreasing.
-      variation *= b < a ? -1 : 1;
-      variation = Math.round(variation * 100) / 100;
-      variation += '%';
+
+      if (min > 0 && max > 0) {
+        var variation = max / min * 100;
+        // Count only the difference between the values.
+        variation -= 100;
+        // Check whether is increasing or decreasing.
+        variation *= b < a ? -1 : 1;
+        variation = Math.round(variation * 100) / 100;
+        variation += '%';
+      }
     }
 
     var value = d.value;
