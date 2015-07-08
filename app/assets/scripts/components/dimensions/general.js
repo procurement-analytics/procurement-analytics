@@ -42,13 +42,7 @@ var IndGeneral = module.exports = React.createClass({
       }
     }
 
-    var value = d.value;
-    var suffix = '';
-    if (value / 1e6 >= 1) {
-      suffix = ' M';
-      value = Math.round(value / 1e6);
-    }
-    value = numeral(value).format('0,0[.]0') + suffix;
+    var value = utils.formatToMillion(d.value);
 
     return (
       <dl className="popover-list">
