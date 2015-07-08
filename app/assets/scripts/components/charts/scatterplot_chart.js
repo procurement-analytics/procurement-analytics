@@ -117,7 +117,7 @@ var d3ScatterplotChart = function(el, data) {
     // Define xAxis function.
     xAxis = d3.svg.axis()
       .scale(x)
-      .ticks(5)
+      .ticks(6)
       .tickFormat(function(d) {
         var suffix = '';
         if (d / 1e6 >= 1) {
