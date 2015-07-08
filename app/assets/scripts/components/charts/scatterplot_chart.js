@@ -252,6 +252,8 @@ var d3ScatterplotChart = function(el, data) {
       .attr("cx", function(d) { return x(d[_this.xData.key]); })
       .attr("cy", function(d) { return y(d[_this.yData.key]); });
 
+    circles.exit().remove();
+
     circles
       .on("mouseover", function(d, i) {
         var matrix = this.getScreenCTM()
