@@ -160,8 +160,12 @@ var d3BarChart = function(el, data) {
 
     // Create the buckets.
     var xDomain = this.xData.domain;
-    var buckets = d3.range(xDomain[0], xDomain[1], (xDomain[1] - xDomain[0]) / this.data.data.length);
-    var bucketsScale = buckets.concat([xDomain[1]]);
+    // Buckets for the rangeBands consist of the first item of each array.
+    var buckets = xDomain.map(function(o) {
+      return o[0];
+    });
+    // Buckets for the axis must include the last value, because of rangePoints.
+    var bucketsScale = buckets.concat([xDomain[xDomain.length - 1][1]]);
 
     xBar.rangeBands([0, _width])
       .domain(buckets);

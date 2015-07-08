@@ -1,1 +1,139 @@
-{"charts": [{"y": {"domain": [30, 1500], "label": "# of contracts"}, "x": {"domain": [45, 100], "label": "Price"}, "data": [{"data": [45, 80, 250, 300, 100], "id": "micro-supplier", "label": "Micro"}, {"data": [45, 80, 250, 300, 100], "id": "small-supplier", "label": "Small"}, {"data": [45, 80, 250, 300, 100], "id": "medium-supplier", "label": "Medium"}, {"data": [45, 80, 250, 300, 100], "id": "big-supplier", "label": "No SME"}], "id": "price-distribution", "title": "Price Distribution"}, {"x": {"domain": [0, 4264040], "label": "Price variation"}, "data": [{"data": {"q1": 39382, "q3": 301338, "min": 0, "max": 6771450000, "median": 104275, "whisker2": 694265, "whisker1": 0}, "id": "micro-supplier", "label": "Micro"}, {"data": {"q1": 45480, "q3": 661675, "min": 0, "max": 39530413070, "median": 161871, "whisker2": 1585890, "whisker1": 0}, "id": "small-supplier", "label": "Small"}, {"data": {"q1": 60397, "q3": 1330178, "min": 0, "max": 22652578577, "median": 247500, "whisker2": 3234572, "whisker1": 0}, "id": "medium-supplier", "label": "Medium"}, {"data": {"q1": 74994, "q3": 1750710, "min": 0, "max": 16195330360, "median": 326000, "whisker2": 4264040, "whisker1": 0}, "id": "big-supplier", "label": "No SME"}], "id": "price-variation", "title": "Price variation"}], "metadata": {"id": "cost-efficiency--size-supplier"}}
+{
+  "charts": [
+    {
+      "y": {
+        "domain": [
+          30,
+          450
+        ],
+        "label": "# of contracts"
+      },
+      "x": {
+        "domain": [
+          [0, 100],
+          [100, 1000],
+          [1000, 5000],
+          [5000, 20000],
+          [20000, 100000]
+        ],
+        "label": "Price"
+      },
+      "data": [
+        {
+          "data": [
+            45,
+            80,
+            250,
+            300,
+            100
+          ],
+          "id": "micro-supplier",
+          "label": "Micro"
+        },
+        {
+          "data": [
+            45,
+            80,
+            250,
+            300,
+            100
+          ],
+          "id": "small-supplier",
+          "label": "Small"
+        },
+        {
+          "data": [
+            45,
+            80,
+            250,
+            300,
+            100
+          ],
+          "id": "medium-supplier",
+          "label": "Medium"
+        },
+        {
+          "data": [
+            45,
+            80,
+            250,
+            300,
+            100
+          ],
+          "id": "big-supplier",
+          "label": "No SME"
+        }
+      ],
+      "id": "price-distribution",
+      "title": "Price Distribution"
+    },
+    {
+      "x": {
+        "domain": [
+          0,
+          4264040
+        ],
+        "label": "Price variation"
+      },
+      "data": [
+        {
+          "data": {
+            "q1": 39382,
+            "q3": 301338,
+            "min": 0,
+            "max": 6771450000,
+            "median": 104275,
+            "whisker2": 694265,
+            "whisker1": 0
+          },
+          "id": "micro-supplier",
+          "label": "Micro"
+        },
+        {
+          "data": {
+            "q1": 45480,
+            "q3": 661675,
+            "min": 0,
+            "max": 39530413070,
+            "median": 161871,
+            "whisker2": 1585890,
+            "whisker1": 0
+          },
+          "id": "small-supplier",
+          "label": "Small"
+        },
+        {
+          "data": {
+            "q1": 60397,
+            "q3": 1330178,
+            "min": 0,
+            "max": 22652578577,
+            "median": 247500,
+            "whisker2": 3234572,
+            "whisker1": 0
+          },
+          "id": "medium-supplier",
+          "label": "Medium"
+        },
+        {
+          "data": {
+            "q1": 74994,
+            "q3": 1750710,
+            "min": 0,
+            "max": 16195330360,
+            "median": 326000,
+            "whisker2": 4264040,
+            "whisker1": 0
+          },
+          "id": "big-supplier",
+          "label": "No SME"
+        }
+      ],
+      "id": "price-variation",
+      "title": "Price variation"
+    }
+  ],
+  "metadata": {
+    "id": "cost-efficiency--size-supplier"
+  }
+}
