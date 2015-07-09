@@ -28,15 +28,10 @@ var IndGeneral = module.exports = React.createClass({
     if (i > 0) {
       var a = otherData.full[i - 1].value;
       var b = otherData.full[i].value;
-      var min = _.min([a, b]);
-      var max = _.max([a, b]);
 
-      if (min > 0 && max > 0) {
-        var variation = max / min * 100;
-        // Count only the difference between the values.
-        variation -= 100;
-        // Check whether is increasing or decreasing.
-        variation *= b < a ? -1 : 1;
+      if (a > 0 && a > 0) {
+        // http://www.calculatorsoup.com/calculators/algebra/percent-change-calculator.php
+        variation = ((b - a) / Math.abs(a)) * 100;
         variation = Math.round(variation * 100) / 100;
         variation += '%';
       }
