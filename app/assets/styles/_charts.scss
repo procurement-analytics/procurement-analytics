@@ -205,6 +205,58 @@
     stroke-dasharray: 4px;
     fill: none;
   }
+
+  // Axis specifics
+  .x.axis {
+    // 1 chart per line.
+    .chart-group-1 & {
+      .tick:nth-of-type(2n) {
+        display: none;
+      }
+
+      @include media(small-up) {
+        .tick:nth-of-type(2n) {
+          display: block;
+        }
+      }
+    }
+    // 3 charts per line.
+    .chart-group-3 & {
+      .tick:nth-of-type(2n) {
+        display: none;
+      }
+
+      @include media(small-up) {
+        .tick:nth-of-type(2n) {
+          display: block;
+        }
+      }
+
+      @include media(medium-up) {
+        .tick:nth-of-type(2n) {
+          display: none;
+        }
+      }
+
+      @include media(large-up) {
+        .tick:nth-of-type(2n) {
+          display: block;
+        }
+      }
+
+      @include media(xlarge-up) {
+        .tick:nth-of-type(2n) {
+          display: none;
+        }
+      }
+
+      @media #{$screen} and (min-width: 1700px) {
+        .tick:nth-of-type(2n) {
+          display: block;
+        }
+      }
+    }
+  }
 }
 
 

@@ -117,7 +117,7 @@ var d3ScatterplotChart = function(el, data) {
     // Define xAxis function.
     xAxis = d3.svg.axis()
       .scale(x)
-      .ticks(5)
+      .ticks(6)
       .tickFormat(function(d) {
         var suffix = '';
         if (d / 1e6 >= 1) {
@@ -251,6 +251,8 @@ var d3ScatterplotChart = function(el, data) {
       .attr("r", function(d) { return _this.rData ? r(d[_this.rData.key]) : 4; })
       .attr("cx", function(d) { return x(d[_this.xData.key]); })
       .attr("cy", function(d) { return y(d[_this.yData.key]); });
+
+    circles.exit().remove();
 
     circles
       .on("mouseover", function(d, i) {

@@ -14,12 +14,7 @@ var IndFairness = module.exports = React.createClass({
   },
 
   relationChartPopover: function(d) {
-    var suffix = '';
-    if (d.amount / 1e6 >= 1) {
-      suffix= ' M';
-      d.amount = d.amount / 1e6;
-    }
-    d.amount = numeral(d.amount).format('0,0[.]0') + suffix;
+    var amount = utils.formatToMillion(d.amount);
 
     return (
       <dl className="popover-list">
@@ -30,7 +25,7 @@ var IndFairness = module.exports = React.createClass({
         <dt>Contracts</dt>
         <dd>{d.contracts}</dd>
         <dt>Amount</dt>
-        <dd>{d.amount}</dd>
+        <dd>{amount}</dd>
       </dl>
     );
   },
@@ -99,7 +94,11 @@ var IndFairness = module.exports = React.createClass({
                       if (c.tooltip) {
                         opts['data-title'] = c.tooltip;
                       }
-                      return <td {...opts}>{c.value}</td>;
+                      var value = c.value;
+                      if (c.format && c.format == 'amount|million') {
+                        value = utils.formatToMillion(value);
+                      }
+                      return <td {...opts}>{value}</td>;
                     })}</tr>;
                   })}
                 </tbody>
