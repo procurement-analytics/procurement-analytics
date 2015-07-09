@@ -1,4 +1,5 @@
 'use strict';
+var numeral = require('numeral');
 
 module.exports.chartGroupClass = function(group) {
   var tot = group ? group.length : 0;
@@ -18,4 +19,13 @@ module.exports.chartGroupClass = function(group) {
       klass += 3;
   }
   return ' ' + klass + ' ';
-}
+};
+
+module.exports.formatToMillion = function(val) {
+  var suffix = '';
+  if (val / 1e6 >= 1) {
+    suffix = ' M';
+    val = Math.round(val / 1e6);
+  }
+  return numeral(val).format('0,0[.]0') + suffix;
+};
