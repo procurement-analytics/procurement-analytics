@@ -28,24 +28,16 @@ var IndGeneral = module.exports = React.createClass({
     if (i > 0) {
       var a = otherData.full[i - 1].value;
       var b = otherData.full[i].value;
-      var min = _.min([a, b]);
-      var max = _.max([a, b]);
-      var variation = max / min * 100;
-      // Count only the difference between the values.
-      variation -= 100;
-      // Check whether is increasing or decreasing.
-      variation *= b < a ? -1 : 1;
-      variation = Math.round(variation * 100) / 100;
-      variation += '%';
+
+      if (a > 0 && a > 0) {
+        // http://www.calculatorsoup.com/calculators/algebra/percent-change-calculator.php
+        variation = ((b - a) / Math.abs(a)) * 100;
+        variation = Math.round(variation * 100) / 100;
+        variation += '%';
+      }
     }
 
-    var value = d.value;
-    var suffix = '';
-    if (value / 1e6 >= 1) {
-      suffix = ' M';
-      value = Math.round(value / 1e6);
-    }
-    value = numeral(value).format('0,0[.]0') + suffix;
+    var value = utils.formatToMillion(d.value);
 
     return (
       <dl className="popover-list">
