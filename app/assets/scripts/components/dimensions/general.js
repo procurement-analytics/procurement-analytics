@@ -142,7 +142,9 @@ var IndGeneral = module.exports = React.createClass({
     var generalStats = this.state.generalStats.length == 0 ? null : (
       <dl className="facts-list">
         {this.state.generalStats.map(function(d) {
-          return [(<dt>{d.label}</dt>), (<dd>{d.value}</dd>)];
+          var statClass = _.kebabCase(d.label);
+          return [(<dt className={ statClass }>{d.label}</dt>),
+                  (<dd className={ statClass }>{d.value}</dd>)];
         })}
       </dl>
     );
