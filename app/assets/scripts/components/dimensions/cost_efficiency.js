@@ -3,6 +3,7 @@ var React = require('react/addons');
 var Reflux = require('reflux');
 var _ = require('lodash');
 var numeral = require('numeral');
+var d3 = require('d3');
 var utils = require('../../utils/utils');
 
 var BoxChart = require('../charts/box_chart');
@@ -43,6 +44,12 @@ var IndCostEfficiency = module.exports = React.createClass({
     );
   },
 
+  calcChartYDomain: function(data) {
+    var domain = [0]
+    domain.push(d3.max(data));
+    return domain;
+  },
+
   render: function() {
 
     var ldn = this.props.loading;
@@ -55,10 +62,12 @@ var IndCostEfficiency = module.exports = React.createClass({
 
     if (distributionChartData) {
       distributionCharts = distributionChartData.data.map(function(o, i) {
+        var yDomain = _.cloneDeep(distributionChartData.y);
+        yDomain.domain = this.calcChartYDomain(o.data);
         return (
           <div className="chart-item" key={i.toString()}>
             <h2 className="chart-title">{o.label}</h2>
-            <BarChart data={o.data} x={distributionChartData.x}  y={distributionChartData.y} popoverContentFn={this.distributionChartPopover}/>
+            <BarChart data={o.data} x={distributionChartData.x}  y={yDomain} popoverContentFn={this.distributionChartPopover}/>
           </div>
         );
       }.bind(this));
