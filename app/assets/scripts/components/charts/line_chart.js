@@ -61,7 +61,7 @@ var d3LineChart = function(el, data) {
   var parseDate = d3.time.format("%Y-%m-%d").parse;
 
   this._calcSize = function() {
-    _width = parseInt(this.$el.style('width'), 10) - margin.left - margin.right;
+    _width = parseInt(this.$el.style('width'), 10) ; //- margin.left - margin.right - CLAUDIO
     _height = parseInt(this.$el.style('height'), 10) - margin.top - margin.bottom;
   };
 

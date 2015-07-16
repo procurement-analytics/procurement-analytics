@@ -8,7 +8,7 @@
 
 .chart-item {
   width: 100%;
-  max-width: 44rem;
+  // max-width: 58rem;
   margin-left: auto;
   margin-right: auto;
   vertical-align: top;
@@ -99,6 +99,7 @@
 .lineChart {
   .area {
     fill: $infograph-color-a;
+    @include chart_transition;
   }
   .line {
     stroke: shade($infograph-color-a, 48%);
@@ -108,26 +109,32 @@
 
   .focus-circle {
     fill: shade($infograph-color-a, 48%);
+    @include chart_transition;
   }
 
   .hgl-on {
     .area {
       opacity: 0.48;
+      @include chart_transition;
     }
     .line {
       opacity: 0.48;
+      @include chart_transition;
     }
 
     .hgl-back {
       fill: #ccc;
+      @include chart_transition;
     }
     .hgl-area {
       fill: $infograph-color-a;
+      @include chart_transition;
     }
     .hgl-line {
       stroke: shade($infograph-color-a, 48%);
       stroke-width: 2px;
       fill: none;
+      @include chart_transition;
     }
   }
 }

@@ -98,3 +98,10 @@
     @media #{$screen} and (min-width: lower-bound($xxlarge-range)) { @content; }
   }
 }
+
+
+// ANIMATIONS
+
+@mixin chart_transition {
+  transition: opacity 0.4s ease;
+}
