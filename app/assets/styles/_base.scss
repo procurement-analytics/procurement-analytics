@@ -110,9 +110,25 @@ a:active{
   text-transform: uppercase;
   font-weight: $base-font-bold;
   margin-bottom: 0;
+
+  a > span {
+    vertical-align: top;
+    margin: 4px 20px;
+    display: inline-block;
+  }
+
   @include media(small-up) {
     line-height: 2rem;
   }
+
+  @include media(medium-up) {
+      .main-logo {
+        max-height: 40px;
+        width: auto;
+      }
+  }
+
+
 }
 
 #site-prime-nav {

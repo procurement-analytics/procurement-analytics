@@ -11,7 +11,7 @@ var App = module.exports = React.createClass({
         <header id="site-header" role="banner">
           <div className="inner">
             <div id="site-headline">
-              <h1 id="site-title"><a href="#/" title="Start"><span>Mexican procurement performance</span></a></h1>
+              <h1 id="site-title"><a href="#/" title="Start"><img className="main-logo" src="assets/graphics/layout/data-analytics-for-procurement-logo-neg.png" /><span>Mexico</span></a></h1>
             </div>
             <nav id="site-prime-nav" role="navigation">
               <ul className="global-menu">
