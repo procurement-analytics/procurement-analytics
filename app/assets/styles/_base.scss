@@ -113,6 +113,15 @@ a:active{
   @include media(small-up) {
     line-height: 2rem;
   }
+
+  @include media(medium-up) {
+      .main-logo {
+        max-height: 40px;
+        width: auto;
+      }
+  }
+
+
 }
 
 #site-prime-nav {
