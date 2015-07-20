@@ -96,56 +96,73 @@ a:active{
 }
 
 #site-headline {
-  float: left;
+  @extend .clearfix;
   padding: 0.75rem 0;
-  width: 10rem;
   @include media(small-up) {
-    width: auto;
+    float: left;
     padding: 1rem 0;
   }
 }
 
 #site-title {
-  line-height: 1.25rem;
-  text-transform: uppercase;
-  font-weight: $base-font-bold;
+  position: relative;
+  float: left;
   margin-bottom: 0;
-
-  a > span {
+  a {
+    display: block;
+  }
+  img {
     vertical-align: top;
-    margin: 4px 20px;
-    display: inline-block;
+    height: 1.75rem;
+    width: auto;
   }
-
+  span {
+    @extend .visually-hidden;
+  }
+  small {
+    font-weight: $base-font-regular;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    position: absolute;
+    top: 50%;
+    right: -0.25rem;
+    line-height: 1.25rem;
+    padding: 0 0.25rem;
+    background: rgba($base-color, .32);
+    @include transform(translate(100%, -50%));
+  }
   @include media(small-up) {
-    line-height: 2rem;
+    img {
+      height: 2rem;
+    }
+    small {
+      right: -0.5rem;
+      font-size: 0.875rem;
+    }
   }
-
-  @include media(medium-up) {
-      .main-logo {
-        max-height: 40px;
-        width: auto;
-      }
-  }
-
-
 }
 
 #site-prime-nav {
-  float: right;
+  @extend .clearfix;
+  margin: 0 (-$inner-pad) 0 (-$inner-pad);
+  @include media(small-up) {
+    float: right;
+    margin: 0;
+  }
 }
 
 .global-menu {
-  float: left;
-  box-shadow: inset 1px 0 0 0 rgba(#fff, 0.12), inset -1px 0 0 0 rgba(#fff, 0.12);
+  overflow: hidden;
+  width: 100%;
+  box-shadow: inset 1px 0 0 0 rgba(#fff, 0.12), inset -1px 0 0 0 rgba(#fff, 0.12), inset 0 1px 0 0 rgba(#fff, 0.12);
   li {
     float: left;
+    width: 50%;
   }
   a {
     display: block;
-    width: 4rem;
-    height: 5.25rem;
-    line-height: 5.25rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
     box-shadow: -1px 0 0 0 rgba(#fff, 0.16);
     font-size: 1.25rem;
     text-align: center;
@@ -162,7 +179,12 @@ a:active{
     box-shadow: none;
   }
   @include media(small-up) {
+    float: left;
+    li {
+      width: auto;
+    }
     a {
+      width: 4rem;
       height: 4rem;
       line-height: 4rem;
     }
@@ -193,9 +215,14 @@ a:active{
     content: "";
   }
   > .inner {
-    padding-top: 6.5rem;
+    padding-top: 7.5rem;
     padding-bottom: 2rem;
     @extend .row;
+  }
+  @include media(small-up) {
+    > .inner {
+      padding-top: 6rem;
+    }
   }
   @include media(medium-up) {
     > .inner {
