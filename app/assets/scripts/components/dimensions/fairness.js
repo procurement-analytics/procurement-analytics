@@ -4,6 +4,8 @@ var React = require('react/addons');
 var _ = require('lodash');
 var numeral = require('numeral');
 var utils = require('../../utils/utils');
+var popover = require('../charts/popover');
+var $ = require('jquery');
 
 var ScatterplotChart = require('../charts/scatterplot_chart');
 
@@ -11,6 +13,11 @@ var IndFairness = module.exports = React.createClass({
 
   propTypes: {
     data: React.PropTypes.object
+  },
+
+  componentDidMount: function() {
+    // Init the popover.
+    this.popover = new popover();
   },
 
   relationChartPopover: function(d) {
@@ -41,6 +48,19 @@ var IndFairness = module.exports = React.createClass({
         <dd>{d.amount}</dd>
       </dl>
     );
+  },
+
+  tableTooltipHover: function(data, colData, event) {
+    var $target = $(event.target);
+    var pos = $target.offset();
+    var x = pos.left + $target.width() / 2;
+    var y = pos.top + 8;
+
+    this.popover.setContent(data, 'popover-table').show(x, y);
+  },
+
+  tableTooltipOut: function() {
+    this.popover.hide();
   },
 
   render: function() {
@@ -92,15 +112,16 @@ var IndFairness = module.exports = React.createClass({
                     return <tr key={i.toString()}>{r.map(function(c, i) {
                       var opts = { key: i.toString() };
                       if (c.tooltip) {
-                        opts['data-title'] = c.tooltip;
+                        opts['onMouseEnter'] = this.tableTooltipHover.bind(this, c.tooltip, c);
+                        opts['onMouseLeave'] = this.tableTooltipOut.bind(this, c.tooltip, c);
                       }
                       var value = c.value;
                       if (c.format && c.format == 'amount|million') {
                         value = utils.formatToMillion(value);
                       }
                       return <td {...opts}>{value}</td>;
-                    })}</tr>;
-                  })}
+                    }, this)}</tr>;
+                  }, this)}
                 </tbody>
               </table>
             </div>
