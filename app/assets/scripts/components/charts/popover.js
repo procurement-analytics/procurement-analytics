@@ -32,10 +32,11 @@ function popover() {
    * @param ReactElement
    * Content for the popover. Can be anything supported by react. 
    */
-  this.setContent = function(ReactElement) {
+  this.setContent = function(ReactElement, classes) {
+    classes = 'popover' + (classes ? ' ' + classes : '');
     _prev_content = _content;
     _content = React.renderToStaticMarkup(
-      <div className="popover" id={_id}>
+      <div className={classes} id={_id}>
         {ReactElement}
       </div>
     );
