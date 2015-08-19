@@ -94,6 +94,7 @@ var d3TimeChart = function(el, data) {
       .attr("class", "legend")
   };
 
+
   // Construct a stacked bar array.
   this.stack = function(arr) {
     _.each(arr, function(rows) {
@@ -101,16 +102,19 @@ var d3TimeChart = function(el, data) {
       rows.d = _.map(rows.data, function(d) {
         var val = {
           x: x(total),
-          width: x(d),
+          width: ((x(d) > 0) ? x(d) : 0),
           val: d,
-          sum: total + d
+          //sum: total + d
         };
-        total += d;
+        if (d > 0) {
+          total += d;
+        }
         return val;
       });
     });
     return arr;
   };
+
 
   this.update = function() {
     this._calcSize();
