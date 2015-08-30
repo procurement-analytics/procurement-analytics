@@ -222,6 +222,10 @@ var d3BarChart = function(el, data) {
     });
 
     // Append Axis.
+    xAxis.tickValues(bucketsScale.filter(function(d, i){
+      return (i % 2 === 0);
+    }));
+    //xAxis.
     svg.select(".x.axis")
       .attr("transform", "translate(" + margin.left + "," + (_height + margin.top + 10) + ")").transition()
       .call(xAxis);
@@ -253,4 +257,3 @@ var d3BarChart = function(el, data) {
   this._init();
   this.setData(data);
 };
-
