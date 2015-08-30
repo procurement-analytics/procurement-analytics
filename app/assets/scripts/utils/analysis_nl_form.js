@@ -27,6 +27,13 @@ var fields = [
         tokens: {
           'comparisonArticle': 'for'
         }
+      },
+      {
+        key: 'contract_type',
+        value: 'contract type',
+        tokens: {
+          'comparisonArticle': 'for'
+        }
       }
     ]
   },
