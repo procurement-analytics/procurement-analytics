@@ -231,8 +231,9 @@ var d3BarChart = function(el, data) {
       .call(xAxis);
 
     if (this.data.x.label) {
+      var self = this;
       svg.select(".x.axis .label")
-        .text(this.xData.label)
+        .text(function(d,i) { return (i % 2 == 0) ? self.xData.label: '';})
         .attr("x", _width / 2)
         .attr("y", 35);
     }
