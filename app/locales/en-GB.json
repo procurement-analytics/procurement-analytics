@@ -1,8 +1,98 @@
 {
+  "DashboardTitle": "Mexican procurement performance",
   "CountryName": "Mexico",
   "Analysis": "Analysis",
   "About": "About",
-  "SummaryTitle": "Summary",
-  "SummaryText": "Here you can see summary information about the full dataset.",
-  "full data set": "full data set",
+  "Loading": "Loading",
+  "LoadingTitle": " loading",
+  "Dimensions": {
+    "Summary": {
+      "Title": "Summary",
+      "Description": "Here you can see summary information about the full dataset.",
+      "Charts": {
+        "Amount": {
+          "Description": "The value of the contracts in the dataset, optionally broken down by size of supplier and contract procedure."
+        },
+        "Number": {
+          "Description": "The number of contracts in the dataset over time, optionally broken down by size of supplier and contract procedure."
+        }
+      },
+      "PopOvers": {
+        "Value": "Value",
+        "Date": "Date",
+        "Variation": "Variation",
+      }
+    },
+    "Timeliness": {
+      "Title": "About timeliness",
+      "Description": "Timely delivery of goods, works and services is a key indication of success in procurement, whether done by private sector companies or governments.",
+      "Charts": {
+        "Time": {
+          "Description": "On average, how long the procurement process takes."
+        }
+      }
+    },
+    "CostEfficiency": {
+      "Title": "About cost efficiency",
+      "Description": "Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.",
+      "Charts": {
+        "Variation": {
+          "Title": "Price Variation",
+          "Description": "The variation in prices in the dataset. The width of the box shows the range of prices, and the vertical line in the middle shows the average. The outliers were removed from these plots."
+        },
+        "Distribution": {
+          "Title": "Price distribution",
+          "Description": "The distribution of contract prices in the dataset, grouped into equal price buckets. The 5% most expensive contracts are not included in this chart."
+        }
+      },
+      "PopOvers": {
+        "Min": "Min",
+        "Max": "Max",
+        "Median": "Median",
+        "Quartile1": "1st Quartile",
+        "Quartile3": "3rd Quartile",
+        "Contracts": "Contracts",
+        "PriceBucket": "Price Bucket"
+      }
+    },
+    "Fairness": {
+      "Title": "About fairness",
+      "Description": "A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.",
+      "Charts": {
+        "Top5": {
+          "Description": "The five largest contracts in the dataset."
+        },
+        "Relation": {
+          "Description": "The relationship between the amount spent by a buyer and the number of different suppliers that contract with that buyer."
+        }
+      },
+      "PopOvers": {
+        "Buyer": "Buyer",
+        "Suppliers": "Suppliers",
+        "Contracts": "Contracts",
+        "Amount": "Amount"
+      }
+    }
+  },
+  "NLForm": {
+    "Comparison": {
+      "FullDataSet": "full data set",
+      "ForThe": "for the",
+      "SizeSupplier": "size of the supplier",
+      "For": "for",
+      "ContractType": "contract type",
+      "ContractProcedure": "contract procedure"
+    },
+    "Dimension": {
+      "Summary": "summary",
+      "SummaryArticle": "a",
+      "Timeliness": "timeliness",
+      "TimelinessArticle": "",
+      "CostEfficiency": "cost efficiency",
+      "CostEfficiencyArticle": "",
+      "Fairness": "fairness",
+      "FairnessArticle": ""
+    },
+    "Sentence": "Showing {#dimensionArticle#} {%dimension%} of the procurement process {#comparisonArticle#} {%comparison%}"
+  }
 }
