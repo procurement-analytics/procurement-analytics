@@ -41,11 +41,11 @@ var IndGeneral = module.exports = React.createClass({
 
     return (
       <dl className="popover-list">
-        <dt>Value</dt>
+        <dt>{i18n.t("Dimensions.Summary.PopOvers.Value")}</dt>
         <dd>{value}</dd>
-        <dt>Date</dt>
+        <dt>{i18n.t("Dimensions.Summary.PopOvers.Date")}</dt>
         <dd>{months[d.date.getMonth()]} {d.date.getFullYear()}</dd>
-        <dt>Variation</dt>
+        <dt>{i18n.t("Dimensions.Summary.PopOvers.Variation")}</dt>
         <dd>{variation}</dd>
       </dl>
     );
@@ -99,12 +99,12 @@ var IndGeneral = module.exports = React.createClass({
 
     // Build the tile for this contractsCharts.
     var contractsTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(contractsCharts)}>
-        <h1 className="tile-title">{ldn ? 'Loading' : contractsChartData.title}</h1>
+      <section className={"tile chart-group" + (ldn ? i18n.t("LoadingTitle") : '') + utils.chartGroupClass(contractsCharts)}>
+        <h1 className="tile-title">{ldn ? i18n.t("Loading") : contractsChartData.title}</h1>
         {contractsCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>The number of contracts in the dataset over time, optionally broken down by size of supplier and contract procedure.</p>
+              <p>{i18n.t("Dimensions.Summary.Charts.Number.Description")}</p>
             </div>
             <div className="chart-container">
               {contractsCharts}
@@ -116,12 +116,12 @@ var IndGeneral = module.exports = React.createClass({
 
     // Build the tile for this amountCharts.
     var amountTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(amountCharts)}>
-        <h1 className="tile-title">{ldn ? 'Loading' : amountChartData.title}</h1>
+      <section className={"tile chart-group" + (ldn ? i18n.t("LoadingTitle") : '') + utils.chartGroupClass(amountCharts)}>
+        <h1 className="tile-title">{ldn ? i18n.t("Loading") : amountChartData.title}</h1>
         {amountCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>The value of the contracts in the dataset, optionally broken down by size of supplier and contract procedure.</p>
+              <p>{i18n.t("Dimensions.Summary.Charts.Amount.Description")}</p>
             </div>
             <div className="chart-container">
               {amountCharts}
@@ -146,9 +146,9 @@ var IndGeneral = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">Summary</h1>
+            <h1 className="tile-title">{i18n.t("Dimensions.Summary.Title")}</h1>
             <div className="tile-body">
-              <p>Here you can see summary information about the full dataset.</p>
+              <p>{i18n.t("Dimensions.Summary.Description")}</p>
               {generalStats}
             </div>
           </section>
