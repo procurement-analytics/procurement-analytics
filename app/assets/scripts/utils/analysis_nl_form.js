@@ -1,6 +1,6 @@
 'use strict';
 var _ = require('lodash');
-
+var i18n = require("../components/i18n");
 var fields = [
   {
     id: 'comparison',
@@ -9,30 +9,30 @@ var fields = [
     opts: [
       {
         key: 'all',
-        value: 'full data set',
+        value: i18n.t("NLForm.Comparison.FullDataSet"),
         tokens: {
-          'comparisonArticle': 'for the'
+          'comparisonArticle': i18n.t("NLForm.Comparison.ForThe")
         }
       },
       {
         key: 'size_supplier',
-        value: 'size of the supplier',
+        value: i18n.t("NLForm.Comparison.SizeSupplier"),
         tokens: {
-          'comparisonArticle': 'for'
+          'comparisonArticle': i18n.t("NLForm.Comparison.For")
         }
       },
       {
         key: 'contract_procedure',
-        value: 'contract procedure',
+        value: i18n.t("NLForm.Comparison.ContractProcedure"),
         tokens: {
-          'comparisonArticle': 'for'
+          'comparisonArticle': i18n.t("NLForm.Comparison.For")
         }
       },
       {
         key: 'contract_type',
-        value: 'contract type',
+        value: i18n.t("NLForm.Comparison.ContractType"),
         tokens: {
-          'comparisonArticle': 'for'
+          'comparisonArticle': i18n.t("NLForm.Comparison.For")
         }
       }
     ]
@@ -45,30 +45,30 @@ var fields = [
     opts: [
       {
         key: 'summary',
-        value: 'summary',
+        value: i18n.t('NLForm.Dimension.Summary'),
         tokens: {
-          'dimensionArticle': 'a'
+          'dimensionArticle': i18n.t("NLForm.Dimension.SummaryArticle")
         }
       },
       {
         key: 'timeliness',
-        value: 'timeliness',
+        value: i18n.t("NLForm.Dimension.Timeliness"),
         tokens: {
-          'dimensionArticle': ''
+          'dimensionArticle': i18n.t("NLForm.Dimension.TimelinessArticle")
         }
       },
       {
         key: 'cost-efficiency',
-        value: 'cost efficiency',
+        value: i18n.t("NLForm.Dimension.CostEfficiency"),
         tokens: {
-          'dimensionArticle': ''
+          'dimensionArticle': i18n.t("NLForm.Dimension.CostEfficiencyArticle")
         }
       },
       {
         key: 'fairness',
-        value: 'fairness',
+        value: i18n.t("NLForm.Dimension.Fairness"),
         tokens: {
-          'dimensionArticle': ''
+          'dimensionArticle': i18n.t("NLForm.Dimension.FairnessArticle")
         }
       }
     ]
@@ -76,7 +76,7 @@ var fields = [
 ];
 
 module.exports.getSentence = function() { 
-  return 'Showing {#dimensionArticle#} {%dimension%} of the procurement process {#comparisonArticle#} {%comparison%}.';
+  return i18n.t("NLForm.Sentence");
 };
 
 module.exports.fields = function() {
