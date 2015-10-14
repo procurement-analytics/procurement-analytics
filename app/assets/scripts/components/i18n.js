@@ -1,6 +1,7 @@
 i18n = require('i18next-client')
 
 var enGB = require("../../../locales/en-GB.json");
+var esMX = require("../../../locales/es-MX.json");
 
 /*
 
@@ -14,13 +15,16 @@ https://alicoding.com/localizing-react-app-using-react-router-with-react-intl/
 var resources = {
   "en-GB": {
     translation: enGB
+  },
+  "es-MX": {
+    translation: esMX
   }
 }
 
 i18n.init({
-  lng: "en-GB",
-  lngWhiteList: ['en-GB', 'es-MX'],
-  fallbackLng: 'en-GB',
+  lng: "es-MX",
+  lngWhiteList: ['es-MX'],
+  fallbackLng: 'es-MX',
   resStore: resources
 })
 
