@@ -234,13 +234,13 @@ a:active{
 
 .page-headline {
   float: left;
-  max-width: 40rem;
+  max-width: 45rem;
   @include animation(fade-in 0.64s ease 0s);
   @include media(large-up) {
     max-width: 28rem;
   }
   @include media(xlarge-up) {
-    max-width: 40rem;
+    max-width: 45rem;
   }
 }
 
