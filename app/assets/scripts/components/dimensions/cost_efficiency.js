@@ -19,9 +19,9 @@ var IndCostEfficiency = module.exports = React.createClass({
     var buckets = otherData.buckets;
     return (
       <dl className="popover-list">
-        <dt>Contracts</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.Contracts")}</dt>
         <dd>{d[0]}</dd>
-        <dt>Price bucket</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.PriceBucket")}</dt>
         <dd>{buckets[i]} - {buckets[i + 1]}</dd>
       </dl>
     );
@@ -30,15 +30,15 @@ var IndCostEfficiency = module.exports = React.createClass({
   variationChartPopover : function(d) {
     return (
       <dl className="popover-list">
-        <dt>Min</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.Min")}</dt>
         <dd>{numeral(d.whisker1).format('0,0[.]0')}</dd>
-        <dt>1st Quartile</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.Quartile1")}</dt>
         <dd>{numeral(d.q1).format('0,0[.]0')}</dd>
-        <dt>Median</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.Median")}</dt>
         <dd>{numeral(d.median).format('0,0[.]0')}</dd>
-        <dt>3rd Quartile</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.Quartile3")}</dt>
         <dd>{numeral(d.q3).format('0,0[.]0')}</dd>
-        <dt>Max</dt>
+        <dt>{i18n.t("Dimensions.CostEfficiency.PopOvers.Max")}</dt>
         <dd>{numeral(d.whisker2).format('0,0[.]0')}</dd>
       </dl>
     );
@@ -82,12 +82,12 @@ var IndCostEfficiency = module.exports = React.createClass({
     }
 
     var distributionTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(distributionCharts)}>
-        <h1 className="tile-title">Price distribution</h1>
+      <section className={"tile chart-group" + (ldn ? i18n.t("LoadingTitle") : '') + utils.chartGroupClass(distributionCharts)}>
+        <h1 className="tile-title">{i18n.t("Dimensions.CostEfficiency.Charts.Distribution.Title")}</h1>
         {distributionCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>The distribution of contract prices in the dataset, grouped into equal price buckets. The 5% most expensive contracts are not included in this chart.</p>
+              <p>{i18n.t("Dimensions.CostEfficiency.Charts.Distribution.Description")}</p>
             </div>
             <div className="chart-container">
               {distributionCharts}
@@ -98,12 +98,12 @@ var IndCostEfficiency = module.exports = React.createClass({
     );
 
     var variationTile = (
-      <section className={"tile chart-group chart-group-none" + (ldn ? ' loading' : '')}>
-        <h1 className="tile-title">Price variation</h1>
+      <section className={"tile chart-group chart-group-none" + (ldn ? i18n.t("LoadingTitle") : '')}>
+        <h1 className="tile-title">{i18n.t("Dimensions.CostEfficiency.Charts.Variation.Title")}</h1>
         {variationCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>The variation in prices in the dataset. The width of the box shows the range of prices, and the vertical line in the middle shows the average. The outliers were removed from these plots.</p>
+              <p>{i18n.t("Dimensions.CostEfficiency.Charts.Variation.Description")}</p>
             </div>
             <div className="chart-container">
               {variationCharts}
@@ -118,9 +118,9 @@ var IndCostEfficiency = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">About cost efficiency</h1>
+            <h1 className="tile-title">{i18n.t("Dimensions.CostEfficiency.Title")}</h1>
             <div className="tile-body">
-              <p>Paying the most economical price is a fundamental goal of any purchasing decision, whether on our private lives, corporate work or on government operations.</p>
+              <p>{i18n.t("Dimensions.CostEfficiency.Description")}</p>
             </div>
           </section>
         </div>

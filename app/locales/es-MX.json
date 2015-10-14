@@ -1,0 +1,98 @@
+{
+  "DashboardTitle": "Desempeño de las contrataciones del Gobierno de México",
+  "CountryName": "México",
+  "Analysis": "Análisis",
+  "About": "Acerca de",
+  "Loading": "Cargando",
+  "LoadingTitle": " cargando",
+  "Dimensions": {
+    "Summary": {
+      "Title": "Resumen",
+      "Description": "Aquí puedes consultar información resumida sobre el conjunto de datos completo.",
+      "Charts": {
+        "Amount": {
+          "Description": "El valor de los contratos en el conjunto de datos, desglosado opcionalmente por tamaño del proveedor y procedimiento de contratación."
+        },
+        "Number": {
+          "Description": "El número de contratos en el conjunto de datos a lo largo del tiempo, desglosado opcionalmente por tamaño del proveedor y procedimiento de contratación."
+        }
+      },
+      "PopOvers": {
+        "Value": "Valor",
+        "Date": "Fecha",
+        "Variation": "Variación",
+      }
+    },
+    "Timeliness": {
+      "Title": "Sobre la puntualidad",
+      "Description": "La entrega oportuna de bienes, obras, y servicios es una indicación clave de éxito en contrataciones, ya sea realizada por sector privado o gobierno.",
+      "Charts": {
+        "Time": {
+          "Description": "En promedio, qué tanto tiempo toma el proceso de contratación."
+        }
+      }
+    },
+    "CostEfficiency": {
+      "Title": "Sobre la eficiencia en costos",
+      "Description": "Pagar el precio más económico es un objetivo fundamental en cada decisión de compra, ya sea en nuestra vida privada, trabajo de oficina o en el trabajo del gobierno.",
+      "Charts": {
+        "Variation": {
+          "Title": "Variación en precio",
+          "Description": "La variación en precios en el conjunto de datos. El ancho de la caja muestra el rango de precios, y la línea vertical en medio muestra el promedio. Los atípicos fueron removidos de estas gráficas."
+        },
+        "Distribution": {
+          "Title": "Distribución de precios",
+          "Description": "La distribución de precios de contratos en el conjunto de datos, agrupados de manera uniforme en rangos de precio. El 5% de los contratos más costosos no se incluyen en esta gráfica."
+        }
+      },
+      "PopOvers": {
+        "Min": "Mín",
+        "Max": "Máx",
+        "Median": "Media",
+        "Quartile1": "Primer cuartil",
+        "Quartile3": "Tercer cuartil",
+        "Contracts": "Contratos",
+        "PriceBucket": "Grupo de precio"
+      }
+    },
+    "Fairness": {
+      "Title": "Sobre la equidad",
+      "Description": "Un eje para la competitividad en contrataciones de gobierno es la equidad de condiciones para todos, y la competencia es un prerrequisito para la eficiencia en costos y la calidad.",
+      "Charts": {
+        "Top5": {
+          "Description": "Los cinco contratos más grandes en el conjunto de datos."
+        },
+        "Relation": {
+          "Description": "La relación entre el monto gastado por un comprador y el número de diferentes proveedores que contratan con ese comprador."
+        }
+      },
+      "PopOvers": {
+        "Buyer": "Comprador",
+        "Suppliers": "Proveedores",
+        "Contracts": "Contratos",
+        "Amount": "Monto"
+      }
+    }
+  },
+  "NLForm": {
+    "Comparison": {
+      "FullDataSet": "conjunto de datos completo",
+      "ForThe": "para el",
+      "SizeSupplier": "tamaño del proveedor",
+      "For": "para",
+      "ContractType": "tipo de contrato",
+      "ContractProcedure": "procedimiento de contratación"
+    },
+    "Dimension": {
+      "Summary": "resumen",
+      "SummaryArticle": "un",
+      "Timeliness": "puntualidad",
+      "TimelinessArticle": "la",
+      "CostEfficiency": "eficiencia en costos",
+      "CostEfficiencyArticle": "la",
+      "Fairness": "equidad",
+      "FairnessArticle": "la"
+    },
+    "Sentence": "Se muestra {#dimensionArticle#} {%dimension%} del proceso de contratación {#comparisonArticle#} {%comparison%}"
+  }
+}

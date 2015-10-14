@@ -25,13 +25,13 @@ var IndFairness = module.exports = React.createClass({
 
     return (
       <dl className="popover-list">
-        <dt>Buyer</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Buyer")}</dt>
         <dd>{d.name}</dd>
-        <dt>Suppliers</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Suppliers")}</dt>
         <dd>{d.suppliers}</dd>
-        <dt>Contracts</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Contracts")}</dt>
         <dd>{d.contracts}</dd>
-        <dt>Amount</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Amount")}</dt>
         <dd>{amount}</dd>
       </dl>
     );
@@ -40,11 +40,11 @@ var IndFairness = module.exports = React.createClass({
   concentrChartPopover: function(d) {
     return (
       <dl className="popover-list">
-        <dt>Buyer</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Buyer")}</dt>
         <dd>{d.name}</dd>
-        <dt>Contracts</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Contracts")}</dt>
         <dd>{d.contracts}</dd>
-        <dt>Amount</dt>
+        <dt>{i18n.t("Dimensions.Fairness.PopOvers.Amount")}</dt>
         <dd>{d.amount}</dd>
       </dl>
     );
@@ -131,12 +131,12 @@ var IndFairness = module.exports = React.createClass({
     }
 
     var relationTile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(relationCharts)}>
-        <h1 className="tile-title">{ldn ? 'Loading' : relationChartData.title}</h1>
+      <section className={"tile chart-group" + (ldn ? i18n.t("LoadingTitle") : '') + utils.chartGroupClass(relationCharts)}>
+        <h1 className="tile-title">{ldn ? i18n.t("Loading") : relationChartData.title}</h1>
         {relationCharts ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>The relationship between the amount spent by a buyer and the number of different suppliers that contract with that buyer.</p>
+              <p>{i18n.t("Dimensions.Fairness.Charts.Relation.Description")}</p>
             </div>
             <div className="chart-container">
               {relationCharts}
@@ -163,12 +163,12 @@ var IndFairness = module.exports = React.createClass({
     );*/
 
     var top5Tile = (
-      <section className={"tile chart-group" + (ldn ? ' loading' : '') + utils.chartGroupClass(top5Table)}>
-        <h1 className="tile-title">{ldn ? 'Loading' : top5TableData.title}</h1>
+      <section className={"tile chart-group" + (ldn ? i18n.t("LoadingTitle") : '') + utils.chartGroupClass(top5Table)}>
+        <h1 className="tile-title">{ldn ? i18n.t("Loading") : top5TableData.title}</h1>
         {top5Table ? (
           <div className="tile-body">
             <div className="tile-prose">
-              <p>The five largest contracts in the dataset.</p>
+              <p>{i18n.t("Dimensions.Fairness.Charts.Top5.Description")}</p>
             </div>
             <div className="chart-container">
               {top5Table}
@@ -183,9 +183,9 @@ var IndFairness = module.exports = React.createClass({
 
         <div className="col-intro">
           <section className="tile">
-            <h1 className="tile-title">About fairness</h1>
+            <h1 className="tile-title">{i18n.t("Dimension.Fairness.Title")}</h1>
             <div className="tile-body">
-              <p>A level playing field is a linchpin of continuous competition for government contracts, and competition is a pre-requisite for cost-efficiency and quality.</p>
+              <p>{i18n.t("Dimension.Fairness.Description")}</p>
             </div>
           </section>
         </div>

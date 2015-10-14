@@ -1,19 +1,14 @@
 language: node_js
 node_js:
 - '0.12'
-
 env:
   global:
-  - GH_REF=github.com/procurement-analytics/procurement-analytics.git
+  - GH_REF=github.com/mxabierto/procurement-analytics.git
   - DEPLOY_BRANCH=master
-  - secure: "FYRSjx8L2h2HqLLn+jbmpTLWshERdCneiu3ymKM4JPA8jlggtgxSeD54U/5ygnYdf1fUmyjU3pXQCFvrOTQV+fVFzA1UredLCiONPkGB/59dm34a/hxO3nhHJ3dz0SOqxZ8VB2WfZZ1gnjMvKlu1vPcm0X913tHN+uUwBlHV705FMseW37G+MF5uaWp5GWnixtpz3Lq8hBaPY16qagOeju/yrLwOW/zE+TJxEgsaOrx0V/nqfg7PtmxYAbSDNXtM0FrvvqL/FjFLQe+fh4Q6RWq2pgRwSq8/YmEbBTYtp+k6t/KteFVnaTkdys1TOcTOg4p5RlI4VR/0jq+5ZrUXBa20iAHtQqKWh4X0VsGxfP43Idt1VnqZwHG7Uj5iMbmW9OW5EDlqdMkmdCnvr/eoSDlbABJXGLuAQWHDGGWmUuQCHSqZNMdqlaNyzDQSmHJtnC6hfXGclfuRHntMpcxs4SaG9OhUUeBNImgnjEHi29X7B7D9L6ANIuBnBfiUuaYIcQlaOApQreswcKCRNVlSr0X+E2H9XqbKk248EBnsqw7oc5KJyq5O7So2eNF7R1Wf+MVU3IoWHG3SO5uIneXZCIHCyVVWFX5aYbXj/TjwQeIRwuEDlzVHf0WI745HZKpvBpRw0KYVPvUCTnzpymJjhLfeQFM6dp7ubRDGOJ61R7A="
-
+  - secure: oYNPRhNoi+LMMU5KuhGUusFpg5PJuTYl0L5tFqt7eenz3mQTq3+Ne2gMnhV3POuTuoHBYz6yU8UrLiqbROKOigU2WEZCCo0TL11aSGY8sxThdr2mw1NBjZ3zGIemXbuOgb00m+ebsycy83pr1A4RbLO706Fz9D8an/DMy59ma9L5OrnsE8ouN25MdNMG4ohQMhzg71CfriFEJNaXnf1h0gz4IJQ9eakSh06YWs/JIs7+jxI1MdLNMdKd/Iz/KC6gzgbbYEReV6gEPbS4YcdvWFwnwRpNBweYfjqQSWxTs5yow0uFlnopZFGRuzAxvYJ7BAvLNPOjeVSkPUi4u+FOMShDzGvwvh/4KD77EJTujV6UxxCLGCtKOF0iP89Ucq4xguhN4M0GP5LwNRF3DaVAOfs7ZizVJLztnMYboAfIGNLOnJCsui0EpKpOtmmh6zxp1jQCE5H54yfiO1yHX1IW0dfvgCblZXNqC6g6d4nVfRBwQTGZnirR7tG1nnUf4pVy2RDAHdB0m5Cxgq7R9+u1WUv9UHrCxW/nydunXF0SduBs1Wfz+e3ue6d3nP978ansz5hQm6zXiS7eUsxIIAPDo2fpqVRZO7HvJnJuZdXsI49+508FB/TCFBwKXfaPKU6FelsZ7mcWzNzLaTNoH17UTCnbf4ENHzCdDZ6zm/LihLQ=
 before_install:
 - chmod +x ./.build_scripts/deploy.sh
-
 script:
 - gulp prod
-
 after_success:
-- ./.build_scripts/deploy.sh
-  
+- "./.build_scripts/deploy.sh"

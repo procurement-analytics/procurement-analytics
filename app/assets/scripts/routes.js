@@ -11,7 +11,7 @@ var Redirect = Router.Redirect;
 
 
 var App = require('./components/app');
-var About = require('./components/about');
+var About = require('./components/about-es');
 var Analysis = require('./components/analysis');
 
 var routes = module.exports = (
