@@ -4,7 +4,7 @@ node_js:
 
 env:
   global:
-  - GH_REF=github.com/procurement-analytics/procurement-analytics.git
+  - GH_REF=github.com/mxabierto/procurement-analytics.git
   - DEPLOY_BRANCH=master
   - secure: "FYRSjx8L2h2HqLLn+jbmpTLWshERdCneiu3ymKM4JPA8jlggtgxSeD54U/5ygnYdf1fUmyjU3pXQCFvrOTQV+fVFzA1UredLCiONPkGB/59dm34a/hxO3nhHJ3dz0SOqxZ8VB2WfZZ1gnjMvKlu1vPcm0X913tHN+uUwBlHV705FMseW37G+MF5uaWp5GWnixtpz3Lq8hBaPY16qagOeju/yrLwOW/zE+TJxEgsaOrx0V/nqfg7PtmxYAbSDNXtM0FrvvqL/FjFLQe+fh4Q6RWq2pgRwSq8/YmEbBTYtp+k6t/KteFVnaTkdys1TOcTOg4p5RlI4VR/0jq+5ZrUXBa20iAHtQqKWh4X0VsGxfP43Idt1VnqZwHG7Uj5iMbmW9OW5EDlqdMkmdCnvr/eoSDlbABJXGLuAQWHDGGWmUuQCHSqZNMdqlaNyzDQSmHJtnC6hfXGclfuRHntMpcxs4SaG9OhUUeBNImgnjEHi29X7B7D9L6ANIuBnBfiUuaYIcQlaOApQreswcKCRNVlSr0X+E2H9XqbKk248EBnsqw7oc5KJyq5O7So2eNF7R1Wf+MVU3IoWHG3SO5uIneXZCIHCyVVWFX5aYbXj/TjwQeIRwuEDlzVHf0WI745HZKpvBpRw0KYVPvUCTnzpymJjhLfeQFM6dp7ubRDGOJ61R7A="
 
